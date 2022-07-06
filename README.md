@@ -7,7 +7,7 @@ Plateforme de sessions pédagogiques
 precond : install python3-venv
 
 ```
-git clone https://github.com/PnCevennes/Pedaparc
+git clone https://github.com/PnCevennes/Pedaparc-pub
 cd Pedaparc
 python3 -m venv venv
 source venv/bin/activate
