@@ -33,11 +33,7 @@ db_host = 'db_host'
 
 #L'ajout ou la suppression d'une des refs résultera la modification des champs tags 
 
-#Tags de finalisation pour pedatheque_create
-tags_pedatheque_create = ['ref.thematiques','ref.lieux','ref.saison','ref.public']
 #Tags de pedatheque_search, recherche d'animation
 tags_pedatheque_search = ['ref.thematiques','ref.duree','ref.saison','ref.public','ref.lieux']
 #Tags de mediatheque_search, recherche de medias
 tags_mediatheque_search = ['ref.thematiques','ref.type_mat']
-#Tags nécessaires à la création d'une séquence
-tags_sequence_create = ['ref.approches','ref.modalites','ref.type_seq','ref.duree_seq']
