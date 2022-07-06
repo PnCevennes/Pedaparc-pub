@@ -1,0 +1,100 @@
+<!-- Ce fichier sert à afficher la page courante et tous les outils relatifs. -->
+
+{% extends 'layout.htm' %}
+
+
+{% block content %}
+<div class="ui centered grid">
+    <div class="fourteen wide column">
+        {{contenu|safe}}
+    </div>
+    {% if g.user.is_admin %}
+    <div class="right floated three wide column">
+        <a class="ui button primary" href="/outils_facilitateurs/{{pagename}}/edit">Modifier cette page</a>
+    </div>
+    {% endif %}
+</div>
+<div class="ui very padded container large-container">
+    {% for document in documents %}
+    <div class="ui accordion">
+        <div class="title">
+            <div class="ui horizontal segments">
+                <div class="ui segment twenty-width">
+                    <p><i class="dropdown icon"></i><b>Nom :</b></p>
+                    <p class="text-display">{{document.nom|md|safe}}</p>
+                </div>
+                <div class="ui segment fifty-five-width">
+                    <p><b>Description :</b></p>
+                    <p class="text-display">{{document.description|md|safe}}</p>
+                </div>
+                {% if not document.fk_type_mat_outil.id == 2 %}
+                <div class="ui segment ten-width">
+                    <div class="ui modal big-modal" id="{{document.id}}">
+                        <div class="header">{{document.nom|md|safe}}</div>
+                        <div class="content">
+                            {% if document.fk_type_mat_outil.id==70 or document.fk_type_mat_outil.id==71 or document.fk_type_mat_outil.id==74 or document.fk_type_mat_outil.id==75 %}
+                            <embed src="/{{document.url}}" class="big-embed"></embed>
+                            {% elif document.fk_type_mat_outil.id==72 %}
+                            <video controls class="big-embed">
+                                <source src="/{{document.url}}">
+                                Votre navigateur ne supporte pas cette extension.
+                            </video>
+                            {% elif document.fk_type_mat_outil.id==73 %}
+                            <audio controls class="big-embed">
+                                <source src="/{{document.url}}">
+                                Votre navigateur ne supporte pas cette extension.
+                            </audio>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <button class="ui primary button" onclick="javascript:$('#{{document.id}}').modal('show');">Aperçu</button>
+                </div>
+                {% endif %}
+                {% if g.user.is_admin %}
+                <div class="ui segment five-width">
+                    <a href="/outils_facilitateurs/{{pagename}}/{{document.id}}/edit" class="ui right floated icon"><i class="edit icon color pink"></i></a>
+                </div>
+                <div class="ui segment five-width">
+                    <a href="/outils_facilitateurs/{{pagename}}/{{document.id}}/delete" class="ui right floated icon"><i class="trash icon"></i></a>
+                </div>
+                {% endif %}
+                <div class="ui segment five-width">
+                    <a href="/outils_facilitateurs/{{document.id}}/download" class="ui right floated icon"><i class="download icon"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            {% if document.variante or document.difficulte or document.materiel %}
+            <div class="ui horizontal segments">
+                {% if document.variante %}
+                    <div class="ui segment">
+                        <p class="text-display"><b>Variante :</b> {{document.variante|md|safe}}</p>
+                    </div>
+                {% endif %}
+                {% if document.difficulte %}
+                    <div class="ui segment">
+                        <p class="text-display"><b>Difficulté :</b> {{document.difficulte.nom}}</p>
+                    </div>
+                {% endif %}
+                {% if document.materiel %}
+                    <div class="ui segment">
+                        <p class="text-display"><b>Matériel :</b> {{document.materiel|md|safe}}</p>
+                    </div>
+                {% endif %}
+            </div>
+            {% else %}
+            <div class="ui segment">Il n'y a pas plus de détails.</div>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% if not documents%}
+<h2 class="ui centered header">Il n'y a rien ici !</h2>
+{% endif %}
+
+<script>
+    $('.ui.accordion').accordion();
+</script>
+{% endblock %}

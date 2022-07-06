@@ -1,0 +1,67 @@
+<!-- Ce fichier sert à afficher le média courant. -->
+
+<div class="ui horizontal segments">
+	<div class="ui segment five-width">
+		{% if media.fk_type_mat.id==70 %}
+		<i class="image icon"></i>
+		{% elif media.fk_type_mat.id==71 %}
+		<i class="camera icon"></i>
+		{% elif media.fk_type_mat.id==72 %}
+		<i class="video icon"></i>
+		{% elif media.fk_type_mat.id==73 %}
+		<i class="volume up icon"></i>
+		{% elif media.fk_type_mat.id==74 %}
+		<i class="file icon"></i>
+		{% elif media.fk_type_mat.id==75 %}
+		<i class="book icon"></i>
+		{% endif %}
+	</div>
+	<div class="ui segment twenty-width">
+		<p>{{media.nom|md|safe}}</p>
+	</div>
+	<div class="ui segment forty-width">
+		<p>{{media.description|md|safe}}</p>
+	</div>
+	<div class="ui segment ten-width">
+		<div class="ui modal big-modal" id="{{media.id}}">
+			<div class="header">
+				{{media.nom|md|safe}}
+			</div>
+			<div class="content">
+				{% if media.fk_type_mat.id==70 or media.fk_type_mat.id==71 or media.fk_type_mat.id==74 or media.fk_type_mat.id==75 %}
+				<embed src="/{{media.url}}" class="big-embed"></embed>
+				{% elif media.fk_type_mat.id==72 %}
+				<video controls class="big-embed">
+					<source src="/{{media.url}}">
+					Votre navigateur ne supporte pas cette extension.
+				</video>
+				{% elif media.fk_type_mat.id==73 %}
+				<audio controls class="big-embed">
+					<source src="/{{media.url}}">
+					Votre navigateur ne supporte pas cette extension.
+				</audio>
+				{% endif %}
+			</div>
+		</div>
+		<button class="ui primary button" onclick="javascript:$('#{{media.id}}').modal('show');">Aperçu</button>
+	</div>
+	<div class="ui segment five-width">
+		<a href="/mediatheque/{{media.id}}"><i class="download icon"></i></a>
+	</div>
+	{% if g.user.is_admin %}
+	<div class="ui segment five-width">
+		<a href="/mediatheque/{{media.id}}/edit" class="ui right floated icon"><i class="edit icon color pink"></i></a>
+	</div>
+	<div class="ui segment five-width">
+		<a href="/mediatheque/{{media.id}}/delete" class="ui right floated icon"><i class="trash icon"></i></a>
+	</div>
+	{% endif %}
+	<div class="ui segment ten-width">
+	{% for theme in media.thematiques %}
+		<i class="ui icon tooltip">
+			<img class="ui mini image" src="/static/ressources/{{theme.nom}}.png">
+			<span class="tooltiptext">{{theme.nom}}</span>
+		</i>
+	{% endfor %}
+	</div>
+</div>

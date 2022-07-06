@@ -1,0 +1,16 @@
+<!-- Ce fichier sert à afficher une page d'erreur générale en cas d'erreurs d'URL ou au niveau du serveur. -->
+
+{% extends 'layout.htm' %}
+
+{% block content %}
+<script src="{{ url_for('static', filename='js/confetti.js') }}"></script>
+
+<div class="ui very padded container">
+	<h1>Une erreur est survenue.</h1>
+	<p>Voici des confettis.</p>	
+</div>
+
+<script defer>
+	startConfetti();
+</script>
+{% endblock %}

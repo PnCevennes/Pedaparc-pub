@@ -1,0 +1,122 @@
+<!-- Ce fichier sert à afficher la page d'accueil de l'application. -->
+
+{% extends 'layout.htm' %}
+
+{% block content %}
+<div class="ui hidden divider"></div>
+<div class="ui top attached tabular menu">
+  <a class="item {% if not g.user.is_admin %}active{% endif %}" data-tab="notice">Notice</a>
+  {% if g.user.is_admin %}
+  <a class="item active" data-tab="moderation">Modération</a>
+  {% endif %}
+  <a class="item" data-tab="stats">Statistiques</a>
+</div>
+<div class="ui bottom attached tab segment {% if not g.user.is_admin %}active{% endif %}" data-tab="notice">
+  <div class="ui centered grid">
+    <div class="fourteen wide column">
+        {{contenu|safe}}
+    </div>
+    {% if g.user.is_admin %}
+    <div class="right floated three wide column">
+        <a class="ui button primary" href="/edit">Modifier cette page</a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% if g.user.is_admin %}
+
+{% if anims %}
+<div class="ui bottom attached tab segment active" data-tab="moderation">
+{% for anim in anims %}
+{% include '/pedatheque/search/simpler_anim_display.htm' %}
+{% endfor %}
+</div>
+{% else %}
+<div class="ui bottom attached tab segment active" data-tab="moderation"><p>Vous n'avez rien à modérer !</p></div>
+{% endif %}
+{% endif %}
+
+<div class="ui bottom attached tab segment" data-tab="stats">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+  <div class="ui very padded container large-container">
+    <p>Nombre d'animations depuis le 31 mai 2022 :</p>
+    <canvas id="animations" style="width:100%;max-width:700px"></canvas>
+    <p>Nombre de médias depuis le 31 mai 2022 :</p>
+    <canvas id="medias" style="width:100%;max-width:700px"></canvas>
+  </div>
+
+  <script>
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET','/get_stats',true)
+    let response;
+    xhr.addEventListener("load", function () {
+      response = JSON.parse(xhr.responseText);
+      graphs_create(response);
+    });
+    xhr.send(null)
+
+    function graphs_create(rep) {
+
+      var animations = new Chart(document.getElementById('animations').getContext('2d'), {
+        type: "line",
+        data: {
+          labels: rep['dates'],
+          datasets: [
+            {
+              label: 'Animations validées',
+              fill: false,
+              pointRadius: 1,
+              borderColor: "rgba(0,255,0,0.5)",
+              data: rep['y_anim_valid']
+            },
+            {
+              label: 'Animations non validées',
+              fill: false,
+              pointRadius:1,
+              borderColor: "rgba(255,0,0,0.5)",
+              data: rep['y_anim_unvalid']
+            },
+            {
+              label: 'Total d\'animations',
+              fill: false,
+              pointRadius:1,
+              borderColor: "rgba(0,0,255,0.5)",
+              data: rep['y_anim_all']              
+            }
+          ]
+        }
+      });
+
+      var medias = new Chart(document.getElementById('medias').getContext('2d'), {
+        type: "line",
+        data: {
+          labels: rep['dates'],
+          datasets: [
+            {
+              label: 'Médias',
+              fill: false,
+              pointRadius: 1,
+              borderColor: "rgba(0,255,0,0.5)",
+              data: rep['y_mat_peda']
+            },
+            {
+              label: 'Outils facilitateurs',
+              fill: false,
+              pointRadius:1,
+              borderColor: "rgba(255,0,0,0.5)",
+              data: rep['y_outil']
+            }
+          ]
+        }
+      });
+    }
+
+  </script>  
+</div>
+
+<script>
+	$('.menu .item').tab();
+</script>
+
+{% endblock %}

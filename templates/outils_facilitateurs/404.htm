@@ -1,0 +1,16 @@
+<!-- Ce fichier affiche une page d'erreur si la page est inexistante. -->
+
+{% extends 'layout.htm' %}
+
+{% block content %}
+<div class="ui centered grid">
+    <div class="fourteen wide column">
+        <h1>Cette page n'existe pas encore. Allez voir ailleurs !</h1>
+    </div>
+    {% if g.user.is_admin %}
+    <div class="three wide right floated column">
+        <a class="ui button primary" href="/outils_facilitateurs/{{pagename}}/edit">Créer cette page</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

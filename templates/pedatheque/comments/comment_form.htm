@@ -1,0 +1,15 @@
+<!-- Ce fichier sert à afficher le formulaire de création d'un nouveau commentaire. -->
+
+<form method="post" action="/pedatheque/create_comment/{{anim.id}}">
+	<div class="ui segments">
+		<div class="ui segment">
+			<p><div>
+				<p>Nouveau commentaire :</p>
+				<textarea class="text-area" name="commentaire" required></textarea>
+			</p></div>
+		</div>
+		<div class="ui clearing segment">
+			<button class="ui right floated primary button" type="submit">Envoyer</button>
+		</div>		
+	</div>
+</form>

@@ -1,0 +1,15 @@
+<!-- Ce fichier sert à afficher les résultats de la recherche d'animation avec tags. -->
+
+{% extends 'layout.htm' %}
+
+{% block content %}
+<div class="ui very padded container large-container">
+	<a href="/pedatheque" class="ui aligned primary button">Nouvelle recherche</a>
+
+	{% for anim, tags in anims %}
+		{% include '/pedatheque/search/simple_anim_display.htm' %}
+	{% endfor %}
+</div>
+
+{% if not anims%}{% include 'empty.htm' %}{% endif %}
+{% endblock %}

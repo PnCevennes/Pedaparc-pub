@@ -1,0 +1,17 @@
+<!-- Ce fichier sert à afficher le commentaire courant. -->
+
+<div class="ui segments">
+	<div class="ui segment">
+		<p><div>
+			<p>{{comment.auteur}}</p>
+			<p>{{comment.commentaire|md|safe}}</p>
+			<p>{{comment.date}}</p>
+		</p></div>
+	</div>
+	{% if g.user.is_admin or comment.auteur==g.user.name %}
+	<div class="ui segment">
+		<p><b>Supprimer le commentaire :</b></p>
+		<a href="/pedatheque/delete_comment/{{anim.id}}/{{comment.id}}" class="ui right floated icon"><i class="trash icon"></i></a>	
+	</div>
+	{% endif %}
+</div>

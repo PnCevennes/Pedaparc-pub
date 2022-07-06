@@ -1,0 +1,73 @@
+<!-- Ce fichier sert à afficher un court résumé de l'animation courante. -->
+
+<div class="ui segments">
+	<div class="ui clearing segment mini-padding">
+		<div class="ui left floated header">
+			<h2>{{anim.titre}}</h2>
+			<h4>{{anim.auteurs}}</h4>
+		</div>
+		<div class="ui right floated header">
+			{% for tag in tags %}
+				{% if tag.reference==1 or tag.reference==4 or tag.reference==5 %}
+				<i class="ui icon tooltip">
+					<img class="ui mini image" src="/static/ressources/{{tag.nom}}.png">
+					<span class="tooltiptext">{{tag.nom}}</span>
+				</i>
+				{% endif %}
+			{% endfor %}
+
+			{% if anim.statut==3 %}
+				<i class="spinner icon color red"></i>
+			{% elif anim.statut==2 %}
+				<i class="check circle icon color yellow"></i>
+			{% elif anim.statut==1 %}
+				<i class="check circle icon color green"></i>
+			{% endif %}
+			
+			{% if g.user.is_admin or anim.auteurs==g.user.name %}
+			<a href="/pedatheque_edit?q={{anim.id}}" class="ui icon"><i class="edit icon color pink"></i></a>
+			{% endif %}
+		</div>
+	</div>
+	<div class="ui horizontal segments">
+		<div class="ui segment fifty-width text-display">
+			<p><b>Objectifs :</b></p>
+			{{anim.objectifs|md|safe}}
+		</div>
+		<div class="ui segment fifty-width text-display">
+			<p><b>Description :</b></p>
+			{{anim.description|md|safe}}
+		</div>
+	</div>
+	<div class="ui horizontal segments">
+		<div class="ui segment fifty-width">
+			<a href="/pedatheque/{{anim.id}}" class="ui aligned primary button">Consulter</a>
+			<h4>
+				{% if anim.date_modif %}
+				<p><small>Dernière modification le {{anim.date_modif|date_format}}</small></p>
+				{% endif %}
+			</h4>
+		</div>
+		<div class="ui segment fifty-width">
+			<p><b>Niveaux :</b></p>
+
+			{% set count = namespace(value=0) %}
+
+			{% for tag in tags %}
+				{% if tag.reference==6 %}
+				{% set count.value = count.value + 1 %}
+				<div class="ui checkbox mini-right-margin">
+					<p><i class="check icon"></i>{{tag.nom}}</p>
+				</div>
+				{% endif %}
+			{% endfor %}
+
+			{% if count.value == 0 %}
+			<div class="ui checkbox">
+				<p><i class="check icon"></i>Tout niveau</p>
+			</div>
+			{% endif %}
+		</div>
+	</div>
+	
+</div>

@@ -1,0 +1,79 @@
+<!-- Ce fichier sert à saisir les informations du média. Il permet de renseigner : type du média, nom, description, selection du média. -->
+
+{% extends 'layout.htm' %}
+
+{% block content %}
+
+<form method="post" {% if not media %} action="/mediatheque/create" enctype=multipart/form-data {% else %} action="/mediatheque/{{media.id}}/edit" {% endif %}>
+	<div class="ui very padded container large-container">
+
+		<h1>Importer un nouveau média</h1>
+
+		<div class="ui segments">
+			<div class="ui horizontal segments">
+				<div class="ui segment">
+					<p><b>Type de média*</b></p>
+					<select class="ui compact selection dropdown" name="type_mat" required>
+						{% if not media %}<option value="">Choisir ...</option>{% endif %}
+					{% for type in types %}
+						<option value="{{type.id}}" {% if media %}{% if type==media.fk_type_mat %} selected {% endif %}{% endif %}>{{type.nom}}</option>
+					{% endfor %}
+					</select>
+				</div>
+				<div class="ui segment">
+					<p><b>Mots-clés*</b></p>
+					{% for theme in thematiques %}
+					<div class="ui checkbox mini-right-margin">
+						<input type="checkbox" value="{{theme.id}}" name="thematique" id="{{theme.id}}" {% if media %}{% if theme in media.thematiques %} checked {% endif %}{% endif %}>
+						<label for="{{theme.id}}">{{theme.nom}}</label>
+					</div>					
+					{% endfor %}
+				</div>
+			</div>
+			<div class="ui segment">
+				<p><b>Nom du media*</b></p>
+				<textarea required class="fifty-text-area" rows="2" placeholder="Rentrer le texte en moins de 60 caractères." name="nom" onkeyup="javascript:MaxLengthTextarea(this,60);">{% if media %}{{media.nom}}{% endif %}</textarea>
+			</div>
+			<div class="ui segment">
+				<p><b>Description du media*</b></p>
+				<textarea required class="eighty-text-area" rows="3" placeholder="Rentrer le texte en moins de 200 caractères." name="description" onkeyup="javascript:MaxLengthTextarea(this,200);">{% if media %}{{media.description}}{% endif %}</textarea>
+			</div>
+			{% if not media %}
+			<div class="ui segment">
+				<p><b>Selection du media*</b></p>
+				<input type="file" name="file" required>
+			</div>
+			{% endif %}
+		</div>
+
+		<button class="ui right floated primary button" type="submit">Enregistrer</button>
+	</div>
+</form>
+
+{% if alert %}
+<div class="ui mini modal">
+  <div class="header">Extension non supportée</div>
+  <div class="content">
+    <p>Les extensions supportés sont : {% for item in alert %}{{item}} {% endfor %}</p>
+  </div>
+  <div class="actions">
+    <div class="ui approve button">Accepter</div>
+  </div>
+</div>
+
+
+<script>
+	$('.mini.modal').modal('show');
+</script>
+{% endif %}
+
+<script type="text/javascript">
+	function MaxLengthTextarea(objettextarea,maxlength){
+		if (objettextarea.value.length > maxlength) {
+		objettextarea.value = objettextarea.value.substring(0, maxlength);
+		alert('Votre texte ne doit pas dépasser '+maxlength+' caractères!');
+	}
+}
+</script>
+
+{% endblock %}

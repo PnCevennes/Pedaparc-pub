@@ -1,0 +1,97 @@
+<!-- Ce fichier sert à saisir les informations de l'outil. Il permet de renseigner : type de l'outil, titre, matériel, difficulté, consigne et variante. -->
+
+{% extends 'layout.htm' %}
+
+{% block content %}
+
+<form method="post" {% if not outil %} action="/outils_facilitateurs/create" {% else %} action="/outils_facilitateurs/{{pagename}}/{{outil.id}}/edit" {% endif %} enctype=multipart/form-data>
+	<div class="ui very padded container large-container">
+
+		<h1>Importer un nouvel outil</h1>
+
+		<div class="ui segments">
+			<div class="ui horizontal segments">
+				<div class="ui segment">
+					<div class="ui labeled input">
+						<div class="ui label">Titre*</div>
+						<input type="text" name="nom" required {% if outil %}value="{{outil.nom}}"{% endif %}>
+					</div>
+				</div>
+				{% if not outil %}
+				<div class="ui segment">
+					<p><b>Type d'outils facilitateurs*</b></p>
+					<select class="ui compact selection dropdown" name="type_outil" required>
+						{% if not outil %}<option value="">Choisir ...</option>{% endif %}
+					{% for type in types_outils %}
+						<option value="{{type.id}}" {% if outil %}{% if outil.fk_type_mat==type %}selected{% endif %}{% endif %}>{{type.nom}}</option>
+					{% endfor %}
+					</select>
+				</div>
+				{% endif %}
+			</div>
+			<div class="ui segment">
+				<p><b>Consigne*</b></p>
+				<textarea required class="eighty-text-area" rows="10" placeholder="Rentrer le texte en moins de 1500 caractères." name="description" onkeyup="javascript:MaxLengthTextarea(this,1500);">{% if outil %}{{outil.description}}{% endif %}</textarea>
+				<p><b>Variante</b></p>
+				<textarea class="eighty-text-area" rows="10" placeholder="Rentrer le texte en moins de 1000 caractères." name="variante" onkeyup="javascript:MaxLengthTextarea(this,1000);">{% if outil %}{{outil.variante}}{% endif %}</textarea>
+			</div>
+			<div class="ui segment">
+				<p><b>Matériel</b></p>
+				<textarea class="eighty-text-area" rows="3" placeholder="Rentrer le texte en moins de 200 caractères." name="materiel" onkeyup="javascript:MaxLengthTextarea(this,200);">{% if outil %}{{outil.materiel}}{% endif %}</textarea>
+			</div>
+			<div class="ui segment">
+					<p><b>Difficulté*</b></p>
+					<select class="ui compact selection dropdown" name="difficulte" required>
+						{% if not outil %}<option value="">Choisir ...</option>{% endif %}
+					{% for difficulte in difficultes %}
+						<option value="{{difficulte.id}}" {% if outil %}{% if outil.difficulte==difficulte %}selected{% endif %}{% endif %}>{{difficulte.nom}}</option>
+					{% endfor %}
+				</select>
+			</div>
+			<div class="ui segment">
+				<p><b>Type de média</b></p>
+				<select class="ui compact selection dropdown" name="type_media">
+					{% if not document %}<option value="">Choisir ...</option>{% endif %}
+					{% for type in types_medias %}
+					<option value="{{type.id}}" {% if document %}{% if type==document.fk_type_mat %} selected {% endif %}{% endif %}>{{type.nom}}</option>
+					{% endfor %}
+				</select>
+			</div>
+			<div class="ui segment">
+				<p><b>Selection du média</b></p>
+				<input type="file" name="file">
+			</div>
+		</div>
+
+		<button class="ui right floated primary button" type="submit">Enregistrer</button>
+	</div>
+</form>
+
+{% if alert %}
+<div class="ui mini modal">
+  <div class="header">Extension non supportée</div>
+  <div class="content">
+    <p>Les extensions supportés sont : {% for item in alert %}{{item}} {% endfor %}</p>
+  </div>
+  <div class="actions">
+    <div class="ui approve button">Accepter</div>
+  </div>
+</div>
+
+
+<script>
+	$('.mini.modal').modal('show');
+</script>
+{% endif %}
+
+<script>
+
+function MaxLengthTextarea(objettextarea,maxlength){
+	if (objettextarea.value.length > maxlength) {
+		objettextarea.value = objettextarea.value.substring(0, maxlength);
+		alert('Votre texte ne doit pas dépasser '+maxlength+' caractères!');
+	}
+}
+</script>
+
+{% endblock %}

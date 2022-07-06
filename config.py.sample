@@ -1,0 +1,43 @@
+'''
+Fichier de configuration générale de l'application
+'''
+import os.path
+
+SECRET_KEY = '123456'
+UPLOAD_FOLDER = os.path.join('static', 'upload')
+DOWNLOAD_FOLDER = os.path.join('static', 'download')
+ALLOWED_EXTENSIONS = {'pdf', 'jpg', 'png', 'jpeg', 'mp3', 'mp4', 'wma', 'avi', 'wmh', 'M4V'}
+
+PAGE_DIR = 'static_pages'
+
+LDAP_PREFIX = 'ldap_prefix\\%s'
+LDAP_HOST = 'ldap_host'
+LDAP_BASE_PATH = 'dc=sample'
+LDAP_USER = 'ldap_user'
+LDAP_PASS = 'ldap_pass'
+
+ADMIN_GROUPS = ['admin-pedaparc', 'Administrateurs']
+
+MAIL_SERVER = 'mail_server'
+MAIL_PORT = 25
+#MAIL_PORT = 587
+MAIL_USERNAME = 'mail_username'
+MAIL_PASSWORD = 'mail_password'
+MAIL_SENDER = 'Pedaparc <mail_username>'
+SEND_MAIL = True
+
+db_name = 'db'
+db_username = 'db_user'
+db_password = 'db_password'
+db_host = 'db_host'
+
+#L'ajout ou la suppression d'une des refs résultera la modification des champs tags 
+
+#Tags de finalisation pour pedatheque_create
+tags_pedatheque_create = ['ref.thematiques','ref.lieux','ref.saison','ref.public']
+#Tags de pedatheque_search, recherche d'animation
+tags_pedatheque_search = ['ref.thematiques','ref.duree','ref.saison','ref.public','ref.lieux']
+#Tags de mediatheque_search, recherche de medias
+tags_mediatheque_search = ['ref.thematiques','ref.type_mat']
+#Tags nécessaires à la création d'une séquence
+tags_sequence_create = ['ref.approches','ref.modalites','ref.type_seq','ref.duree_seq']

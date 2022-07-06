@@ -1,0 +1,196 @@
+<!-- Ce fichier sert à afficher le détail d'une animation. -->
+
+{% extends 'layout.htm' %}
+
+{% block content %}
+<div class="ui very padded container large-container">
+	<div class="ui clearing segment">
+			<a href="/pedatheque/{{anim.id}}/download" class="ui right floated icon button">
+				<i class="download icon"></i>
+			</a>
+	</div>
+	<h1>{{anim.titre}}</h1>
+	<div class="ui right floated header">
+		{% if anim.statut==3 %}
+			<i class="spinner icon color red"></i>
+		{% elif anim.statut==2 %}
+			<i class="check circle icon color yellow"></i>
+		{% elif anim.statut==1 %}
+			<i class="check circle icon color green"></i>
+		{% endif %}
+		{% if g.user.is_admin or anim.auteurs==g.user.name %}
+		<a href="/pedatheque_edit?q={{anim.id}}" class="ui icon"><i class="edit icon color pink"></i></a>
+		{% endif %}
+	</div>
+	<h3>{{anim.auteurs}}</h3>
+	<div class="ui segments">
+		<div class="ui segment">
+			<p><div><h3><b>Lieu :</b> {{anim.lieu}}<h3></p></div>
+			<h4>
+				{% if anim.date_modif %}
+				<p><small>Dernière modification le {{anim.date_modif|date_format}}</small></p>
+				{% endif %}
+			</h4>
+		</div>
+		<div class="ui segment text-display">
+			<p><div>
+				<b>Durée :</b> {{anim.fk_duree.nom}}
+			</p></div>
+			<p><div>
+				<b>Public :</b>
+				{% set count = namespace(value=0) %}
+				{% for tag in tags %}
+					{% if tag.reference==6 %}
+					{% set count.value = count.value + 1 %}
+					<div class="ui checkbox mini-right-margin">
+						<p><i class="check icon"></i>{{tag.nom}}</p>
+					</div>
+					{% endif %}
+				{% endfor %}
+				{% if count.value == 0 %}
+					<div class="ui checkbox">
+						<p><i class="check icon"></i>Tout niveau</p>
+					</div>
+				{% endif %}
+			</p></div>
+			<p><div>
+				<b>Description :</b> {{anim.description|md|safe}}
+			</p></div>
+			<p><div>
+				<b>Objectifs :</b> {{anim.objectifs|md|safe}}
+			</p></div>
+			<p><div><b>Matériel :</b> {% for seq in sequences %}<p>{{seq.materiel_div|md|safe}}</p>{% endfor %}</p></div>
+			{% if anim.public_specifique %}<p><div><b>Public spécifique :</b> {{anim.public_specifique|md|safe}}</p></div>{% endif %}
+			<p><div><b>Avant l'animation :</b> {{anim.pre_anim}}</p></div>
+		</div>
+	</div>
+
+	<div class="ui horizontal segments">
+		<div class="ui container segment grey inverted thirty-width"><p>Description de l'animation par les séquences</p></div>
+		<div class="ui container segment grey inverted fourteen-width"><p>Approche et modalités</p></div>
+		<div class="ui container segment grey inverted fourteen-width"><p>Objectifs</p></div>
+		<div class="ui container segment grey inverted fourteen-width"><p>Durée</p></div>
+		<div class="ui container segment grey inverted fourteen-width"><p>Matériel</p></div>
+		<div class="ui container segment grey inverted fourteen-width"><p>Média associé</p></div>
+	</div>
+
+	<div class="ui segments">
+
+		{% for seq in sequences %}
+
+		{% if seq.fk_type_seq.id==42 %}
+			{% set color='intro-color' %}
+		{% elif seq.fk_type_seq.id==43 %}
+			{% set color='dvp-color' %}
+		{% elif seq.fk_type_seq.id==44 %}
+			{% set color='dvpopt-color' %}
+		{% elif seq.fk_type_seq.id==45 %}
+			{% set color='conclu-color' %}
+		{% endif %}
+
+		<div class="ui segment {{color}}">
+			<h3 class="ui left aligned header">{{seq.fk_type_seq.nom}} : {{seq.titre}}</h3>
+		</div>
+		<div class="ui horizontal segments">
+			<div class="ui segment thirty-width" name="description"><p class="text-display">{{seq.description|md|safe}}</p></div>
+			<div class="ui segment fourteen-width" name="approche&modalite"><p class="text-display">{{seq.fk_approche.nom}}</p><p class="text-display">{{seq.fk_modalite.nom}}</p></div>
+			<div class="ui segment fourteen-width" name="objectifs"><p class="text-display">{{seq.objectifs|md|safe}}</p></div>
+			<div class="ui segment fourteen-width" name="duree"><p class="text-display">{{seq.fk_duree.nom}}</p></div>
+			<div class="ui segment fourteen-width" name="materiel"><p class="text-display">{{seq.materiel_div|md|safe}}</p></div>
+			<div class="ui segment fourteen-width" name="media">
+				{% if seq.materiel %}
+					{% for media in seq.materiel %}
+					<div class="ui modal big-modal" id="{{media.id}}">
+						<div class="header">
+							{{media.nom}}
+						</div>
+						<div class="content">
+							{% if media.fk_type_mat.id==70 or media.fk_type_mat.id==71 or media.fk_type_mat.id==74 or media.fk_type_mat.id==75 %}
+							<embed src="/{{media.url}}" class="big-embed"></embed>
+							{% elif media.fk_type_mat.id==72 %}
+							<video controls class="big-embed">
+								<source src="/{{media.url}}">
+								Votre navigateur ne supporte pas cette extension.
+							</video>
+							{% elif media.fk_type_mat.id==73 %}
+							<audio controls class="big-embed">
+								<source src="/{{media.url}}">
+								Votre navigateur ne supporte pas cette extension.
+							</audio>
+							{% endif %}
+						</div>
+					</div>
+					<div>
+						<button class="ui primary button" onclick="javascript:$('#{{media.id}}').modal('show');">Aperçu</button>	
+						<p>{{media.nom}}</p>
+					</div>
+					{% endfor %}
+				{% endif %}
+			</div>
+		</div>
+
+		{% endfor %}
+
+	</div>
+	<div class="ui segments">
+		<div class="ui segment text-display">
+			<p><div>
+				<b>Après l'animation :</b> {{anim.post_anim}}
+			</p></div>
+		</div>
+	</div>
+
+	{% if g.user.is_admin or (not anim.statut==1 and anim.auteurs==g.user.name) %}
+	<div class="ui horizontal segments">
+		{% if g.user.is_admin %}
+		<div class="ui segment">
+			<form method="post" action="/pedatheque/{{anim.id}}/update_author">
+				<p><b>Modifier l'auteur :</b></p>
+				<div class="ui input">
+					<div class="ui search">
+						<input class="prompt" type="text" name="auteur" id="auteur" placeholder="Auteur ...">
+						<div class="results"></div>
+					</div>
+					<button type="submit" class="ui button">Enregistrer</button>
+				</div>
+			</form>
+		</div>
+		{% if not anim.statut==1 %}
+		<div class="ui segment">
+			<p><b>Valider l'animation :</b></p>
+			<a href="/pedatheque/{{anim.id}}/validate" class="ui right floated icon"><i class="check icon"></i></a>
+		</div>
+		{% endif %}
+		{% endif %}
+		<div class="ui segment">
+			<p><b>Supprimer l'animation :</b></p>
+			<a href="/pedatheque/{{anim.id}}/delete" class="ui right floated icon"><i class="trash icon"></i></a>
+		</div>
+	</div>
+	{% endif %}
+
+</div>
+
+<div class="ui hidden divider"></div>
+
+{% if g.user.is_admin %}
+<script defer>
+$('.ui.search')
+  .search({
+    apiSettings: {
+      url: '/pedatheque/get_users?q={query}'
+    },
+    fields: {
+      results: 'items',
+      title   : 'title'
+    },
+    minCharacters : 3
+  })
+;
+</script>
+{% endif %}
+
+{% include '/pedatheque/comments/comments_layout.htm' %}
+
+{% endblock %}
+

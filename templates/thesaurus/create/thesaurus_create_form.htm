@@ -1,0 +1,49 @@
+<!-- Ce fichier sert à saisir les informations du nouveau tag. Il permet de renseigner : reference et nom. -->
+
+{% extends 'layout.htm' %}
+
+{% block content %}
+
+<form method="post" action="/thesaurus/create">
+	<div class="ui very padded container large-container">
+
+		<h1>Créer un nouveau tag</h1>
+
+		<div class="ui segments">
+			<div class="ui segment">
+				<p>Catégorie du tag</p>
+				<select class="ui compact selection dropdown" name="reference" required>
+					<option value="">Choisir ...</option>
+				{% for reference in references %}
+					<option value="{{reference.id}}">{{reference.label}}</option>
+				{% endfor %}
+				</select>
+			</div>
+			<div class="ui segment">
+				<div class="ui labeled input">
+					<div class="ui label">Nom du tag</div>
+					<input type="text" name="nom">
+				</div>
+			</div>
+		</div>
+		<button class="ui right floated primary button" type="submit">Enregistrer</button>
+	</div>
+</form>
+
+{% if alert %}
+<div class="ui mini modal">
+  <div class="header">Ce tag existe déjà !</div>
+  <div class="content">
+  	<p>Le tag <b>{{alert}}</b> n'est pas valide.</p>
+  </div>
+  <div class="actions">
+    <div class="ui approve button">Accepter</div>
+  </div>
+</div>
+{% endif %}
+
+<script>
+	$('.mini.modal').modal('show');
+</script>
+
+{% endblock %}

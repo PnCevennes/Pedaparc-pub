@@ -1,0 +1,101 @@
+<!-- Ce fichier sert à afficher la barre de navigation. -->
+
+<html>
+    <head>
+        <meta charset="utf8" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='semantic/semantic.min.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+        <script src="{{ url_for('static', filename='jquery/jquery-3.1.1.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='semantic/semantic.min.js') }}"></script>
+        <link rel="icon" type="image/png" href="{{ url_for('static', filename='ressources/favicon.png') }}" />
+        {% block head %}{% endblock %}
+    </head>
+    <body>
+        <div class="ui clearing segment">
+            <div class="ui left floated header content">
+                <img src="{{ url_for('static', filename='ressources/favicon.png') }}">
+                <p class="content">Péda-Parc</p>
+            </div>
+            {% if g.user.is_valid %}
+            <div class="ui right floated header">
+                <img src="{{ url_for('static', filename='ressources/user_logo.png') }}">
+                <div class="ui simple dropdown item">
+                    {{g.user.name}}
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a href="/logout" class="item">Se déconnecter</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <h1 class="ui center aligned header">Plateforme de sessions pédagogiques du Parc National des Cévennes</h1>
+
+        {% if g.user.is_admin %}
+        <div class="ui fluid five item menu">
+        {% else %}
+        <div class="ui fluid four item menu">
+        {% endif %}
+        
+            <a href="/" class="item">Accueil</a>
+            <div class="ui dropdown item">
+                Pédathèque
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a href="/pedatheque_edit" class="item">Créer une nouvelle animation</a>
+                    <a href="/pedatheque" class="item">Chercher une animation</a>
+                    <a href="/pedatheque/results?auteur={{g.user.name|username_format}}" class="item">Mes animations</a>
+                </div>
+            </div>
+            <div class="ui dropdown item">
+                Outils facilitateurs
+                <i class="dropdown icon"></i>
+                <div class="menu" id="outils_dropdown">
+                    <a class="item" href="/outils_facilitateurs/create">Importer un nouvel outil</a>
+                </div>
+            </div>
+            <div class="ui dropdown item">
+                Médiathèque
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a href="/mediatheque" class="item">Nouvelle recherche</a>
+                    <a href="/mediatheque/create" class="item">Importer un média</a>
+                </div>
+            </div>
+            {% if g.user.is_admin %}
+            <div class="ui dropdown item">
+                Édition du thesaurus
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a href="/thesaurus" class="item">Ajout de tags</a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        <script>
+            let xhr_outils = new XMLHttpRequest();
+            xhr_outils.open('GET','/get_outils',true)
+            let response_outils;
+            xhr_outils.addEventListener("load", function () {
+                response_outils = JSON.parse(xhr_outils.responseText)
+                const dropdown = document.getElementById('outils_dropdown')
+                for (let i=0;i<response_outils.length;i++) {
+                    let a = document.createElement('a')
+                    a.className = 'item'
+                    a.href = '/outils_facilitateurs/' + response_outils[i][0]
+                    a.innerText = response_outils[i][1]
+                    dropdown.appendChild(a)
+                }
+            });
+            xhr_outils.send(null)
+            
+            $('.ui.dropdown').dropdown();
+        </script>
+
+        <div>{% block content %}{% endblock %}</div>
+
+        <div class="very-big-bottom-margin"></div>
+        
+    </body>
+</html>

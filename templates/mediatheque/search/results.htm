@@ -1,0 +1,15 @@
+<!-- Ce fichier sert à afficher les résultats de la recherche de medias avec tags. -->
+
+{% extends 'layout.htm' %}
+
+{% block content %}
+<div class="ui very padded container large-container">
+	<a href="/mediatheque" class="ui aligned primary button">Nouvelle recherche</a>
+
+	{% for media in medias %}
+		{% include '/mediatheque/search/simple_media_display.htm' %}
+	{% endfor %}
+</div>
+
+{% if not medias%}{% include 'empty.htm' %}{% endif %}
+{% endblock %}

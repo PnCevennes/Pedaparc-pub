@@ -1,0 +1,165 @@
+.very-big-bottom-margin {
+    margin-bottom: 300px !important;
+}
+
+.big-bottom-margin {
+    margin-bottom: 100px !important ;
+}
+
+.mini-bottom-margin {
+    margin-bottom: 10px !important ;
+}
+
+.mini-right-margin {
+    margin-right: 10px !important ;
+}
+
+.mini-padding {
+    padding-bottom: 0em !important ;
+}
+
+.edit-page-area {
+    width: 100% !important ;
+    height: 70% !important ;
+}
+
+.text-area {
+    resize: vertical !important ;
+    box-sizing: border-box !important ;
+    width: 100% !important ;
+}
+
+.fifty-text-area {
+    resize: none !important ;
+    box-sizing: border-box !important ;
+    width: 50% !important ;
+}
+
+.eighty-text-area {
+    resize: none !important ;
+    box-sizing: border-box !important ;
+    width: 80% !important ;
+}
+
+.vertical-text-area {
+    resize: vertical !important ;
+}
+
+.none-text-area {
+    resize: none !important ;
+}
+
+.text-display *|* {
+    word-wrap: break-word !important ;
+}
+
+.large-container {
+    width: 80% !important ;
+}
+
+.medium-container {
+    width: 50% !important ;
+}
+
+.five-width {
+    width: 5% !important ;
+}
+
+.ten-width {
+    width: 10% !important;
+}
+
+.fourteen-width {
+    width: 14% !important ;
+}
+
+.twenty-width {
+    width: 20% !important ;
+}
+
+.thirty-width {
+    width: 30% !important ;
+}
+
+.forty-width {
+    width: 40% !important ;
+}
+
+.fifty-width {
+    width: 50% !important ;
+}
+
+.fifty-five-width {
+    width: 55% !important ;
+}
+
+.ninety-width {
+    width: 90% !important ;
+}
+
+.hundred-ten-width {
+    width: 110% !important ;
+}
+
+.big-modal {
+    width: 80% !important ;
+    height: 80% !important ;
+}
+
+.big-embed {
+    width: 100% !important ;
+    height: 100% !important ;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  color: black;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+
+  width: 120px;
+  top: 100%;
+  left: 50%;
+  margin-left: -60px;
+
+  font-size: large;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.tooltip .tooltiptext::after {
+  content: " ";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent black transparent;
+}
+
+.intro-color {
+    background-color: #f4d451 !important;
+}
+
+.dvp-color {
+    background-color: #e7b3a7 !important;
+}
+
+.dvpopt-color {
+    background-color: #f8c5a5 !important;
+}
+
+.conclu-color {
+    background-color: #659962 !important;
+}

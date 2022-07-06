@@ -1,0 +1,16 @@
+<!-- Ce fichier sert à modifier les pages de la notice ou des outils facilitateurs. -->
+
+{% extends 'layout.htm' %}
+
+{% block content %}
+<div>
+    <form method="post">
+        <div>
+            <textarea name="contenu" class="edit-page-area">{{contenu}}</textarea>
+        </div>
+        <div>
+            <input type="submit" value="Envoyer" />
+        </div>
+    </form>
+</div>
+{% endblock %}

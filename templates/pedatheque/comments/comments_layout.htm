@@ -1,0 +1,12 @@
+<!-- Ce fichier sert à afficher les commentaires et le formulaire de création. -->
+
+<div class="ui very padded container large-container">
+
+	<p>Commentaires :</p>
+	{% for comment in commentaires %}
+	{% include '/pedatheque/comments/comments_display.htm' %}
+	{% endfor %}
+
+
+	{% include '/pedatheque/comments/comment_form.htm' %}
+</div>

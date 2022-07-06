@@ -1,0 +1,27 @@
+<!-- Ce fichier sert à afficher un résumé très court de l'animation courante pour les administrateurs. -->
+
+<div class="ui segments">
+	<div class="ui clearing segment mini-padding">
+		<div class="ui left floated header">
+			<h2>{{anim.titre}}</h2>
+			<h4>{{anim.auteurs}}</h4>
+		</div>
+		<div class="ui right floated header">
+
+			{% if anim.statut==3 %}
+				<i class="spinner icon color red"></i>
+			{% elif anim.statut==2 %}
+				<i class="check circle icon color yellow"></i>
+			{% elif anim.statut==1 %}
+				<i class="check circle icon color green"></i>
+			{% endif %}
+
+			{% if g.user.is_admin or anim.auteurs==g.user.name %}
+			<a href="/pedatheque_edit?q={{anim.id}}" class="ui icon"><i class="edit icon color pink"></i></a>
+			{% endif %}
+		</div>
+	</div>
+	<div class="ui segment">
+		<a href="/pedatheque/{{anim.id}}" class="ui aligned primary button">Consulter</a>
+	</div>
+</div>
