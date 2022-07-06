@@ -95,3 +95,12 @@ ENV/
 .ropeproject
 
 config.py
+
+.static_pages/*
+!.static_pages/.gitkeep
+
+.static/download/*
+!.static/download/.gitkeep
+
+.static/upload/*
+!.static/upload/.gitkeep
