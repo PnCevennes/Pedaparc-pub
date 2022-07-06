@@ -19,11 +19,6 @@ from utils import auth
 
 views = Blueprint('pedatheque_edit',__name__)
 
-#Cette variable correspond aux tags nécessaires à la création d'une séquence
-thes = {item.nom: thesaurus.get_from_thes(nom=item.nom) for item 
-in utils.format('screate', thesaurus.get_from_thes('ref'))}
-
-
 #Cette fonction permet de récupérer tous les mots-clés du thesaurus
 @views.route('/get_thes', methods=['GET'])
 @auth.require_valid_user
