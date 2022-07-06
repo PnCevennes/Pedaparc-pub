@@ -8,7 +8,7 @@ precond : install python3-venv
 
 ```
 git clone https://github.com/PnCevennes/Pedaparc-pub
-cd Pedaparc
+cd Pedaparc-pub
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
