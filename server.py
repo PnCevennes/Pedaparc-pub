@@ -80,11 +80,11 @@ if __name__ == '__main__':
     #from flask_script import Manager
     app.run('0.0.0.0')
 
-'''
+
 @app.errorhandler(Exception)
 def page_not_found(e):
     return render_template('error.htm')
-'''
+
 @app.template_filter('md')
 def affichage_md(s):
     return utils.render_page(s)
