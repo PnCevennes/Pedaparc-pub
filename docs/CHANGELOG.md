@@ -12,7 +12,7 @@ Pedaparc permet :
 
 Cette application dispose aussi de fonctionnalités administratrices pour les différents composants de celle-ci.
 
-Enfin, vous pouvez retrouver le setup de l'application dans le fichier [README.md](https://github.com/PnCevennes/Pedaparc/blob/master/README.md).
+Enfin, vous pouvez retrouver le setup de l'application dans le fichier [README.md](https://github.com/PnCevennes/Pedaparc-pub/blob/main/README.md).
 
 ### Languages utilisées
 
@@ -28,7 +28,7 @@ Application conçue et développée par Olivia Pelestor, @Alexandre-Roussel48 et
 ## Quoi de neuf pour Pedaparc ? Des fixs !
 
 - Ajout d'une redirection après la création d'un nouveau mot-clé (fonctionnalité administrateur)
-- Modification des noms de types d'outils facilitateurs (thésaurus) dans le fichier [__init.py__](https://github.com/PnCevennes/Pedaparc/blob/master/models/__init__.py)
+- Modification des noms de types d'outils facilitateurs (thésaurus) dans le fichier [__init.py__](https://github.com/PnCevennes/Pedaparc-pub/blob/main/models/__init__.py)
 - Ajout de la valeur par défaut '' pour le champ label du thésaurus
 - Correction du texte associé au graphiques de l'onglet statistiques
 
