@@ -5,10 +5,12 @@ Fonctions relatives à l'authentification LDAP
 from functools import wraps
 
 import ldap3
+from ldap3.core.exceptions import LDAPUnknownAuthenticationMethodError
 from flask import redirect, url_for, g, abort
 
 import config
 
+from flask import request
 
 class AuthUser:
     '''
@@ -109,7 +111,10 @@ def check_ldap_auth(login, passwd):
     '''
     Vérifie les informations d'authentification et renvoie un objet AuthUser
     '''
-    ldap_cnx = ldap_connect(login, passwd)
+    try:
+        ldap_cnx = ldap_connect(login, passwd)
+    except LDAPUnknownAuthenticationMethodError as err:
+        raise InvalidAuthError
     ldap_cnx.search(
             config.LDAP_BASE_PATH,
             '(sAMAccountName=%s)' % login,
@@ -136,7 +141,7 @@ def require_valid_user(view):
     @wraps(view)
     def _require_valid_user(*args, **kwargs):
         if not g.user.is_valid:
-            return redirect(url_for('main.login_view'))
+            return redirect(url_for('main.login_view', url=request.url))
         return view(*args, **kwargs)
     return _require_valid_user
 

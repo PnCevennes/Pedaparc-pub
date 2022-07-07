@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
         <script src="{{ url_for('static', filename='jquery/jquery-3.1.1.min.js') }}"></script>
         <script src="{{ url_for('static', filename='semantic/semantic.min.js') }}"></script>
+        <link rel="icon" type="image/png" href="{{ url_for('static', filename='ressources/favicon.png') }}" />
     </head>
     <body>
         <div class="ui clearing segment">
@@ -36,5 +37,10 @@
                 </div>
             </form>
         </div>
+        {% if err %}
+        <script>
+            alert("Votre nom d'utilisateur ou votre mot de passe est incorrect !")
+        </script>
+        {% endif %}
     </body>
 </html>

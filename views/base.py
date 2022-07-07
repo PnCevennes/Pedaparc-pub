@@ -116,15 +116,14 @@ def edit_notice():
 def login_view():
     if request.method == 'GET':
         err = request.args.get('err', False)
-        if request.referrer:
-            redir_page = request.referrer
-        else:
-            redir_page = url_for('main.index')
-        return render_template('login.htm', err=err, redirect_to=redir_page)
+        return render_template('login.htm', err=err)
 
     login = request.form['login'].strip()
     passwd = request.form['passwd'].strip()
-    redir_page = url_for('main.index')
+    if request.args.get('url', False):
+        redir_page = request.args.get('url')
+    else:
+        redir_page = url_for('main.index')
 
     try:
         user = auth.check_ldap_auth(login, passwd)
@@ -137,7 +136,7 @@ def login_view():
         resp.set_cookie('user', cookie_data, expires=cookie_exp)
 
         return resp
-    except auth.InvalidAuthError as err:
+    except auth.InvalidAuthError:
         return redirect(url_for('main.login_view', err=True))
 
 
