@@ -14,3 +14,4 @@ zipp==3.7.0
 flask_mail
 py3o-template
 bs4
+bleach
