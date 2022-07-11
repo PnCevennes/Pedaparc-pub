@@ -12,7 +12,7 @@ Pedaparc permet :
 
 Cette application dispose aussi de fonctionnalités administratrices pour les différents composants de celle-ci.
 
-Enfin, vous pouvez retrouver le setup de l'application dans le fichier [README.md](https://github.com/PnCevennes/Pedaparc-pub/blob/main/README.md).
+Enfin, vous pouvez retrouver le setup de l'application dans le fichier [README.md](https://github.com/PnCevennes/Pedaparc/blob/master/README.md).
 
 ### Languages utilisées
 
@@ -28,7 +28,7 @@ Application conçue et développée par Olivia Pelestor, @Alexandre-Roussel48 et
 ## Quoi de neuf pour Pedaparc ? Des fixs !
 
 - Ajout d'une redirection après la création d'un nouveau mot-clé (fonctionnalité administrateur)
-- Modification des noms de types d'outils facilitateurs (thésaurus) dans le fichier [__init.py__](https://github.com/PnCevennes/Pedaparc-pub/blob/main/models/__init__.py)
+- Modification des noms de types d'outils facilitateurs (thésaurus) dans le fichier [__init.py__](https://github.com/PnCevennes/Pedaparc/blob/master/models/__init__.py)
 - Ajout de la valeur par défaut '' pour le champ label du thésaurus
 - Correction du texte associé au graphiques de l'onglet statistiques
 
@@ -69,6 +69,28 @@ Application conçue et développée par Olivia Pelestor, @Alexandre-Roussel48 et
 
 - Nouvelle version de la création d'animations
 Réalisée en vuejs, dorénavant la création d'animations est plus dynamique.
+
+### Languages utilisées
+
+![](https://img.shields.io/badge/HTML5-informationals?style=flat&logo=html5&color=E34F26&logoColor=FFF)![](https://img.shields.io/badge/CSS3-informationals?style=flat&logo=css3&color=1572B6&logoColor=FFF)![](https://img.shields.io/badge/JavaScript-informationals?style=flat&logo=javascript&color=C7B61A&logoColor=FFF)![](https://img.shields.io/badge/python-informationals?style=flat&logo=python&color=3776AB&logoColor=FFF)![](https://img.shields.io/badge/vue.js-informationals?style=flat&logo=vue.js&color=4FC08D&logoColor=FFF)
+
+### Frameworks et librairies utilisées
+
+![](https://img.shields.io/badge/flask-informationals?style=flat&logo=flask&color=000000&logoColor=FFF)![](https://img.shields.io/badge/jinja-informationals?style=flat&logo=jinja&color=B41717&logoColor=FFF)![](https://img.shields.io/badge/peewee-informationals?style=flat&logo=peewee&color=000000&logoColor=FFF)![](https://img.shields.io/badge/py3o-informationals?style=flat&logo=py3o&color=0E85CD&logoColor=FFF)![](https://img.shields.io/badge/semanticUi-informationals?style=flat&logo=semanticUi&color=35BDB2&logoColor=FFF)
+
+Application conçue et développée par Olivia Pelestor, @Alexandre-Roussel48 et @PnCevennes.
+
+# 2.1.0 (11/07/2022)
+## Quoi de neuf pour Pedaparc ? Des nouvelles fonctionnalités et des fixs !
+
+- Gestion d'exceptions login
+- Fix faille XSS
+- Suppression de lignes inutilisées
+- Ajout de la notice d'accueil
+- Update du README.md
+- Modification des modèles de téléchargement
+- Agrandissement des dropdowns des formulaires de création
+- Ajout des fonctionnalités de sélection de médias et de sauvegarde pour plus tard à la création d'animations
 
 ### Languages utilisées
 
