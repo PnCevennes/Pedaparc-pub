@@ -171,6 +171,7 @@ def update_outil_page(pagename,id_document):
         types = thesaurus.get_from_thes(nom='ref.type_outil'), 
         outil = mat_peda.get_mat_peda(id_document),
         difficultes = thesaurus.get_from_thes(nom='ref.difficulte'),
+        types_medias = thesaurus.get_from_thes(nom='ref.type_mat'),
         pagename = pagename)
 
 
