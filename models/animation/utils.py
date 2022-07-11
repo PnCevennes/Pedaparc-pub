@@ -50,7 +50,7 @@ def create_or_update_animation(data, tags):
         animation = Animation.create(
             id = anim_uuid,
             titre = data['titre'],
-            statut = 2,
+            statut = data['statut'],
             auteurs = data['user'],
             pre_anim = data['pre_anim'],
             objectifs = data['objectifs'],
@@ -109,35 +109,6 @@ def anim_to_dict(id_anim):
     data['tags'] = [item.id for item in anim.tags[:]]
     
     return data
-
-
-def create_uncomplete_animation(data):
-    '''
-    Crée un objet Animation incomplet à partir des données
-    passées en paramètre.
-
-        Param(s):
-                data ({}): Dictionnaire contenant
-                les premiers attributs de l'objet
-
-        Return(s):
-                anim (Animation): Objet Animation dont
-                les premiers attributs ont été remplis
-    '''
-    anim_uuid = uuid.uuid4().hex
-    animation = Animation.create(
-        id = anim_uuid,
-        titre = data['titre'],
-        statut = 3,
-        auteurs = data['user'],
-        pre_anim = data['pre_anim'],
-        objectifs = data['objectifs'],
-        lieu = data['lieu'],
-        fk_duree = Thesaurus.get(id=data['duree']))
-
-    Rel_anim_tag.create(fk_anim=animation, fk_thes=Thesaurus.get(id=data['duree']))
-
-    return animation
 
 
 def validate(id_anim):
