@@ -6,6 +6,7 @@
 
 <form method="post" {% if not media %} action="/mediatheque/create" enctype=multipart/form-data {% else %} action="/mediatheque/{{media.id}}/edit" {% endif %}>
 	<div class="ui very padded container large-container">
+		<p>Les champs marqués d'un astérisque (*) sont obligatoires.</p>
 
 		<h1>Importer un nouveau média</h1>
 
@@ -13,7 +14,7 @@
 			<div class="ui horizontal segments">
 				<div class="ui segment">
 					<p><b>Type de média*</b></p>
-					<select class="ui compact selection dropdown" name="type_mat" required>
+					<select style="padding: 1px;" class="ui compact selection dropdown" name="type_mat" required>
 						{% if not media %}<option value="">Choisir ...</option>{% endif %}
 					{% for type in types %}
 						<option value="{{type.id}}" {% if media %}{% if type==media.fk_type_mat %} selected {% endif %}{% endif %}>{{type.nom}}</option>

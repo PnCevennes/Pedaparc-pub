@@ -6,7 +6,8 @@
 
 <form method="post" {% if not outil %} action="/outils_facilitateurs/create" {% else %} action="/outils_facilitateurs/{{pagename}}/{{outil.id}}/edit" {% endif %} enctype=multipart/form-data>
 	<div class="ui very padded container large-container">
-
+		<p>Les champs marqués d'un astérisque (*) sont obligatoires.</p>
+		
 		<h1>Importer un nouvel outil</h1>
 
 		<div class="ui segments">
@@ -20,7 +21,7 @@
 				{% if not outil %}
 				<div class="ui segment">
 					<p><b>Type d'outils facilitateurs*</b></p>
-					<select class="ui compact selection dropdown" name="type_outil" required>
+					<select style="padding: 1px;" class="ui compact selection dropdown" name="type_outil" required>
 						{% if not outil %}<option value="">Choisir ...</option>{% endif %}
 					{% for type in types_outils %}
 						<option value="{{type.id}}" {% if outil %}{% if outil.fk_type_mat==type %}selected{% endif %}{% endif %}>{{type.nom}}</option>
@@ -41,7 +42,7 @@
 			</div>
 			<div class="ui segment">
 					<p><b>Difficulté*</b></p>
-					<select class="ui compact selection dropdown" name="difficulte" required>
+					<select style="padding: 1px;" class="ui compact selection dropdown" name="difficulte" required>
 						{% if not outil %}<option value="">Choisir ...</option>{% endif %}
 					{% for difficulte in difficultes %}
 						<option value="{{difficulte.id}}" {% if outil %}{% if outil.difficulte==difficulte %}selected{% endif %}{% endif %}>{{difficulte.nom}}</option>
@@ -50,7 +51,7 @@
 			</div>
 			<div class="ui segment">
 				<p><b>Type de média</b></p>
-				<select class="ui compact selection dropdown" name="type_media">
+				<select style="padding: 1px;" class="ui compact selection dropdown" name="type_media">
 					{% if not document %}<option value="">Choisir ...</option>{% endif %}
 					{% for type in types_medias %}
 					<option value="{{type.id}}" {% if document %}{% if type==document.fk_type_mat %} selected {% endif %}{% endif %}>{{type.nom}}</option>
