@@ -6,7 +6,7 @@ import os.path
 SECRET_KEY = '123456'
 UPLOAD_FOLDER = os.path.join('static', 'upload')
 DOWNLOAD_FOLDER = os.path.join('static', 'download')
-ALLOWED_EXTENSIONS = {'pdf', 'jpg', 'png', 'jpeg', 'mp3', 'mp4', 'wma', 'avi', 'wmh', 'M4V'}
+ALLOWED_EXTENSIONS = {'pdf', 'jpg', 'png', 'jpeg', 'mp3', 'mp4', 'wma', 'avi', 'wmh', 'M4V', 'ppt', 'pptx'}
 
 PAGE_DIR = 'static_pages'
 
