@@ -101,3 +101,19 @@ Application conçue et développée par Olivia Pelestor, @Alexandre-Roussel48 et
 ![](https://img.shields.io/badge/flask-informationals?style=flat&logo=flask&color=000000&logoColor=FFF)![](https://img.shields.io/badge/jinja-informationals?style=flat&logo=jinja&color=B41717&logoColor=FFF)![](https://img.shields.io/badge/peewee-informationals?style=flat&logo=peewee&color=000000&logoColor=FFF)![](https://img.shields.io/badge/py3o-informationals?style=flat&logo=py3o&color=0E85CD&logoColor=FFF)![](https://img.shields.io/badge/semanticUi-informationals?style=flat&logo=semanticUi&color=35BDB2&logoColor=FFF)
 
 Application conçue et développée par Olivia Pelestor, @Alexandre-Roussel48 et @PnCevennes.
+
+# 2.2.0 (12/07/2022)
+## Quoi de neuf pour Pedaparc ? Une nouvelle fonctionnalité et un fix !
+
+- Ajout d'un attribut de mat_peda à la documentation
+- Ajout de la recherche de médias par nom et ajout du triage alphabétique pour la création d'animations
+
+### Languages utilisées
+
+![](https://img.shields.io/badge/HTML5-informationals?style=flat&logo=html5&color=E34F26&logoColor=FFF)![](https://img.shields.io/badge/CSS3-informationals?style=flat&logo=css3&color=1572B6&logoColor=FFF)![](https://img.shields.io/badge/JavaScript-informationals?style=flat&logo=javascript&color=C7B61A&logoColor=FFF)![](https://img.shields.io/badge/python-informationals?style=flat&logo=python&color=3776AB&logoColor=FFF)![](https://img.shields.io/badge/vue.js-informationals?style=flat&logo=vue.js&color=4FC08D&logoColor=FFF)
+
+### Frameworks et librairies utilisées
+
+![](https://img.shields.io/badge/flask-informationals?style=flat&logo=flask&color=000000&logoColor=FFF)![](https://img.shields.io/badge/jinja-informationals?style=flat&logo=jinja&color=B41717&logoColor=FFF)![](https://img.shields.io/badge/peewee-informationals?style=flat&logo=peewee&color=000000&logoColor=FFF)![](https://img.shields.io/badge/py3o-informationals?style=flat&logo=py3o&color=0E85CD&logoColor=FFF)![](https://img.shields.io/badge/semanticUi-informationals?style=flat&logo=semanticUi&color=35BDB2&logoColor=FFF)
+
+Application conçue et développée par Olivia Pelestor, @Alexandre-Roussel48 et @PnCevennes.
