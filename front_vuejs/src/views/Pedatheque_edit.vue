@@ -29,10 +29,18 @@ export default {
 	},
 	methods: {
 		get_thes () {
-			fetch('/pedatheque_edit/get_thes').then(resp => {resp.json().then(data => {this.rep = data})})
+			fetch('http://127.0.0.1:5000/pedatheque_edit/get_thes').then(resp => {resp.json().then(data => {this.rep = data})})
 		},
 		get_medias () {
-			fetch('/pedatheque_edit/get_medias').then(resp => {resp.json().then(data => {this.medias = data})})
+			fetch('http://127.0.0.1:5000/pedatheque_edit/get_medias').then(resp => {resp.json().then(data => {this.medias = data; this.medias.sort(function (a, b) {
+				if (a.nom==b.nom) {
+					return 0;
+				} else {
+					let compare = [a.nom.toLowerCase(), b.nom.toLowerCase()];
+					compare.sort();
+					return compare[0] == a.nom.toLowerCase() ? -1 : 1;
+				}
+			});})})
 		},
 		add_seq () {
 			this.data.sequences.push(

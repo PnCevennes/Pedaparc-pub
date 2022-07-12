@@ -8,7 +8,8 @@ export default {
 			reduction: false,
 			open: false,
 			type_mat_filters: [],
-			theme_filters: []
+			theme_filters: [],
+			nom_media: ''
 		}
 	},
 	methods: {
@@ -76,18 +77,22 @@ export default {
 			}
 		},
 		getfilteredmedias () {
-			let first_filter = this.medias
-			if (this.type_mat_filters.length!=0) {
-				first_filter = first_filter.filter(e => {return this.type_mat_filters.includes(e.fk_type_mat)})
-			}
-
-			let second_filter = first_filter;
-			if (this.theme_filters.length!=0) { 
-				for (let theme in this.theme_filters) {
-					second_filter = second_filter.filter(e => {return e.thematiques.includes(this.theme_filters[theme])})
+			if (this.nom_media=='') {
+				let first_filter = this.medias
+				if (this.type_mat_filters.length!=0) {
+					first_filter = first_filter.filter(e => {return this.type_mat_filters.includes(e.fk_type_mat)})
 				}
+
+				let second_filter = first_filter;
+				if (this.theme_filters.length!=0) { 
+					for (let theme in this.theme_filters) {
+						second_filter = second_filter.filter(e => {return e.thematiques.includes(this.theme_filters[theme])})
+					}
+				}
+				return second_filter;
+			} else {
+				return this.medias.filter(e => {return e.nom.toLowerCase().substring(0, this.nom_media.length) == this.nom_media.toLowerCase()})
 			}
-			return second_filter
 		}
 	}
 }
@@ -154,7 +159,7 @@ export default {
 								<sui-modal-content scrolling style="height: 80vh;">
 									<div class="ui grid">
 										<div class="row">
-											<div class="three wide column" style="position: fixed; width: 20%;">
+											<div class="three wide column" style="position: fixed; width: 25%;">
 												<p>Types de médias :</p>
 												<div class="grouped field" style="margin-bottom: 15px;">
 													<div class="field" v-for="type in types_mat">
@@ -173,8 +178,11 @@ export default {
 														</div>
 													</div>
 												</div>
+												<div class="ui input">
+													<input type="text" v-model="nom_media" placeholder="Nom du média">
+												</div>
 											</div>
-											<div class="thirteen wide column" style="margin-left: 20%;">
+											<div class="thirteen wide column" style="margin-left: 25%;">
 												<div class="ui clearing segment" v-for="media in getfilteredmedias">
 													<i :class="get_icon(media.fk_type_mat)"></i>
 													{{media.nom}}
