@@ -73,12 +73,20 @@
     width: 14% !important ;
 }
 
+.fifteen-width {
+    width: 15% !important;
+}
+
 .twenty-width {
     width: 20% !important ;
 }
 
 .thirty-width {
     width: 30% !important ;
+}
+
+.thirty-five-width {
+    width: 35% !important;
 }
 
 .forty-width {
@@ -91,6 +99,10 @@
 
 .fifty-five-width {
     width: 55% !important ;
+}
+
+.seventy-width {
+    width: 70% !important;
 }
 
 .ninety-width {
@@ -133,7 +145,25 @@
   font-size: large;
 }
 
+.tooltip .tooltiptext-right {
+  visibility: hidden;
+  width: 500px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  left: 105%;
+}
+
 .tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.tooltip:hover .tooltiptext-right {
   visibility: visible;
 }
 
@@ -146,6 +176,17 @@
   border-width: 5px;
   border-style: solid;
   border-color: transparent transparent black transparent;
+}
+
+.tooltip .tooltiptext-right::after {
+  content: "";
+  position: absolute;
+  top: 15%;
+  right: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent black transparent transparent;
 }
 
 .intro-color {
