@@ -66,12 +66,9 @@
 	</div>
 
 	<div class="ui horizontal segments">
-		<div class="ui container segment grey inverted thirty-width"><p>Description de l'animation par les séquences</p></div>
-		<div class="ui container segment grey inverted fourteen-width"><p>Approche et modalités</p></div>
-		<div class="ui container segment grey inverted fourteen-width"><p>Objectifs</p></div>
-		<div class="ui container segment grey inverted fourteen-width"><p>Durée</p></div>
-		<div class="ui container segment grey inverted fourteen-width"><p>Matériel</p></div>
-		<div class="ui container segment grey inverted fourteen-width"><p>Média associé</p></div>
+		<div class="ui container segment grey inverted fifty-width"><p>Description de l'animation par les séquences</p></div>
+		<div class="ui container segment grey inverted thirty-five-width"><p>Objectifs</p></div>
+		<div class="ui container segment grey inverted fifteen-width"><p>Matériel</p></div>
 	</div>
 
 	<div class="ui segments">
@@ -91,43 +88,47 @@
 		<div class="ui segment {{color}}">
 			<h3 class="ui left aligned header">{{seq.fk_type_seq.nom}} : {{seq.titre}}</h3>
 		</div>
-		<div class="ui horizontal segments">
-			<div class="ui segment thirty-width" name="description"><p class="text-display">{{seq.description|md|safe}}</p></div>
-			<div class="ui segment fourteen-width" name="approche&modalite"><p class="text-display">{{seq.fk_approche.nom}}</p><p class="text-display">{{seq.fk_modalite.nom}}</p></div>
-			<div class="ui segment fourteen-width" name="objectifs"><p class="text-display">{{seq.objectifs|md|safe}}</p></div>
-			<div class="ui segment fourteen-width" name="duree"><p class="text-display">{{seq.fk_duree.nom}}</p></div>
-			<div class="ui segment fourteen-width" name="materiel"><p class="text-display">{{seq.materiel_div|md|safe}}</p></div>
-			<div class="ui segment fourteen-width" name="media">
-				{% if seq.materiel %}
-					{% for media in seq.materiel %}
-					<div class="ui modal big-modal" id="{{media.id}}">
-						<div class="header">
-							{{media.nom}}
-						</div>
-						<div class="content">
-							{% if media.fk_type_mat.id==70 or media.fk_type_mat.id==71 or media.fk_type_mat.id==74 or media.fk_type_mat.id==75 %}
-							<embed src="/{{media.url}}" class="big-embed"></embed>
-							{% elif media.fk_type_mat.id==72 %}
-							<video controls class="big-embed">
-								<source src="/{{media.url}}">
-								Votre navigateur ne supporte pas cette extension.
-							</video>
-							{% elif media.fk_type_mat.id==73 %}
-							<audio controls class="big-embed">
-								<source src="/{{media.url}}">
-								Votre navigateur ne supporte pas cette extension.
-							</audio>
-							{% endif %}
-						</div>
-					</div>
-					<div>
-						<button class="ui primary button" onclick="javascript:$('#{{media.id}}').modal('show');">Aperçu</button>	
-						<p>{{media.nom}}</p>
-					</div>
-					{% endfor %}
-				{% endif %}
+		<div class="ui horizontal segments {{color}}">
+			<div class="ui segment fifty-width">
+				<p class="text-display"><b>Approche :</b> {{seq.fk_approche.nom}}, <b>Modalité :</b> {{seq.fk_modalite.nom}}</p>
+			</div>
+			<div class="ui segment fifty-width">
+				<p class="text-display"><b>Durée :</b> {{seq.fk_duree.nom}}</p>
 			</div>
 		</div>
+		<div class="ui horizontal segments">
+			<div class="ui segment fifty-width" name="description"><p class="text-display">{{seq.description|md|safe}}</p></div>
+			<div class="ui segment thirty-five-width" name="objectifs"><p class="text-display">{{seq.objectifs|md|safe}}</p></div>
+			<div class="ui segment fifteen-width" name="materiel"><p class="text-display">{{seq.materiel_div|md|safe}}</p></div>
+		</div>
+		{% if seq.materiel %}
+		<div class="ui segment" name="media">
+			<b>Médias :</b>
+				{% for media in seq.materiel %}
+				<div class="ui modal big-modal" id="{{media.id}}">
+					<div class="header">
+						{{media.nom}}
+					</div>
+					<div class="content">
+						{% if media.fk_type_mat.id==70 or media.fk_type_mat.id==71 or media.fk_type_mat.id==74 or media.fk_type_mat.id==75 %}
+						<embed src="/{{media.url}}" class="big-embed"></embed>
+						{% elif media.fk_type_mat.id==72 %}
+						<video controls class="big-embed">
+							<source src="/{{media.url}}">
+							Votre navigateur ne supporte pas cette extension.
+						</video>
+						{% elif media.fk_type_mat.id==73 %}
+						<audio controls class="big-embed">
+							<source src="/{{media.url}}">
+							Votre navigateur ne supporte pas cette extension.
+						</audio>
+						{% endif %}
+					</div>
+				</div>
+				<button class="ui primary button" onclick="javascript:$('#{{media.id}}').modal('show');">Aperçu : {{media.nom}}</button>
+				{% endfor %}
+		</div>
+		{% endif %}
 
 		{% endfor %}
 
