@@ -77,22 +77,23 @@ export default {
 			}
 		},
 		getfilteredmedias () {
-			if (this.nom_media=='') {
-				let first_filter = this.medias
-				if (this.type_mat_filters.length!=0) {
-					first_filter = first_filter.filter(e => {return this.type_mat_filters.includes(e.fk_type_mat)})
-				}
+			let filtered_medias = this.medias;
 
-				let second_filter = first_filter;
-				if (this.theme_filters.length!=0) { 
-					for (let theme in this.theme_filters) {
-						second_filter = second_filter.filter(e => {return e.thematiques.includes(this.theme_filters[theme])})
-					}
-				}
-				return second_filter;
-			} else {
-				return this.medias.filter(e => {return e.nom.toLowerCase().substring(0, this.nom_media.length) == this.nom_media.toLowerCase()})
+			if (this.type_mat_filters.length!=0) {
+				filtered_medias = filtered_medias.filter(e => {return this.type_mat_filters.includes(e.fk_type_mat)})
 			}
+
+			if (this.theme_filters.length!=0) { 
+				for (let theme in this.theme_filters) {
+					filtered_medias = filtered_medias.filter(e => {return e.thematiques.includes(this.theme_filters[theme])})
+				}
+			}
+			
+			if (this.nom_media!='') {
+				filtered_medias = filtered_medias.filter(e => {return e.nom.toLowerCase().substring(0, this.nom_media.length) == this.nom_media.toLowerCase()})
+			}
+
+			return filtered_medias;
 		}
 	}
 }

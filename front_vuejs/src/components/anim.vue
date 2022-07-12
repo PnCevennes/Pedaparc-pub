@@ -34,7 +34,7 @@ export default {
 				<p><div>
 					<p>Avant l'animation :
 						<i class="ui question circle outline icon tooltip right floated">
-							<span class="tooltiptext">Étape(s) à réaliser concrètement en amont de l'animation afin d'en assurer le bon déroulement. Ex : placer des indices sur le terrain avant une chasse au trésor.</span>
+							<span class="tooltiptext-right">Étape(s) à réaliser concrètement en amont de l'animation afin d'en assurer le bon déroulement. Ex : placer des indices sur le terrain avant une chasse au trésor.</span>
 						</i>
 					</p>
 					<textarea style="resize: vertical; box-sizing: border-box; width: 100%;" name="pre_anim" v-model="data.pre_anim"></textarea>

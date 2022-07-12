@@ -70,7 +70,7 @@ export default {
 				<p><div>
 					<p>Après l'animation :
 						<i class="ui question circle outline icon tooltip right floated">
-							<span class="tooltiptext">Étape(s) à réaliser en aval de l'animation. Ex : vérifier des pièges photos entre deux séances.</span>
+							<span class="tooltiptext-right">Étape(s) à réaliser en aval de l'animation. Ex : vérifier des pièges photos entre deux séances.</span>
 						</i>
 					</p>
 					<textarea style="resize: vertical; box-sizing: border-box; width: 100%;" name="post_anim" v-model="data.post_anim"></textarea>
