@@ -96,8 +96,8 @@ ENV/
 
 config.py
 
-static_pages/**
-!static_pages/notice/*
+static_pages/*
+!static_pages/notice/
 
 static/download/*
 !static/download/.gitkeep
