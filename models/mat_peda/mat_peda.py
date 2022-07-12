@@ -22,6 +22,7 @@ class Mat_peda(BaseModel):
 (outil)         variante (str): variante de l'outil
 (outil)         difficulte (str): difficulté de l'outil
 (outil)         materiel (str): materiel de l'outil
+(media)(outil)  date_modif (date): date de création du média/outil
 (outil)         fk_type_mat_outil (Thesaurus): Type du média associé à l'outil
     '''
     id = AutoField()
