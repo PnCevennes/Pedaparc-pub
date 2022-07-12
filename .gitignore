@@ -96,11 +96,11 @@ ENV/
 
 config.py
 
-.static_pages/*
-!.static_pages/.gitkeep
+static_pages/**
+!static_pages/notice/*
 
-.static/download/*
-!.static/download/.gitkeep
+static/download/*
+!static/download/.gitkeep
 
-.static/upload/*
-!.static/upload/.gitkeep
+static/upload/*
+!static/upload/.gitkeep
