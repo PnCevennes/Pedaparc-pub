@@ -29,10 +29,10 @@ export default {
 	},
 	methods: {
 		get_thes () {
-			fetch('http://127.0.0.1:5000/pedatheque_edit/get_thes').then(resp => {resp.json().then(data => {this.rep = data})})
+			fetch('/pedatheque_edit/get_thes').then(resp => {resp.json().then(data => {this.rep = data})})
 		},
 		get_medias () {
-			fetch('http://127.0.0.1:5000/pedatheque_edit/get_medias').then(resp => {resp.json().then(data => {this.medias = data; this.medias.sort(function (a, b) {
+			fetch('/pedatheque_edit/get_medias').then(resp => {resp.json().then(data => {this.medias = data; this.medias.sort(function (a, b) {
 				if (a.nom==b.nom) {
 					return 0;
 				} else {
