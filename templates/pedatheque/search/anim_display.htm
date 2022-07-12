@@ -85,12 +85,15 @@
 			{% set color='conclu-color' %}
 		{% endif %}
 
-		<div class="ui segment {{color}}">
+		<div class="ui segment {{color}} bold-border">
 			<h3 class="ui left aligned header">{{seq.fk_type_seq.nom}} : {{seq.titre}}</h3>
 		</div>
 		<div class="ui horizontal segments {{color}}">
-			<div class="ui segment fifty-width">
-				<p class="text-display"><b>Approche :</b> {{seq.fk_approche.nom}}, <b>Modalité :</b> {{seq.fk_modalite.nom}}</p>
+			<div class="ui segment twenty-five-width">
+				<p class="text-display"><b>Approche :</b> {{seq.fk_approche.nom}}</p>
+			</div>
+			<div class="ui segment twenty-five-width">
+				<p class="text-display"><b>Modalité :</b> {{seq.fk_modalite.nom}}</p>
 			</div>
 			<div class="ui segment fifty-width">
 				<p class="text-display"><b>Durée :</b> {{seq.fk_duree.nom}}</p>
