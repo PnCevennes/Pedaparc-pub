@@ -23,6 +23,10 @@
     height: 70% !important ;
 }
 
+.bold-border {
+    border: 1px solid #1b1c1d !important;
+}
+
 .text-area {
     resize: vertical !important ;
     box-sizing: border-box !important ;
@@ -79,6 +83,10 @@
 
 .twenty-width {
     width: 20% !important ;
+}
+
+.twenty-five-width {
+    width: 25% !important;
 }
 
 .thirty-width {
