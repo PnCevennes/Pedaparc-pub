@@ -37,6 +37,8 @@ def index():
         anims = animation.get_unvalidated_animations()
     else:
         anims = ''
+
+    pictos = thesaurus.get_pictos()
     
     try:
         _path = os.path.join(config.PAGE_DIR, 'notice', 'current.htm')
@@ -47,7 +49,7 @@ def index():
         with open(_path, 'r') as _pg:
             page = utils.render_page(_pg.read())
     
-    return render_template('index.htm', anims=anims, contenu=page)
+    return render_template('index.htm', anims=anims, pictos=pictos, contenu=page)
 
 
 #Cette fonction permet d'afficher le formulaire d'édition de la notice.

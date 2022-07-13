@@ -24,7 +24,7 @@ def get_from_thes(idref=None, *, nom=None):
                 Thesaurus à renvoyer
 
         Return(s):
-                thes (Thesaurus[]): Liste de tout les objets Thesaurus
+                thes (Thesaurus[]): Liste de tous les objets Thesaurus
                 correspondants au type d'objets passé en paramètre
     '''
     if idref is None: 
@@ -55,7 +55,6 @@ def create_thesaurus(data):
     return thes
 
 
-#Retourne l'objet thesaurus dont l'id est passé
 def get_thesaurus(id_thes):
     '''
     Retourne l'objet Thesaurus dont l'Id a été passé en paramètre.
@@ -68,3 +67,14 @@ def get_thesaurus(id_thes):
                 passé en paramètre
     '''
     return Thesaurus.get(id=id_thes)
+
+
+def get_pictos():
+    '''
+    Retourne les objets Thesaurus associés à des pictogrammes.
+
+        Return(s):
+                thes (Thesaurus[]): Liste de tous les objets Thesaurus
+                associés à un pictogramme
+    '''
+    return Thesaurus.select().where(Thesaurus.reference.in_([1,4,5]))[:]

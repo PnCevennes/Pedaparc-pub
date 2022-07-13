@@ -10,6 +10,7 @@
   <a class="item active" data-tab="moderation">Modération</a>
   {% endif %}
   <a class="item" data-tab="stats">Statistiques</a>
+  <a class="item" data-tab="pictos">Pictogrammes</a>
 </div>
 <div class="ui bottom attached tab segment {% if not g.user.is_admin %}active{% endif %}" data-tab="notice">
   <div class="ui centered grid">
@@ -113,6 +114,25 @@
     }
 
   </script>  
+</div>
+
+<div class="ui bottom attached tab segment" data-tab="pictos">
+  <table class="ui celled table">
+    <thead>
+      <tr>
+        <th>Pictogramme</th>
+        <th>Nom</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for picto in pictos %}
+      <tr>
+        <td data-label="Pictogramme"><img src="/static/ressources/{{picto.nom}}.png"></td>
+        <td data-label="Nom">{{picto.nom}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
 
 <script>
