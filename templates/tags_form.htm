@@ -4,18 +4,6 @@
 
 {% block tags %}
 <form method="get" action="/{{action}}/results" class="big-bottom-margin">
-  <div class="ui indicating progress" id="precision" data-total="4">
-    <div class="bar">
-      <div class="progress"></div>
-    </div>
-    <div class="label">Pertinence</div>
-  </div>
-  <div class="ui icon buttons">
-    <div class="decrement ui basic red button icon"><i class="minus icon"></i></div>
-    <div class="increment ui basic green button icon" onclick=""><i class="plus icon"></i></div>
-  </div>
-  <input type="hidden" name="precision" id="pertinence" value="100">
-  <div class="ui hidden divider"></div>
   <div class="mini-bottom-margin">
     {% for key in tags %}
     <div class="ui accordion">
@@ -69,19 +57,5 @@ $('.ui.search')
 <script defer>
   $('.ui.accordion')
   .accordion();
-  $('#precision')
-  .progress('set progress', 100)
-
-  $('#pertinence')[0].value = 100
-
-  $('.red.button')[0].addEventListener('click', function(event) {
-    $('#precision').progress('decrement'); 
-    setTimeout(function() {$('#pertinence')[0].value = $('#precision')[0].attributes[3].value;},200);
-  });
-
-  $('.green.button')[0].addEventListener('click', function(event) {
-    $('#precision').progress('increment'); 
-    setTimeout(function() {$('#pertinence')[0].value = $('#precision')[0].attributes[3].value;},200);
-  })
 </script>
 {% endblock %}
