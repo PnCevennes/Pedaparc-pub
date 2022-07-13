@@ -6,7 +6,7 @@
 <div class="ui very padded container large-container">
 	<a href="/pedatheque" class="ui aligned primary button">Nouvelle recherche</a>
 
-	{% for anim, tags in anims %}
+	{% for anim, tags, pertinence in anims %}
 		{% include '/pedatheque/search/simple_anim_display.htm' %}
 	{% endfor %}
 </div>

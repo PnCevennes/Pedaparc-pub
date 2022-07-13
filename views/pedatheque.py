@@ -78,14 +78,15 @@ def pedatheque_search_search_results():
     for item in utils.format('psearch', thesaurus.get_from_thes('ref')):
         tags = tags+request.args.getlist(item.nom)
     
-    match = animation.match_anim_tags(tags, request.args['precision'])
+    match = animation.match_anim_tags(tags)
+    print(match)
 
     if not g.user.is_admin:
-        match = [item for item in match if item.statut==VALIDE or item.auteurs==g.user.name]
+        match = [item for item in match if item[0].statut==VALIDE or item[0].auteurs==g.user.name]
     else:
-        match = [item for item in match if not item.statut==EN_COURS]
+        match = [item for item in match if not item[0].statut==EN_COURS]
 
-    anims = [(item, item.tags[:]) for item in match]
+    anims = [(item[0], item[0].tags[:], item[1]) for item in match]
 
     return render_template('/pedatheque/search/results.htm', anims=anims)
 

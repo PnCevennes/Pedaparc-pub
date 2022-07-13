@@ -219,35 +219,36 @@ def delete_animation(id_anim):
     Animation.delete().where(Animation.id==id_anim).execute()
 
 
+def anim_sort(tab):
+    return tab[1]
 
-def match_anim_tags(tags, precision):
+
+def match_anim_tags(tags):
     '''
-    Retourne tout les objets Animation correspondants aux mots-clés
-    et à la précision passés en paramètres.
+    Retourne tout les objets Animation et leur pertinence correspondants 
+    aux mots-clés.
 
         Param(s):
                 tags (Thesaurus[]): Liste d'objets Thesaurus à utiliser
                 pour la recherche
-                precision (int): Entier entre 0 et 100 permettant de définir
-                la pertinence des résultats
 
         Return(s):
-                anims (Animation[]): Liste de tout les objets Animation
-                correspondant aux mots-clés et à la précision donnée.
+                anims ([Animation, pertinence][]): Liste de tout les objets 
+                Animation correspondant aux mots-clés données.
     '''
     if tags:
-        query = Rel_anim_tag.select(Rel_anim_tag.fk_anim).where(
+        query = Rel_anim_tag.select(Rel_anim_tag.fk_anim, fn.COUNT(Rel_anim_tag.fk_anim)).where(
             Rel_anim_tag.fk_thes.in_(tags)
-            ).group_by(Rel_anim_tag.fk_anim).having(
-            (fn.COUNT(Rel_anim_tag.fk_anim)>=len(tags)*(int(precision)/100))
-            )
+            ).group_by(Rel_anim_tag.fk_anim)
     else:
-        query = Rel_anim_tag.select(Rel_anim_tag.fk_anim).group_by(Rel_anim_tag.fk_anim)
-    match = list(query.dicts())
-    return [Animation.get(id=item['fk_anim']) for item in match]
+        query = Rel_anim_tag.select(Rel_anim_tag.fk_anim, fn.COUNT(Rel_anim_tag.fk_anim)).group_by(Rel_anim_tag.fk_anim)
+
+    match = [[Animation.get(id=item['fk_anim']), int((item['fk_anim_id']/(len(tags) if len(tags) else item['fk_anim_id']))*100)] 
+    for item in list(query.dicts())] 
+
+    return sorted(match, key=anim_sort, reverse=True)
 
 
-#Retourne une copie de l'animation sans markdown
 def anim_delete_md(anim, md_to_text):
     '''
     Retourne une copie de l'objet Animation dont le markdown

@@ -41,12 +41,13 @@
 	</div>
 	<div class="ui horizontal segments">
 		<div class="ui segment fifty-width">
-			<a href="/pedatheque/{{anim.id}}" class="ui aligned primary button">Consulter</a>
 			<h4>
 				{% if anim.date_modif %}
-				<p><small>Dernière modification le {{anim.date_modif|date_format}}</small></p>
+				<div><small class="left floated">Dernière modification le {{anim.date_modif|date_format}}</small></div>
+				<div><small class="right floated">Pertinence : {{pertinence}}%</small></div>
 				{% endif %}
 			</h4>
+			<a href="/pedatheque/{{anim.id}}" class="ui aligned primary button">Consulter</a>
 		</div>
 		<div class="ui segment fifty-width">
 			<p><b>Niveaux :</b></p>
