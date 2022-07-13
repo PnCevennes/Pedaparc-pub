@@ -6,7 +6,7 @@
 <div class="ui very padded container large-container">
 	<a href="/mediatheque" class="ui aligned primary button">Nouvelle recherche</a>
 
-	{% for media in medias %}
+	{% for media, pertinence in medias %}
 		{% include '/mediatheque/search/simple_media_display.htm' %}
 	{% endfor %}
 </div>

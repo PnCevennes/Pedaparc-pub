@@ -98,7 +98,7 @@ def mediatheque_results():
     types = request.args.getlist('ref.type_mat')
     tags = request.args.getlist('ref.thematiques')
     
-    match = mat_peda.match_mat_peda_tags(types,tags, request.args['precision'])
+    match = mat_peda.match_mat_peda_tags(types,tags)
     
     return render_template('/mediatheque/search/results.htm', medias=match)
 

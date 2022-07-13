@@ -113,22 +113,24 @@ def update_outil(data):
 	outil.save()
 
 
-def match_mat_peda_tags(types, tags, precision):
+def mat_peda_sort(tab):
+    return tab[1]
+
+
+def match_mat_peda_tags(types, tags):
 	'''
-	Retourne tout les objets Mat_peda correspondants aux mots-clés,
-	types et précision passés en paramètre.
+	Retourne tout les objets Mat_peda correspondants aux mots-clés et
+	types passés en paramètre.
 
 		Param(s):
 				types (Thesaurus[]): Liste d'objets Thesaurus à utiliser
 				pour la recherche
 				tags (Thesaurus[]): Liste d'objets Thesaurus à utiliser
 				pour la recherche
-				precision (int): Entier entre 0 et 100 permettant de définir
-				la pertinence des résultats
 
 		Return(s):
-				mat_pedas (Mat_peda[]): Liste de tout les objets Mat_peda
-				correspondant aux mots-clés, types et précision donnés.
+				mat_pedas ([Mat_peda, pertinence][]): Liste de tout les objets Mat_peda
+				correspondant aux mots-clés et types donnés.
 	'''
 
 	if not types:
@@ -136,17 +138,19 @@ def match_mat_peda_tags(types, tags, precision):
 
 	queryTypes = Mat_peda.select().where(Mat_peda.fk_type_mat.in_(types))
 
-	if not tags:
-		return queryTypes
-	else:
-		query = Rel_mat_peda_thematique.select(Rel_mat_peda_thematique.fk_mat_peda).where(
+	if tags:
+		query = Rel_mat_peda_thematique.select(Rel_mat_peda_thematique.fk_mat_peda, fn.COUNT(Rel_mat_peda_thematique.fk_mat_peda)).where(
 				Rel_mat_peda_thematique.fk_mat_peda.in_(queryTypes) & Rel_mat_peda_thematique.fk_thes.in_(tags)
-				).group_by(Rel_mat_peda_thematique.fk_mat_peda).having(
-				(fn.COUNT(Rel_mat_peda_thematique.fk_mat_peda)>=len(tags)*(int(precision)/100))
-				)
+				).group_by(Rel_mat_peda_thematique.fk_mat_peda)
+	else:
+		query = Rel_mat_peda_thematique.select(Rel_mat_peda_thematique.fk_mat_peda, fn.COUNT(Rel_mat_peda_thematique.fk_mat_peda)).where(
+				Rel_mat_peda_thematique.fk_mat_peda.in_(queryTypes)
+				).group_by(Rel_mat_peda_thematique.fk_mat_peda)
 
-	match = list(query.dicts())
-	return [Mat_peda.get(id=item['fk_mat_peda']) for item in match]
+	match = [[Mat_peda.get(id=item['fk_mat_peda']), int((item['fk_mat_peda_id']/(len(tags) if len(tags) else item['fk_mat_peda_id']))*100)] 
+	for item in list(query.dicts())]
+
+	return sorted(match, key=mat_peda_sort, reverse=True)
 
 
 def get_all_mat_pedas():
