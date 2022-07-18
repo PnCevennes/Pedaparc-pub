@@ -43,16 +43,15 @@
                 Pédathèque
                 <i class="dropdown icon"></i>
                 <div class="menu">
-                    <a href="/pedatheque_edit" class="item">Créer une nouvelle animation</a>
                     <a href="/pedatheque" class="item">Chercher une animation</a>
                     <a href="/pedatheque/results?auteur={{g.user.name|username_format}}" class="item">Mes animations</a>
+                    <a href="/pedatheque_edit" class="item">Créer une nouvelle animation</a>
                 </div>
             </div>
             <div class="ui dropdown item">
                 Outils facilitateurs
                 <i class="dropdown icon"></i>
                 <div class="menu" id="outils_dropdown">
-                    <a class="item" href="/outils_facilitateurs/create">Importer un nouvel outil</a>
                 </div>
             </div>
             <div class="ui dropdown item">
@@ -87,6 +86,11 @@
                     a.innerText = response_outils[i][1]
                     dropdown.appendChild(a)
                 }
+                let a = document.createElement('a')
+                a.className = 'item'
+                a.href = '/outils_facilitateurs/create'
+                a.innerText = 'Importer un nouvel outil'
+                dropdown.appendChild(a)
             });
             xhr_outils.send(null)
             
