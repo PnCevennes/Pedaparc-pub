@@ -191,10 +191,10 @@ def get_user_animations(user):
                 user (str): Nom de l'auteur des objets Animation voulus
 
         Return(s):
-                anims (Animation[]): Liste de tout les objets Animation
+                anims ([Animation, pertinence][]): Liste de tout les objets Animation
                 dont l'auteur a été passé en paramètre
     '''
-    return Animation.select().where(Animation.auteurs==user)
+    return [[item, ''] for item in Animation.select().where(Animation.auteurs==user)]
 
 
 def delete_animation(id_anim):
@@ -243,7 +243,7 @@ def match_anim_tags(tags):
     else:
         query = Rel_anim_tag.select(Rel_anim_tag.fk_anim, fn.COUNT(Rel_anim_tag.fk_anim)).group_by(Rel_anim_tag.fk_anim)
 
-    match = [[Animation.get(id=item['fk_anim']), int((item['fk_anim_id']/(len(tags) if len(tags) else item['fk_anim_id']))*100)] 
+    match = [[Animation.get(id=item['fk_anim']), (str(item['fk_anim_id'])+'/'+str(len(tags)) if len(tags) else '')] 
     for item in list(query.dicts())] 
 
     return sorted(match, key=anim_sort, reverse=True)

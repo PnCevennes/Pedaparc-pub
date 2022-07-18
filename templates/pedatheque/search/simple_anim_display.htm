@@ -44,7 +44,7 @@
 			<h4>
 				{% if anim.date_modif %}
 				<div><small class="left floated">Dernière modification le {{anim.date_modif|date_format}}</small></div>
-				<div><small class="right floated">Pertinence : {{pertinence}}%</small></div>
+				{% if pertinence %}<div><small class="right floated">Pertinence : {{pertinence}}</small></div>{% endif %}
 				{% endif %}
 			</h4>
 			<a href="/pedatheque/{{anim.id}}" class="ui aligned primary button">Consulter</a>
