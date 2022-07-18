@@ -147,7 +147,7 @@ def match_mat_peda_tags(types, tags):
 				Rel_mat_peda_thematique.fk_mat_peda.in_(queryTypes)
 				).group_by(Rel_mat_peda_thematique.fk_mat_peda)
 
-	match = [[Mat_peda.get(id=item['fk_mat_peda']), int((item['fk_mat_peda_id']/(len(tags) if len(tags) else item['fk_mat_peda_id']))*100)] 
+	match = [[Mat_peda.get(id=item['fk_mat_peda']), (str(item['fk_mat_peda_id'])+'/'+str(len(tags)) if len(tags) else '')] 
 	for item in list(query.dicts())]
 
 	return sorted(match, key=mat_peda_sort, reverse=True)
