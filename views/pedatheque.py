@@ -70,7 +70,7 @@ VALIDE = 1
 @auth.require_valid_user
 def pedatheque_search_search_results():
     if request.args.get('auteur'):
-        anims = [(item, item.tags[:])
+        anims = [(item[0], item[0].tags[:], item[1])
             for item in animation.get_user_animations(request.args.get('auteur'))]
         return render_template('/pedatheque/search/results.htm', anims=anims)
 
