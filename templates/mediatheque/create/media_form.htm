@@ -53,6 +53,15 @@
 
 {% if alert %}
 <div class="ui mini modal">
+	{% if alert == 'duplicate' %}
+	<div class="header">Média déjà existant</div>
+	<div class="content">
+		<p>Le média que vous avez essayé d'importer existe déja !</p>
+	</div>
+	<div class="actions">
+		<div class="ui approve button">Accepter</div>
+	</div>
+	{% else %}
   <div class="header">Extension non supportée</div>
   <div class="content">
     <p>Les extensions supportés sont : {% for item in alert %}{{item}} {% endfor %}</p>
@@ -60,6 +69,7 @@
   <div class="actions">
     <div class="ui approve button">Accepter</div>
   </div>
+  {% endif %}
 </div>
 
 

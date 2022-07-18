@@ -9,6 +9,7 @@ from flask import (
         g)
 
 from werkzeug.utils import secure_filename
+import hashlib
 
 import utils
 import config
@@ -36,18 +37,34 @@ def allowed_file(filename):
             filename.rsplit('.', 1)[1].lower() in config.ALLOWED_EXTENSIONS
 
 
+#Cette fonction permet de renvoyer la somme md5 du fichier upload
+def hash_file(file):
+    md5_hash = hashlib.md5(file.read()).hexdigest()
+    file.stream.seek(0) 
+    return md5_hash
+
+
 #Cette fonction permet de créer/importer le média
 @views.route('/create', methods=['POST'])
 @auth.require_valid_user
 def mediatheque_create():    
     file = request.files['file']
     if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
+        filename = hash_file(file) + '_' + secure_filename(file.filename)
+
+        url = os.path.join(config.UPLOAD_FOLDER, filename)
+
+        if os.path.isfile(url):
+            return render_template('/mediatheque/create/media_form.htm', 
+                types = thesaurus.get_from_thes(nom='ref.type_mat'), 
+                thematiques = thesaurus.get_from_thes(nom='ref.thematiques'), 
+                alert='duplicate')
+
         data = dict(request.form)
-        data['url'] = os.path.join(config.UPLOAD_FOLDER, filename)
+        data['url'] = url
         data['thematique'] = request.form.getlist('thematique')
         mat_peda.create_mat_peda(data)
-        file.save(data['url'])
+        file.save(url)
         return redirect('/mediatheque')
     else:
         return render_template('/mediatheque/create/media_form.htm', 
