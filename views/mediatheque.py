@@ -10,6 +10,7 @@ from flask import (
 
 from werkzeug.utils import secure_filename
 import hashlib
+import glob
 
 import utils
 import config
@@ -50,21 +51,22 @@ def hash_file(file):
 def mediatheque_create():    
     file = request.files['file']
     if file and allowed_file(file.filename):
-        filename = hash_file(file) + '_' + secure_filename(file.filename)
 
-        url = os.path.join(config.UPLOAD_FOLDER, filename)
+        md5_hash = hash_file(file)
 
-        if os.path.isfile(url):
+        if glob.glob(os.path.join(config.UPLOAD_FOLDER, md5_hash)+'_*'):
             return render_template('/mediatheque/create/media_form.htm', 
                 types = thesaurus.get_from_thes(nom='ref.type_mat'), 
                 thematiques = thesaurus.get_from_thes(nom='ref.thematiques'), 
                 alert='duplicate')
 
+        filename = md5_hash + '_' + secure_filename(file.filename)
+        
         data = dict(request.form)
-        data['url'] = url
+        data['url'] = os.path.join(config.UPLOAD_FOLDER, filename)
         data['thematique'] = request.form.getlist('thematique')
         mat_peda.create_mat_peda(data)
-        file.save(url)
+        file.save(data['url'])
         return redirect('/mediatheque')
     else:
         return render_template('/mediatheque/create/media_form.htm', 
