@@ -21,7 +21,7 @@
 				{% if not outil %}
 				<div class="ui segment">
 					<p><b>Type d'outils facilitateurs*</b></p>
-					<select style="padding: 1px;" class="ui compact selection dropdown" name="type_outil" required>
+					<select  class="ui compact selection dropdown little-padding" name="type_outil" required>
 						{% if not outil %}<option value="">Choisir ...</option>{% endif %}
 					{% for type in types_outils %}
 						<option value="{{type.id}}" {% if outil %}{% if outil.fk_type_mat==type %}selected{% endif %}{% endif %}>{{type.nom}}</option>
@@ -32,17 +32,17 @@
 			</div>
 			<div class="ui segment">
 				<p><b>Consigne*</b></p>
-				<textarea required class="eighty-text-area" rows="10" placeholder="Rentrer le texte en moins de 1500 caractères." name="description" onkeyup="javascript:MaxLengthTextarea(this,1500);">{% if outil %}{{outil.description}}{% endif %}</textarea>
+				<textarea required class="eighty-text-area-resize" rows="10" name="description">{% if outil %}{{outil.description}}{% endif %}</textarea>
 				<p><b>Variante</b></p>
-				<textarea class="eighty-text-area" rows="10" placeholder="Rentrer le texte en moins de 1000 caractères." name="variante" onkeyup="javascript:MaxLengthTextarea(this,1000);">{% if outil %}{{outil.variante}}{% endif %}</textarea>
+				<textarea class="eighty-text-area-resize" rows="10" name="variante">{% if outil %}{{outil.variante}}{% endif %}</textarea>
 			</div>
 			<div class="ui segment">
 				<p><b>Matériel</b></p>
-				<textarea class="eighty-text-area" rows="3" placeholder="Rentrer le texte en moins de 200 caractères." name="materiel" onkeyup="javascript:MaxLengthTextarea(this,200);">{% if outil %}{{outil.materiel}}{% endif %}</textarea>
+				<textarea class="eighty-text-area-resize" rows="3" name="materiel">{% if outil %}{{outil.materiel}}{% endif %}</textarea>
 			</div>
 			<div class="ui segment">
 					<p><b>Difficulté*</b></p>
-					<select style="padding: 1px;" class="ui compact selection dropdown" name="difficulte" required>
+					<select  class="ui compact selection dropdown little-padding" name="difficulte" required>
 						{% if not outil %}<option value="">Choisir ...</option>{% endif %}
 					{% for difficulte in difficultes %}
 						<option value="{{difficulte.id}}" {% if outil %}{% if outil.difficulte==difficulte %}selected{% endif %}{% endif %}>{{difficulte.nom}}</option>
@@ -51,7 +51,7 @@
 			</div>
 			<div class="ui segment">
 				<p><b>Type de média</b></p>
-				<select style="padding: 1px;" class="ui compact selection dropdown" name="type_media">
+				<select class="ui compact selection dropdown little-padding" name="type_media">
 					{% if not outil %}<option value="">Choisir ...</option>{% endif %}
 					{% for type in types_medias %}
 					<option value="{{type.id}}" {% if outil %}{% if type==outil.fk_type_mat_outil %}selected{% endif %}{% endif %}>{{type.nom}}</option>
@@ -84,15 +84,5 @@
 	$('.mini.modal').modal('show');
 </script>
 {% endif %}
-
-<script>
-
-function MaxLengthTextarea(objettextarea,maxlength){
-	if (objettextarea.value.length > maxlength) {
-		objettextarea.value = objettextarea.value.substring(0, maxlength);
-		alert('Votre texte ne doit pas dépasser '+maxlength+' caractères!');
-	}
-}
-</script>
 
 {% endblock %}
