@@ -18,6 +18,10 @@
     padding-bottom: 0em !important ;
 }
 
+.little-padding {
+    padding: 1px !important;
+}
+
 .edit-page-area {
     width: 100% !important ;
     height: 70% !important ;
@@ -43,6 +47,12 @@
     resize: none !important ;
     box-sizing: border-box !important ;
     width: 80% !important ;
+}
+
+.eighty-text-area-resize {
+    box-sizing: border-box !important ;
+    width: 80% !important ;
+    resize: vertical !important;   
 }
 
 .vertical-text-area {
