@@ -62,7 +62,7 @@ def create_or_update_animation(data, tags):
     else:
         animation = Animation.get(id=data['id'])
         animation.titre = data['titre']
-        animation.statut = 2
+        animation.statut = data['statut']
         animation.pre_anim = data['pre_anim']
         animation.objectifs = data['objectifs']
         animation.lieu = data['lieu']
