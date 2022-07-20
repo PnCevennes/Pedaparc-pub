@@ -3,17 +3,17 @@
 <div class="ui horizontal segments">
 	<div class="ui segment five-width">
 		{% if media.fk_type_mat.id==70 %}
-		<i class="image icon"></i>
+		<i class="image icon tooltip"><span class="tooltiptext">Image</span></i>
 		{% elif media.fk_type_mat.id==71 %}
-		<i class="camera icon"></i>
+		<i class="camera icon tooltip"><span class="tooltiptext">Photo</span></i>
 		{% elif media.fk_type_mat.id==72 %}
-		<i class="video icon"></i>
+		<i class="video icon tooltip"><span class="tooltiptext">Vidéo</span></i>
 		{% elif media.fk_type_mat.id==73 %}
-		<i class="volume up icon"></i>
+		<i class="volume up icon tooltip"><span class="tooltiptext">Bande-son</span></i>
 		{% elif media.fk_type_mat.id==74 %}
-		<i class="file icon"></i>
+		<i class="file icon tooltip"><span class="tooltiptext">Fichier</span></i>
 		{% elif media.fk_type_mat.id==75 %}
-		<i class="book icon"></i>
+		<i class="book icon tooltip"><span class="tooltiptext">Conte</span></i>
 		{% endif %}
 	</div>
 	<div class="ui segment twenty-width">

@@ -17,15 +17,15 @@
 			{% endfor %}
 
 			{% if anim.statut==3 %}
-				<i class="spinner icon color red"></i>
+				<i class="spinner icon color red tooltip"><span class="tooltiptext">En cours d'écriture</span></i>
 			{% elif anim.statut==2 %}
-				<i class="check circle icon color yellow"></i>
+				<i class="check circle icon color yellow tooltip"><span class="tooltiptext">Terminée</span></i>
 			{% elif anim.statut==1 %}
-				<i class="check circle icon color green"></i>
+				<i class="check circle icon color green tooltip"><span class="tooltiptext">Validée</span></i>
 			{% endif %}
 			
 			{% if g.user.is_admin or anim.auteurs==g.user.name %}
-			<a href="/pedatheque_edit?q={{anim.id}}" class="ui icon"><i class="edit icon color pink"></i></a>
+			<a href="/pedatheque_edit?q={{anim.id}}" class="ui icon"><i class="edit icon color pink tooltip"><span class="tooltiptext">Éditer l'animation</span></i></a>
 			{% endif %}
 		</div>
 	</div>
