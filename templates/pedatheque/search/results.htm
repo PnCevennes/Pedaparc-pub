@@ -5,6 +5,7 @@
 {% block content %}
 <div class="ui very padded container large-container">
 	<a href="/pedatheque" class="ui aligned primary button">Nouvelle recherche</a>
+	<div class="ui basic segment"><p><b>Il y a {{anims|length}} résultats !</b></p></div>
 
 	{% for anim, tags, pertinence in anims %}
 		{% include '/pedatheque/search/simple_anim_display.htm' %}
