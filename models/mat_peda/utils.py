@@ -65,7 +65,7 @@ def create_outil(data):
 		difficulte = Thesaurus.get(id=data['difficulte']),
 		materiel = data['materiel'],
 		url = data['url'],
-		fk_type_mat_outil = Thesaurus.get(id=data['type_media']) if data['type_media'] else Thesaurus.get(id=2))
+		fk_type_mat_outil = Thesaurus.get(id=data['type_media']) if data['url'] else Thesaurus.get(id=2))
 	return outil
 
 
