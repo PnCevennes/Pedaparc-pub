@@ -65,7 +65,7 @@ def mediatheque_create():
         data = dict(request.form)
         data['url'] = os.path.join(config.UPLOAD_FOLDER, filename)
         data['thematique'] = request.form.getlist('thematique')
-        mat_peda.create_mat_peda(data)
+        mat_peda.create_media(data)
         file.save(data['url'])
         return redirect('/mediatheque')
     else:

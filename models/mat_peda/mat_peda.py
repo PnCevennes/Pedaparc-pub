@@ -13,17 +13,17 @@ class Mat_peda(BaseModel):
     et outils facilitateurs.
 
         Attributs:
-(media)(outil)  id (int): Id du media/outil
-(media)(outil)  fk_type_mat (Thesaurus): type du média/outil
-(media)(outil)  nom (str): nom du média/outil
-(media)(outil)  description (str): description du média/outil
-(media)(outil)  url (str): url de la ressource du média/outil
-(media)         thematiques (Thesaurus[]): thematique(s) du média
-(outil)         variante (str): variante de l'outil
-(outil)         difficulte (str): difficulté de l'outil
-(outil)         materiel (str): materiel de l'outil
-(media)(outil)  date_modif (date): date de création du média/outil
-(outil)         fk_type_mat_outil (Thesaurus): Type du média associé à l'outil
+                | (media)(outil)  id (int): Id du media/outil
+                | (media)(outil)  fk_type_mat (Thesaurus): type du média/outil
+                | (media)(outil)  nom (str): nom du média/outil
+                | (media)(outil)  description (str): description du média/outil
+                | (media)(outil)  url (str): url de la ressource du média/outil
+                | (media)         thematiques (Thesaurus[]): thematique(s) du média
+                | (outil)         variante (str): variante de l'outil
+                | (outil)         difficulte (str): difficulté de l'outil
+                | (outil)         materiel (str): materiel de l'outil
+                | (media)(outil)  date_modif (date): date de création du média/outil
+                | (outil)         fk_type_mat_outil (Thesaurus): Type du média associé à l'outil
     '''
     id = AutoField()
     fk_type_mat = ForeignKeyField(Thesaurus)
@@ -46,8 +46,8 @@ class Rel_mat_peda_sequence(BaseModel):
     l'objet Mat_peda et l'objet Sequence.
 
         Attributs:
-                fk_mat_peda (Mat_peda): objet Mat_peda
-                fk_sequence (Sequence): objet Sequence
+                | fk_mat_peda (Mat_peda): objet Mat_peda
+                | fk_sequence (Sequence): objet Sequence
     '''
     fk_mat_peda = ForeignKeyField(Mat_peda)
     fk_sequence = ForeignKeyField(Sequence)
@@ -65,8 +65,8 @@ class Rel_mat_peda_thematique(BaseModel):
     l'objet Mat_peda et l'objet Thesaurus.
 
         Attributs:
-                fk_mat_peda (Mat_peda): objet Mat_peda
-                fk_thes (Thesaurus): objet Thesaurus
+                | fk_mat_peda (Mat_peda): objet Mat_peda
+                | fk_thes (Thesaurus): objet Thesaurus
     '''
     fk_mat_peda = ForeignKeyField(Mat_peda)
     fk_thes = ForeignKeyField(Thesaurus)

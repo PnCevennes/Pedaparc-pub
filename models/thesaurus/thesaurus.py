@@ -8,10 +8,10 @@ class Thesaurus(BaseModel):
     fixes de l'application.
 
         Attributs:
-                id (int): Id de la donnée
-                reference (int): référence de la donnée
-                nom (str): nom de la donnée
-                label (str): label de la donnée
+                | id (int): Id de la donnée
+                | reference (int): référence de la donnée
+                | nom (str): nom de la donnée
+                | label (str): label de la donnée
     '''
     id = AutoField(primary_key=True)
     reference = IntegerField()

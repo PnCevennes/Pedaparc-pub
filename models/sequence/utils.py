@@ -1,14 +1,13 @@
 '''
 Fichier contenant les fonctions utiles à la manipulation des sequences.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Fonctions:
 
-   create_sequence(data,id_anim)
-   update_sequence(data)
-   get_sequence(id_seq) -> Sequence
-   get_sequences(id_anim) -> Sequence[]
-   first_sequences(id_anim,id_seq) -> Sequence[]
-   last_sequences(id_anim,id_seq) -> Sequence[]
+    | create_or_update_all_sequences(id_anim, sequences)
+    | get_sequence(id_seq) -> Sequence
+    | get_sequences(id_anim) -> Sequence[]
+    | sequences_delete_md(sequences, md_to_text) -> Sequence[]
 '''
 
 from models.sequence.sequence import Sequence
@@ -24,10 +23,8 @@ def create_or_update_all_sequences(id_anim, sequences):
     à partir des données passées en paramètre.
 
         Param(s):
-                id_anim (str): Id de l'objet Animation
-                auquel les séquences seront liées
-                sequences ([]): Liste contenant les
-                données des séquences à créer ou mettre à jour
+                | id_anim (str): Id de l'objet Animation auquel les séquences seront liées
+                | sequences ([]): Liste contenant les données des séquences à créer ou mettre à jour
     '''
     for seq in sequences:
         if not seq.get('id',False):
@@ -66,27 +63,24 @@ def get_sequence(id_seq):
     Retourne l'objet Sequence à partir de l'Id passé en paramètre.
 
         Param(s):
-                id_seq (int): Id de l'objet Sequence a retourner
+                | id_seq (int): Id de l'objet Sequence a retourner
 
         Return(s):
-                seq (Sequence): Objet Sequence dont l'id a été passé
-                en paramètre
+                | seq (Sequence): Objet Sequence dont l'id a été passé en paramètre
     '''
     return Sequence.get(id=id_seq)
 
 
 def get_sequences(id_anim):
     '''
-    Retourne tout les objets Sequence liés à l'objet Animation
+    Retourne tous les objets Sequence liés à l'objet Animation
     dont l'Id est passé en paramètre.
 
         Param(s):
-                id_anim (str): Id de l'objet Animation dont les objets Sequence
-                sont voulus
+                | id_anim (str): Id de l'objet Animation dont les objets Sequence sont voulus
 
         Return(s):
-                sequences (Sequence[]): Liste de tout les objets Sequence
-                liés à l'objet Animation dont l'id a été passé en paramètre
+                | sequences (Sequence[]): Liste de tous les objets Sequence liés à l'objet Animation dont l'id a été passé en paramètre
     '''
     return Animation.get(id=id_anim).sequences[:]
 
@@ -97,14 +91,11 @@ def sequences_delete_md(sequences, md_to_text):
     des attributs a été retiré.
 
         Param(s):
-                sequences (Sequence[]): Liste d'objets Sequence dont le markdown
-                doit être retiré des attributs
-                md_to_text (function): Fonction permettant de transformer
-                du markdown en plain text
+                | sequences (Sequence[]): Liste d'objets Sequence dont le markdown doit être retiré des attributs
+                | md_to_text (function): Fonction permettant de transformer du markdown en plain text
 
         Return(s):
-                copies (Sequence[]): Liste d'objets Sequence dont les attributs
-                ne sont plus écrits en markdown
+                | copies (Sequence[]): Liste d'objets Sequence dont les attributs ne sont plus écrits en markdown
     '''
     copies = []
 

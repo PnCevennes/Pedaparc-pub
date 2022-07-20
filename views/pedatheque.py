@@ -79,7 +79,6 @@ def pedatheque_search_search_results():
         tags = tags+request.args.getlist(item.nom)
     
     match = animation.match_anim_tags(tags)
-    print(match)
 
     if not g.user.is_admin:
         match = [item for item in match if item[0].statut==VALIDE or item[0].auteurs==g.user.name]
@@ -129,7 +128,7 @@ def pedatheque_search_author_autocomplete():
     cnx = utils.auth.ldap_connect(config.LDAP_USER, config.LDAP_PASS)
     cnx.search(config.LDAP_BASE_PATH, '(sn=*)', attributes=['cn'])
     ldap_users = {'items': [{'title': str(item.cn)} for item 
-        in cnx.entries if str(item.cn).startswith(chain)]}
+        in cnx.entries if str(item.cn).casefold().startswith(chain.casefold())]}
     return json.dumps(ldap_users)
 
 

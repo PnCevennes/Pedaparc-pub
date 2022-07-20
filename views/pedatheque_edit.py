@@ -37,7 +37,7 @@ def pedatheque_create_media_search():
           'id':item.id, 'nom':item.nom, 
           'url':item.url, 'fk_type_mat':item.fk_type_mat.id, 
           'open':False, 'thematiques':[theme.id for theme in item.thematiques[:]]
-          } for item in mat_peda.select_medias()])
+          } for item in mat_peda.get_all_medias()])
 
 
 #Cette fonction permet d'appeler le formulaire de la première étape de création

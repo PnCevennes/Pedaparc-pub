@@ -1,22 +1,23 @@
 '''
 Fichier contenant les fonctions utiles à la manipulation des animations.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Fonctions:
 
-   create_uncomplete_animation(data) -> Animation
-   complete_animation(data)
-   create_rels_thesaurus(data,id_anim)
-   update_animation(data) ->  Animation
-   validate(id_anim)
-   update_author(id_anim, author)
-   get_animation(id_anim) ->  Animation
-   get_all_animations() ->  Animation[]
-   get_unvalidated_animations() ->  Animation[]
-   get_user_animations(user) ->  Animation[]
-   delete_animation(id_anim)
-   match_anim_tags(tags, precision) ->  Animation[]
-   anim_delete_md(anim, md_to_text) ->  Animation
+    | create_or_update_animation(data, tags) -> str
+    | anim_to_dict(id_anim) -> dict
+    | validate(id_anim)
+    | update_author(id_anim, author)
+    | get_animation(id_anim) ->  Animation
+    | get_all_animations() ->  Animation[]
+    | get_validated_animations() -> Animation[]
+    | get_unvalidated_animations() ->  Animation[]
+    | get_user_animations(user) ->  Animation[]
+    | delete_animation(id_anim)
+    | match_anim_tags(tags) ->  [Animation, pertinence][]
+    | anim_delete_md(anim, md_to_text) ->  Animation
 '''
+
 
 from peewee import fn
 
@@ -36,14 +37,12 @@ def create_or_update_animation(data, tags):
     passées en paramètre.
 
         Param(s):
-                data ({}): Dictionnaire contenant
-                les attributs de l'objet
-                tags ({}): Dictionnaire contenant
-                les mots-clés à associer
+                | data ({}): Dictionnaire contenant les attributs de l'objet
+                | tags ({}): Dictionnaire contenant les mots-clés à associer
 
         Return(s):
-                id_anim (str): Id de l'objet Animation
-                créé ou mis à jour
+                | id_anim (str): Id de l'objet Animation créé ou mis à jour
+
     '''
     if not data.get('id', False):
         anim_uuid = uuid.uuid4().hex
@@ -90,12 +89,11 @@ def anim_to_dict(id_anim):
     Retourne un dictionnaire contenant les données d'un objet Animation.
 
         Param(s):
-                id_anim (str): Id de l'objet Animation dont on veut récupérer
-                les attributs
+                | id_anim (str): Id de l'objet Animation dont on veut récupérer les attributs
 
         Return(s):
-                data ({}): Dictionnaire contenant tous les attributs de l'objet
-                Animation dont l'id a été passé en paramètre
+                | data ({}): Dictionnaire contenant tous les attributs de l'objet Animation dont l'id a été passé en paramètre
+
     '''
     anim = Animation.get(id=id_anim)
 
@@ -116,7 +114,8 @@ def validate(id_anim):
     Met le statut de l'animation à 1.
 
         Param(s):
-                id_anim (str): Id de l'objet Animation qui doit être validée
+                | id_anim (str): Id de l'objet Animation qui doit être validée
+
     '''
     anim = Animation.get(id=id_anim)
     anim.statut = 1
@@ -128,9 +127,9 @@ def update_author(id_anim, author):
     Met à jour l'auteur de l'objet Animation.
 
         Param(s):
-                id_anim (str): Id de l'objet Animation dont l'auteur
-                doit être modifié
-                author (str): Nom du nouvel auteur
+                | id_anim (str): Id de l'objet Animation dont l'auteur doit être modifié
+                | author (str): Nom du nouvel auteur
+
     '''
     anim = Animation.get(id=id_anim)
     anim.auteurs = author
@@ -142,42 +141,43 @@ def get_animation(id_anim):
     Retourne l'objet Animation dont l'Id a été passé en paramètre.
 
         Param(s):
-                id_anim (str): Id de l'objet Animation à retourner
+                | id_anim (str): Id de l'objet Animation à retourner
 
         Return(s):
-                anim (Animation): Objet Animation dont l'Id a été passé en
-                paramètre
+                | anim (Animation): Objet Animation dont l'Id a été passé en paramètre
+
     '''
     return Animation.get(id=id_anim)
 
 
 def get_all_animations():
     '''
-    Retourne tout les objets Animation.
+    Retourne tous les objets Animation.
 
         Return(s):
-                anims (Animation[]): Liste de tout les objets Animation
+                | anims (Animation[]): Liste de tous les objets Animation
+
     '''
     return Animation.select()[:]
 
 
 def get_validated_animations():
     '''
-    Retourne tout les objets Animation dont le statut est à 1.
+    Retourne tous les objets Animation dont le statut est à 1.
 
         Return(s):
-                anims (Animation[]): Liste de tout les objets
-                Animation validés
+                | anims (Animation[]): Liste de tous les objets Animation validés
+
     '''
     return Animation.select().where(Animation.statut==1)
 
 def get_unvalidated_animations():
     '''
-    Retourne tout les objets Animation dont le statut est à 2 ou 3.
+    Retourne tous les objets Animation dont le statut est à 2 ou 3.
 
         Return(s):
-                anims (Animation[]): Liste de tout les objets
-                Animation non validés
+                | anims (Animation[]): Liste de tous les objets Animation non validés
+
     '''
     return Animation.select().where(Animation.statut.in_([2,3]))
 
@@ -185,14 +185,14 @@ def get_unvalidated_animations():
 #Retourne toutes les animations de l'user donné en paramètre
 def get_user_animations(user):
     '''
-    Retourne tout les objets Animation de l'auteur passé en paramètre.
+    Retourne tous les objets Animation de l'auteur passé en paramètre.
 
         Param(s):
-                user (str): Nom de l'auteur des objets Animation voulus
+                | user (str): Nom de l'auteur des objets Animation voulus
 
         Return(s):
-                anims ([Animation, pertinence][]): Liste de tout les objets Animation
-                dont l'auteur a été passé en paramètre
+                | anims ([Animation, pertinence][]): Liste de tous les objets Animation dont l'auteur a été passé en paramètre
+
     '''
     return [[item, ''] for item in Animation.select().where(Animation.auteurs==user)]
 
@@ -203,7 +203,8 @@ def delete_animation(id_anim):
     et toutes ses relations.
 
         Param(s):
-                id_anim (str): Id de l'objet Animation à supprimer
+                | id_anim (str): Id de l'objet Animation à supprimer
+
     '''
     #Suppression des relations thesaurus "tag"
     Rel_anim_tag.delete().where(Rel_anim_tag.fk_anim==id_anim).execute()
@@ -223,18 +224,21 @@ def anim_sort(tab):
     return tab[1]
 
 
+def anim_sort_alpha(tab):
+    return tab[0].titre
+
+
 def match_anim_tags(tags):
     '''
-    Retourne tout les objets Animation et leur pertinence correspondants 
+    Retourne tous les objets Animation et leur pertinence correspondants 
     aux mots-clés.
 
         Param(s):
-                tags (Thesaurus[]): Liste d'objets Thesaurus à utiliser
-                pour la recherche
+                | tags (Thesaurus[]): Liste d'objets Thesaurus à utiliser pour la recherche
 
         Return(s):
-                anims ([Animation, pertinence][]): Liste de tout les objets 
-                Animation correspondant aux mots-clés données.
+                | anims ([Animation, pertinence][]): Liste de tous les objets Animation correspondant aux mots-clés données
+
     '''
     if tags:
         query = Rel_anim_tag.select(Rel_anim_tag.fk_anim, fn.COUNT(Rel_anim_tag.fk_anim)).where(
@@ -246,7 +250,10 @@ def match_anim_tags(tags):
     match = [[Animation.get(id=item['fk_anim']), (str(item['fk_anim_id'])+'/'+str(len(tags)) if len(tags) else '')] 
     for item in list(query.dicts())] 
 
-    return sorted(match, key=anim_sort, reverse=True)
+    if not tags:
+        return sorted(match, key=anim_sort_alpha, reverse=False)
+    else:
+        return sorted(match, key=anim_sort, reverse=True)
 
 
 def anim_delete_md(anim, md_to_text):
@@ -255,14 +262,12 @@ def anim_delete_md(anim, md_to_text):
     des attributs a été retiré.
 
         Param(s):
-                anim (Animation): Objet Animation dont le markdown
-                doit être retiré des attributs
-                md_to_text (function): Fonction permettant de transformer
-                du markdown en plain text
+                | anim (Animation): Objet Animation dont le markdown doit être retiré des attributs
+                | md_to_text (function): Fonction permettant de transformer du markdown en plain text
 
         Return(s):
-                copie (Animation): Objet Animation dont les attributs
-                ne sont plus écrits en markdown
+                | copie (Animation): Objet Animation dont les attributs ne sont plus écrits en markdown
+
     '''
     
     copie = Animation()

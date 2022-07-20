@@ -174,10 +174,10 @@ def get_stats():
     unvalid_animations = animation.get_unvalidated_animations()
     
     mat_pedas_stats = []
-    mat_pedas = mat_peda.select_medias()
+    mat_pedas = mat_peda.get_all_medias()
 
     outils_stats = []
-    outils = mat_peda.select_all_outils()
+    outils = mat_peda.get_outils()
     
     for item in dates:
 

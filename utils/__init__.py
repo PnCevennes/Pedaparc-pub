@@ -26,7 +26,7 @@ def format(formatage,tags):
                 de renvoyer les objets thesaurus spécifiques à chaque situation
                     'psearch' -> ['ref.thematiques','ref.duree','ref.saison','ref.public','ref.lieux']
                     'msearch' -> ['ref.thematiques','ref.type_mat']
-                tags (Thesaurus[]): Liste de tout les objets
+                tags (Thesaurus[]): Liste de tous les objets
                 Thesaurus de référence
 
         Return(s):

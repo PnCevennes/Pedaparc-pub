@@ -1,11 +1,12 @@
 '''
 Fichier contenant les fonctions utiles à la manipulation du thesaurus.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Fonctions:
 
-   create_db()
-   pop_refs_thes()
-   pop_thes()
+   | create_db()
+   | pop_refs_thes()
+   | pop_thes()
 '''
 
 import peewee
@@ -41,18 +42,18 @@ def pop_refs_thes():
     si nouvelle reference, ajouter sur le tas
 
     id references:
-        1 - thematiques 
-        2 - type materiel
-        3 - duree anim
-        4 - lieu anim
-        5 - saison anim
-        6 - public anim
-        7 - type sequence
-        8 - duree sequence
-        9 - approche sequence
-        10 - modalites sequence
-        76 - type outil
-        84 - difficulte outil
+        | 1 - thematiques 
+        | 2 - type materiel
+        | 3 - duree anim
+        | 4 - lieu anim
+        | 5 - saison anim
+        | 6 - public anim
+        | 7 - type sequence
+        | 8 - duree sequence
+        | 9 - approche sequence
+        | 10 - modalites sequence
+        | 76 - type outil
+        | 84 - difficulte outil
     """
     for idx, nom, ref, label in [
             (1, 'ref.thematiques', 0, 'Thématiques'),

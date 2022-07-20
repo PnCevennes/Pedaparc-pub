@@ -45,7 +45,7 @@ def page(pagename):
                 'outils_facilitateurs/page.htm',
                 contenu=page,
                 pagename=pagename,
-                documents=mat_peda.select_outils(pagename))
+                documents=mat_peda.get_outils(pagename))
     except FileNotFoundError:
         return render_template('outils_facilitateurs/404.htm', 
             pagename=pagename)
@@ -147,7 +147,7 @@ def outils_facilitateurs_create():
     else:
         data['url'] = ''
 
-    mat_peda.create_outil_facilitateur(data)
+    mat_peda.create_outil(data)
         
     return redirect(url_for('outils_facilitateurs.page', pagename=thesaurus.get_thesaurus(data['type_outil']).label))
 
