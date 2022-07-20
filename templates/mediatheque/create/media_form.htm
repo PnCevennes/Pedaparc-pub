@@ -14,7 +14,7 @@
 			<div class="ui horizontal segments">
 				<div class="ui segment">
 					<p><b>Type de média*</b></p>
-					<select style="padding: 1px;" class="ui compact selection dropdown" name="type_mat" required>
+					<select  class="ui compact selection dropdown little-padding" name="type_mat" required>
 						{% if not media %}<option value="">Choisir ...</option>{% endif %}
 					{% for type in types %}
 						<option value="{{type.id}}" {% if media %}{% if type==media.fk_type_mat %} selected {% endif %}{% endif %}>{{type.nom}}</option>
