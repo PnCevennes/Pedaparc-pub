@@ -9,7 +9,8 @@ export default {
 			open: false,
 			type_mat_filters: [],
 			theme_filters: [],
-			nom_media: ''
+			nom_media: '',
+			delete_seq_open: false
 		}
 	},
 	methods: {
@@ -20,7 +21,10 @@ export default {
 			}
 		},
 		toggle_media (media) {
-			media.open = !media.open
+			media.open = !media.open;
+		},
+		toggle_delete_seq () {
+			this.delete_seq_open = !this.delete_seq_open;
 		},
 		get_icon (type_mat_id) {
 			if (type_mat_id==70) {
@@ -118,7 +122,16 @@ export default {
 					<label class="ui label">Titre*</label>
 					<input type="text" name="titre" v-model="data.titre">
 					<button @click="reduction=true" type="button" class="ui primary button">Réduire la séquence</button>
-					<button type="button" @click="$emit('remove-seq')" class="circular ui icon red button" style="margin-left: 10px;"><i class="x icon"></i></button>
+					<button type="button" @click="toggle_delete_seq" class="circular ui icon red button" style="margin-left: 10px;"><i class="x icon tooltip"><span class="tooltiptext">Supprimer ma séquence</span></i></button>
+					<sui-modal v-model="delete_seq_open" :closable="false">
+						<sui-modal-header>
+							Êtes-vous sûr de vouloir supprimer la séquence ?
+						</sui-modal-header>
+						<sui-modal-actions>
+							<sui-button @click.native="toggle_delete_seq">NON</sui-button>
+							<sui-button positive @click.native="$emit('remove-seq')">OUI</sui-button>
+						</sui-modal-actions>
+					</sui-modal>
 				</div>
 				<div class="ui horizontal segments">
 					<div style="width: 50%;" class="ui container segment" :class="getcolor">

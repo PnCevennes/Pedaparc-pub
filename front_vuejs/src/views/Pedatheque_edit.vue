@@ -76,11 +76,21 @@ export default {
 			return this.data.sequences.length==0;
 		},
 		hasconclusion () {
+			let bool;
 			if (this.data.sequences.length==0) {
-				return false;
+				bool = false;
 			} else {
-				return this.data.sequences[this.data.sequences.length-1].fk_type_seq==45;
+				bool = this.data.sequences[this.data.sequences.length-1].fk_type_seq==45;
 			}
+
+			if (!bool) {
+				this.data.description = '';
+				this.data.public_specifique = '';
+				this.data.post_anim = '';
+				this.data.tags = [];
+			}
+
+			return bool;
 		},
 		animcomplete () {
 			return this.data.titre && this.data.lieu && this.data.objectifs && this.data.fk_duree;
