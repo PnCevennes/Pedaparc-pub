@@ -2,7 +2,7 @@
 	
 export default {
 	name: 'seqform',
-	props: ['parties','approches','modalites','durees', 'medias', 'types_mat', 'thematiques', 'idx', 'data'],
+	props: ['parties','approches','modalites','durees', 'medias', 'types_mat', 'thematiques', 'global_values', 'idx', 'data'],
 	data () {
 		return {
 			reduction: false,
@@ -27,17 +27,17 @@ export default {
 			this.delete_seq_open = !this.delete_seq_open;
 		},
 		get_icon (type_mat_id) {
-			if (type_mat_id==70) {
+			if (type_mat_id==this.global_values['image']) {
 				return 'image icon'
-			} else if (type_mat_id==71) {
+			} else if (type_mat_id==this.global_values['photo']) {
 				return 'camera icon'
-			} else if (type_mat_id==72) {
+			} else if (type_mat_id==this.global_values['video']) {
 				return 'video icon'
-			} else if (type_mat_id==73) {
+			} else if (type_mat_id==this.global_values['bandeson']) {
 				return 'volume up icon'
-			} else if (type_mat_id==74) {
+			} else if (type_mat_id==this.global_values['support']) {
 				return 'file icon'
-			} else if (type_mat_id==75) {
+			} else if (type_mat_id==this.global_values['conte']) {
 				return 'book icon'
 			} else {
 				return ''
@@ -68,13 +68,13 @@ export default {
 	},
 	computed: {
 		getcolor () {
-			if (this.data.fk_type_seq==42) {
+			if (this.data.fk_type_seq==this.global_values['intro']) {
 				return 'intro-color'
-			} else if (this.data.fk_type_seq==43) {
+			} else if (this.data.fk_type_seq==this.global_values['dvp']) {
 				return 'dvp-color'
-			} else if (this.data.fk_type_seq==44) {
+			} else if (this.data.fk_type_seq==this.global_values['dvpopt']) {
 				return 'dvpopt-color'
-			} else if (this.data.fk_type_seq==45) {
+			} else if (this.data.fk_type_seq==this.global_values['conclu']) {
 				return 'conclu-color'
 			} else {
 				return 'grey inverted'
@@ -212,11 +212,11 @@ export default {
 															{{media.nom}}
 														</sui-modal-header>
 														<sui-modal-content style="height: 80vh;">
-															<video v-if="media.fk_type_mat==72" controls class="big-embed" >
+															<video v-if="media.fk_type_mat==global_values['video']" controls class="big-embed" >
 																<source :src="get_url(media)">
 																Votre navigateur ne supporte pas cette extension.
 															</video>
-															<audio v-else-if="media.fk_type_mat==73" controls class="big-embed">
+															<audio v-else-if="media.fk_type_mat==global_values['bandeson']" controls class="big-embed">
 																<source :src="get_url(media)">
 																Votre navigateur ne supporte pas cette extension.
 															</audio>

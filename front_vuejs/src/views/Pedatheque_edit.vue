@@ -24,15 +24,16 @@ export default {
 			},
 			medias: [],
 			redirect: '',
-			end: false
+			end: false,
+			global_values: {}
 		}
 	},
 	methods: {
 		get_thes () {
-			fetch('/pedatheque_edit/get_thes').then(resp => {resp.json().then(data => {this.rep = data})})
+			fetch('http://127.0.0.1:5000/pedatheque_edit/get_thes').then(resp => {resp.json().then(data => {this.rep = data; this.set_global();})})
 		},
 		get_medias () {
-			fetch('/pedatheque_edit/get_medias').then(resp => {resp.json().then(data => {this.medias = data; this.medias.sort(function (a, b) {
+			fetch('http://127.0.0.1:5000/pedatheque_edit/get_medias').then(resp => {resp.json().then(data => {this.medias = data; this.medias.sort(function (a, b) {
 				if (a.nom==b.nom) {
 					return 0;
 				} else {
@@ -69,6 +70,27 @@ export default {
 				},
 				body: JSON.stringify(this.data)
 			}).then(resp => {resp.text().then(data => {this.redirect = data; this.end = true;})});
+		},
+		set_global () {
+			this.global_values = {
+				'intro':this.find_id_by_code('ref.type_seq','intro'),
+				'dvp':this.find_id_by_code('ref.type_seq','dvp'),
+				'dvpopt':this.find_id_by_code('ref.type_seq','dvpopt'),
+				'conclu':this.find_id_by_code('ref.type_seq','conclu'),
+				'image':this.find_id_by_code('ref.type_mat','image'),
+				'photo':this.find_id_by_code('ref.type_mat','photo'),
+				'video':this.find_id_by_code('ref.type_mat','video'),
+				'bandeson':this.find_id_by_code('ref.type_mat','bandeson'),
+				'support':this.find_id_by_code('ref.type_mat','support'),
+				'conte':this.find_id_by_code('ref.type_mat','conte')
+			}
+		},
+		find_id_by_code (categorie, code) {
+			for (let idx in this.rep[categorie]) {
+				if (this.rep[categorie][idx]['code']==code) {
+					return this.rep[categorie][idx]['id'];
+				}
+			}
 		}
 	},
 	computed: {
@@ -137,7 +159,7 @@ export default {
 		<Anim :durees="rep['ref.duree']" :data="data"/>
 		<button v-if="isfirst && animcomplete" type="button" @click="add_seq" class="ui primary button" style="margin-bottom: 10px;">Première séquence</button>
 		<button v-if="isfirst && animcomplete" type="button" class="ui right floated yellow button" @click="send_data(true)">Finir plus tard</button>
-		<Seq v-if="animcomplete" v-for="(sequence, idx) in data.sequences" :data="sequence" :key="idx" :idx="idx" :parties="rep['ref.type_seq']" :approches="rep['ref.approches']" :modalites="rep['ref.modalites']" :durees="rep['ref.duree_seq']" :medias="medias" :types_mat="rep['ref.type_mat']" :thematiques="rep['ref.thematiques']" @remove-seq="remove_seq(idx)" @get-medias="get_medias()"/>
+		<Seq v-if="animcomplete" v-for="(sequence, idx) in data.sequences" :data="sequence" :key="idx" :idx="idx" :parties="rep['ref.type_seq']" :approches="rep['ref.approches']" :modalites="rep['ref.modalites']" :durees="rep['ref.duree_seq']" :medias="medias" :types_mat="rep['ref.type_mat']" :thematiques="rep['ref.thematiques']" :global_values="global_values" @remove-seq="remove_seq(idx)" @get-medias="get_medias()"/>
 		<button v-if="!isfirst && firstseqisintro && allseqcomplete" type="button" @click="add_seq" class="circular ui icon primary button" style="margin-bottom: 10px;"><i class="plus icon"></i></button>
 		<button v-if="!isfirst && firstseqisintro && allseqcomplete && !hasconclusion" type="button" class="ui right floated yellow button" @click="send_data(true)">Finir plus tard</button>
 		<Final v-if="hasconclusion && allseqcomplete" :data="data" :thematiques="rep['ref.thematiques']" :lieux="rep['ref.lieux']" :saisons="rep['ref.saison']" :publics="rep['ref.public']"/>

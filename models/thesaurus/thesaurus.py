@@ -11,9 +11,9 @@ class Thesaurus(BaseModel):
                 | id (int): Id de la donnée
                 | reference (int): référence de la donnée
                 | nom (str): nom de la donnée
-                | label (str): label de la donnée
+                | code (str): code de la donnée
     '''
     id = AutoField(primary_key=True)
     reference = IntegerField()
     nom = CharField(max_length=80)
-    label = TextField(default='')
+    code = TextField(default='')

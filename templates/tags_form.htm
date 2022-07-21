@@ -9,12 +9,12 @@
     <div class="ui accordion">
       <div class="title active">
         <i class="dropdown icon"></i>
-        {{key.label}} :
+        {{key.nom}} :
       </div>
       <div class="content">
       {% for item in tags[key] %}
           <div class="ui checkbox mini-right-margin">
-            <input type="checkbox" value="{{item.id}}" name="{{key.nom}}" id="{{item.id}}">
+            <input type="checkbox" value="{{item.id}}" name="{{key.code}}" id="{{item.id}}">
             <label for="{{item.id}}">{{item.nom}}</label>
           </div>
       {% endfor %}

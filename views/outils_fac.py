@@ -116,9 +116,9 @@ def edit_page(pagename):
 @require_valid_user
 def outils_facilitateurs_create_form():
     return render_template('/outils_facilitateurs/outils_create_form.htm', 
-        types_outils = thesaurus.get_from_thes(nom='ref.type_outil'),
-        types_medias = thesaurus.get_from_thes(nom='ref.type_mat'),
-        difficultes = thesaurus.get_from_thes(nom='ref.difficulte'))
+        types_outils = thesaurus.get_from_thes(code='ref.type_outil'),
+        types_medias = thesaurus.get_from_thes(code='ref.type_mat'),
+        difficultes = thesaurus.get_from_thes(code='ref.difficulte'))
 
 
 #Cette fonction permet de vérifier si 
@@ -141,15 +141,15 @@ def outils_facilitateurs_create():
             file.save(data['url'])
         else:
             return render_template('/outils_facilitateurs/outils_create_form.htm', 
-                types = thesaurus.get_from_thes(nom='ref.type_outil'),
-                difficultes = thesaurus.get_from_thes(nom='ref.difficulte'), 
+                types = thesaurus.get_from_thes(code='ref.type_outil'),
+                difficultes = thesaurus.get_from_thes(code='ref.difficulte'), 
                 alert=config.ALLOWED_EXTENSIONS)
     else:
         data['url'] = ''
 
     mat_peda.create_outil(data)
         
-    return redirect(url_for('outils_facilitateurs.page', pagename=thesaurus.get_thesaurus(data['type_outil']).label))
+    return redirect(url_for('outils_facilitateurs.page', pagename=thesaurus.get_thesaurus(data['type_outil']).code))
 
 
 #Cette fonction permet de supprimer l'outil concerné
@@ -168,10 +168,10 @@ def outils_facilitateur_delete_outil(pagename, id_document):
 @require_admin_user
 def update_outil_page(pagename,id_document):
     return render_template('/outils_facilitateurs/outils_create_form.htm', 
-        types = thesaurus.get_from_thes(nom='ref.type_outil'), 
+        types = thesaurus.get_from_thes(code='ref.type_outil'), 
         outil = mat_peda.get_mat_peda(id_document),
-        difficultes = thesaurus.get_from_thes(nom='ref.difficulte'),
-        types_medias = thesaurus.get_from_thes(nom='ref.type_mat'),
+        difficultes = thesaurus.get_from_thes(code='ref.difficulte'),
+        types_medias = thesaurus.get_from_thes(code='ref.type_mat'),
         pagename = pagename)
 
 
@@ -196,12 +196,13 @@ def update_outil(pagename,id_document):
             file.save(data['url'])
         else:
             return render_template('/outils_facilitateurs/outils_create_form.htm', 
-                types = thesaurus.get_from_thes(nom='ref.type_outil'),
-                difficultes = thesaurus.get_from_thes(nom='ref.difficulte'), 
+                types = thesaurus.get_from_thes(code='ref.type_outil'),
+                difficultes = thesaurus.get_from_thes(code='ref.difficulte'), 
                 alert=config.ALLOWED_EXTENSIONS)
     else:
         data['url'] = document.url
-        data['id_outil'] = id_document
+
+    data['id_outil'] = id_document
     mat_peda.update_outil(data)
     return redirect(url_for('outils_facilitateurs.page', 
         pagename=pagename))

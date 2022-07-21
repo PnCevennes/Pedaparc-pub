@@ -55,8 +55,8 @@ def delete_comment(id_anim, id_commentaire):
 @views.route('/', strict_slashes=False, methods=['GET'])
 @auth.require_valid_user
 def pedatheque_search_search_form():
-    tags = {item: thesaurus.get_from_thes(nom=item.nom) for item 
-        in utils.format('psearch', thesaurus.get_from_thes('ref'))}
+    tags = {item: thesaurus.get_from_thes(code=item.code) for item 
+        in utils.format('psearch', thesaurus.get_from_thes(idref=0))}
     return render_template('/tags_form.htm', tags=tags, action='pedatheque')
 
 
@@ -75,7 +75,7 @@ def pedatheque_search_search_results():
         return render_template('/pedatheque/search/results.htm', anims=anims)
 
     tags = []
-    for item in utils.format('psearch', thesaurus.get_from_thes('ref')):
+    for item in utils.format('psearch', thesaurus.get_from_thes(idref=0)):
         tags = tags+request.args.getlist(item.nom)
     
     match = animation.match_anim_tags(tags)

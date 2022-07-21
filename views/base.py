@@ -177,7 +177,7 @@ def get_stats():
     mat_pedas = mat_peda.get_all_medias()
 
     outils_stats = []
-    outils = mat_peda.get_outils()
+    outils = mat_peda.get_all_outils()
     
     for item in dates:
 
@@ -224,5 +224,5 @@ def get_stats():
 @views.route('/get_outils')
 @auth.require_valid_user
 def get_outils_pagenames():
-    types_outils = thesaurus.get_from_thes(nom='ref.type_outil')
-    return json.dumps([[item.label, item.nom] for item in types_outils])
+    types_outils = thesaurus.get_from_thes(code='ref.type_outil')
+    return json.dumps([[item.code, item.nom] for item in types_outils])

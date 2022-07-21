@@ -27,8 +27,8 @@ views = Blueprint('mediatheque',__name__)
 @auth.require_valid_user
 def mediatheque_create_form():
     return render_template('/mediatheque/create/media_form.htm', 
-            types = thesaurus.get_from_thes(nom='ref.type_mat'), 
-            thematiques = thesaurus.get_from_thes(nom='ref.thematiques'))
+            types = thesaurus.get_from_thes(code='ref.type_mat'), 
+            thematiques = thesaurus.get_from_thes(code='ref.thematiques'))
 
 
 #Cette fonction permet de vérifier si 
@@ -56,8 +56,8 @@ def mediatheque_create():
 
         if glob.glob(os.path.join(config.UPLOAD_FOLDER, md5_hash)+'_*'):
             return render_template('/mediatheque/create/media_form.htm', 
-                types = thesaurus.get_from_thes(nom='ref.type_mat'), 
-                thematiques = thesaurus.get_from_thes(nom='ref.thematiques'), 
+                types = thesaurus.get_from_thes(code='ref.type_mat'), 
+                thematiques = thesaurus.get_from_thes(code='ref.thematiques'), 
                 alert='duplicate')
 
         filename = md5_hash + '_' + secure_filename(file.filename)
@@ -70,8 +70,8 @@ def mediatheque_create():
         return redirect('/mediatheque')
     else:
         return render_template('/mediatheque/create/media_form.htm', 
-            types = thesaurus.get_from_thes(nom='ref.type_mat'), 
-            thematiques = thesaurus.get_from_thes(nom='ref.thematiques'), 
+            types = thesaurus.get_from_thes(code='ref.type_mat'), 
+            thematiques = thesaurus.get_from_thes(code='ref.thematiques'), 
             alert=config.ALLOWED_EXTENSIONS)
 
 
@@ -81,8 +81,8 @@ def mediatheque_create():
 @auth.require_admin_user
 def mediatheque_edit_form(id_media):
     return render_template('/mediatheque/create/media_form.htm', 
-        types = thesaurus.get_from_thes(nom='ref.type_mat'), 
-        thematiques = thesaurus.get_from_thes(nom='ref.thematiques'),
+        types = thesaurus.get_from_thes(code='ref.type_mat'), 
+        thematiques = thesaurus.get_from_thes(code='ref.thematiques'),
         media = mat_peda.get_mat_peda(id_media))
 
 
@@ -103,8 +103,8 @@ def mediatheque_edit(id_media):
 @views.route('/', strict_slashes=False, methods=['GET'])
 @auth.require_valid_user
 def mediatheque_search():
-    tags = {item: thesaurus.get_from_thes(nom=item.nom) for item 
-        in utils.format('msearch', thesaurus.get_from_thes('ref'))}
+    tags = {item: thesaurus.get_from_thes(code=item.nom) for item 
+        in utils.format('msearch', thesaurus.get_from_thes(idref=0))}
     return render_template('/tags_form.htm', tags=tags, 
         action='mediatheque')
 

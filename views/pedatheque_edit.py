@@ -24,13 +24,14 @@ views = Blueprint('pedatheque_edit',__name__)
 @auth.require_valid_user
 def get_thes():
      return json.dumps(
-          { thes.nom : [{'id': tag.id, 'nom': tag.nom} for tag in thesaurus.get_from_thes(idref=thes.id)] 
+          { thes.code : [{'id': tag.id, 'nom': tag.nom, 'code': tag.code} for tag in thesaurus.get_from_thes(idref=thes.id)] 
           for thes in thesaurus.get_from_thes(idref=0) }
           )
 
 
 #Cette fonctions permet de récupérer tous les médias.
 @views.route('/get_medias', methods=['GET'])
+@auth.require_valid_user
 def pedatheque_create_media_search():
      return json.dumps(
           [{
@@ -41,7 +42,7 @@ def pedatheque_create_media_search():
 
 
 #Cette fonction permet d'appeler le formulaire de la première étape de création
-#d'un animation
+#d'un animation.
 @views.route('/', methods=['GET'], strict_slashes=False)
 @auth.require_valid_user
 def pedatheque_create_create_form():
@@ -54,6 +55,7 @@ def pedatheque_create_create_form():
 
 #Cette fonction permet la création ou la mise à jour d'une animation
 @views.route('/cr_or_up_anim', methods=['POST'])
+@auth.require_valid_user
 def create_or_update_animation():
      data = request.json
      sequences = data.pop('sequences')

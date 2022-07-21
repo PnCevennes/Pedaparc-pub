@@ -55,21 +55,21 @@ def pop_refs_thes():
         | 76 - type outil
         | 84 - difficulte outil
     """
-    for idx, nom, ref, label in [
-            (1, 'ref.thematiques', 0, 'Thématiques'),
-            (2, 'ref.type_mat', 0, 'Type'),
-            (3, 'ref.duree', 0, 'Durée'),
-            (4,'ref.lieux', 0, 'Lieux'), 
-            (5, 'ref.saison', 0, 'Saison'), 
-            (6, 'ref.public', 0, 'Public'),
-            (7, 'ref.type_seq', 0, 'Type de séquence'),
-            (8, 'ref.duree_seq', 0, 'Durée de séquence'),
-            (9, 'ref.approches',0, 'Approches'),
-            (10, 'ref.modalites',0, 'Modalités'),
-            (76, 'ref.type_outil',0, 'Types d\'outil'),
-            (84, 'ref.difficulte',0, 'Difficulté')]:
+    for idx, nom, ref, code in [
+            (1, 'Thématiques', 0, 'ref.thematiques'),
+            (2, 'Type', 0, 'ref.type_mat'),
+            (3, 'Durée', 0, 'ref.duree'),
+            (4,'Lieux', 0, 'ref.lieux'), 
+            (5, 'Saison', 0, 'ref.saison'), 
+            (6, 'Public', 0, 'ref.public'),
+            (7, 'Type de séquence', 0, 'ref.type_seq'),
+            (8, 'Durée de séquence', 0, 'ref.duree_seq'),
+            (9, 'Approches',0, 'ref.approches'),
+            (10, 'Modalités',0, 'ref.modalites'),
+            (76, 'Types d\'outils',0, 'ref.type_outil'),
+            (84, 'Difficulté',0, 'ref.difficulte')]:
         try:
-            Thesaurus.create(id=idx, nom=nom, reference=ref, label=label)
+            Thesaurus.create(id=idx, nom=nom, reference=ref, code=code)
         except peewee.IntegrityError:
             print ('%s - %s déja existant' % (idx, nom))
 
@@ -77,7 +77,7 @@ def pop_thes():
     '''
     Entrées de base du thésaurus
     '''
-    for idx, nom, ref, label in [
+    for idx, nom, ref, code in [
             (11, 'Agro-Pastoralisme', 1, ''),
             (12, 'Eau', 1, ''),
             (13, 'Faune', 1, ''),
@@ -109,10 +109,10 @@ def pop_thes():
             (39, 'Grand public', 6, ''),
             (40, 'Classe unique', 6, ''),
             (41, 'Professionnels', 6, ''),
-            (42, 'Introduction', 7, ''),
-            (43, 'Développement', 7, ''),
-            (44, 'Développement optionnel', 7, ''),
-            (45, 'Conclusion', 7, ''),
+            (42, 'Introduction', 7, 'intro'),
+            (43, 'Développement', 7, 'dvp'),
+            (44, 'Développement optionnel', 7, 'dvpopt'),
+            (45, 'Conclusion', 7, 'conclu'),
             (46,'5 min',8, ''),
             (47,'10 min',8, ''),
             (48,'15 min',8, ''),
@@ -134,12 +134,12 @@ def pop_thes():
             (67,'Sensible',9, ''),
             (68,'À l\'écoute',10, ''),
             (69,'En action',10, ''),
-            (70,'Image',2, ''),
-            (71,'Photo',2, ''),
-            (72,'Vidéo',2, ''),
-            (73,'Bande-son',2, ''),
-            (74,'Support',2, ''),
-            (75,'Contes',2, ''),
+            (70,'Image',2, 'image'),
+            (71,'Photo',2, 'photo'),
+            (72,'Vidéo',2, 'video'),
+            (73,'Bande-son',2, 'bandeson'),
+            (74,'Support',2, 'support'),
+            (75,'Conte',2, 'contes'),
             (77,'Instaurer un cadre de confiance',76, 'instaureruncadre'),
             (78,'Débats',76, 'debats'),
             (79,'Émergence des représentations',76, 'emergencedesrespresentations'),
@@ -152,6 +152,6 @@ def pop_thes():
             (87,'Moyen',84,''),
             (88,'Difficile',84,'')]:
         try:
-            Thesaurus.create(id=idx, nom=nom, reference=ref, label=label)
+            Thesaurus.create(id=idx, nom=nom, reference=ref, code=code)
         except peewee.IntegrityError:
             print ('%s - %s déja existant' % (idx, nom))

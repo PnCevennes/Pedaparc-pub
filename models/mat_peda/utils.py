@@ -12,7 +12,7 @@ Fonctions:
    | get_all_mat_pedas() -> Mat_peda[]
    | get_all_medias() -> Mat_peda[]
    | get_all_outils() -> Mat_peda[]
-   | get_outils(label) -> Mat_peda[]
+   | get_outils(code) -> Mat_peda[]
    | get_mat_peda(id_media) -> Mat_peda
    | delete_mat_peda(id_media)
    | outil_delete_md(outil, md_to_text) -> Mat_peda
@@ -106,7 +106,7 @@ def update_outil(data):
 	outil.difficulte = Thesaurus.get(id=data['difficulte'])
 	outil.materiel = data['materiel']
 	outil.url = data['url']
-	outil.fk_type_mat_outil = Thesaurus.get(id=data['type_media']) if data['type_media'] else Thesaurus.get(id=2) 
+	outil.fk_type_mat_outil = Thesaurus.get(id=data['type_media']) if data['url'] else Thesaurus.get(id=2) 
 	outil.save()
 
 
@@ -132,21 +132,21 @@ def match_mat_peda_tags(types, tags):
 	'''
 
 	if not types:
-		types = [item.id for item in get_from_thes(nom='ref.type_mat')]
+		types = [item.id for item in get_from_thes(code='ref.type_mat')]
 
 	queryTypes = Mat_peda.select().where(Mat_peda.fk_type_mat.in_(types))
 
 	if tags:
-		query = Rel_mat_peda_thematique.select(Rel_mat_peda_thematique.fk_mat_peda, fn.COUNT(Rel_mat_peda_thematique.fk_mat_peda)).where(
+		query = list(
+			Rel_mat_peda_thematique.select(Rel_mat_peda_thematique.fk_mat_peda.alias('mat_peda'), fn.COUNT(Rel_mat_peda_thematique.fk_mat_peda).alias('count')).where(
 				Rel_mat_peda_thematique.fk_mat_peda.in_(queryTypes) & Rel_mat_peda_thematique.fk_thes.in_(tags)
-				).group_by(Rel_mat_peda_thematique.fk_mat_peda)
+				).group_by(Rel_mat_peda_thematique.fk_mat_peda).dicts()
+			)
 	else:
-		query = Rel_mat_peda_thematique.select(Rel_mat_peda_thematique.fk_mat_peda, fn.COUNT(Rel_mat_peda_thematique.fk_mat_peda)).where(
-				Rel_mat_peda_thematique.fk_mat_peda.in_(queryTypes)
-				).group_by(Rel_mat_peda_thematique.fk_mat_peda)
+		query = [{'mat_peda': item.id} for item in queryTypes]
 
-	match = [[Mat_peda.get(id=item['fk_mat_peda']), (str(item['fk_mat_peda_id'])+'/'+str(len(tags)) if len(tags) else '')] 
-	for item in list(query.dicts())]
+	match = [[Mat_peda.get(id=item['mat_peda']), (str(item['count'])+'/'+str(len(tags)) if len(tags) else '')] 
+	for item in query]
 
 	if not tags:
 		return sorted(match, key=mat_peda_sort_alpha, reverse=False)
@@ -171,7 +171,7 @@ def get_all_medias():
 		Return(s):
 				| mat_pedas (Mat_peda[]): Liste de tous les objets Mat_peda (médias)
 	'''
-	return [item for item in Mat_peda.select() if item.fk_type_mat in get_from_thes(nom='ref.type_mat')]
+	return [item for item in Mat_peda.select() if item.fk_type_mat in get_from_thes(code='ref.type_mat')]
 
 
 def get_all_outils():
@@ -181,20 +181,20 @@ def get_all_outils():
 		Return(s):
 				| mat_pedas (Mat_peda[]): Liste de tous les objets Mat_peda (outils)
 	'''
-	return [item for item in Mat_peda.select() if item.fk_type_mat in get_from_thes(nom='ref.type_outil')]
+	return [item for item in Mat_peda.select() if item.fk_type_mat in get_from_thes(code='ref.type_outil')]
 
 
-def get_outils(label):
+def get_outils(code):
 	'''
 	Retourne tous les objets Mat_péda étant des outils facilitateurs d'une catégorie d'outils.
 
 		Param(s):
-				| label (str): Catégorie des outils facilitateurs que l'on veut
+				| code (str): Catégorie des outils facilitateurs que l'on veut
 
 		Return(s):
 				| mat_pedas (Mat_peda[]): Liste de tous les objets Mat_peda (outil facilitateur)
 	'''
-	return Mat_peda.select().where(Mat_peda.fk_type_mat==Thesaurus.get(label=label))
+	return Mat_peda.select().where(Mat_peda.fk_type_mat==Thesaurus.get(code=code))
 
 
 def get_mat_peda(id_media):

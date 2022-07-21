@@ -75,13 +75,13 @@
 
 		{% for seq in sequences %}
 
-		{% if seq.fk_type_seq.id==42 %}
+		{% if seq.fk_type_seq.code=='intro' %}
 			{% set color='intro-color' %}
-		{% elif seq.fk_type_seq.id==43 %}
+		{% elif seq.fk_type_seq.code=='dvp' %}
 			{% set color='dvp-color' %}
-		{% elif seq.fk_type_seq.id==44 %}
+		{% elif seq.fk_type_seq.code=='dvpopt' %}
 			{% set color='dvpopt-color' %}
-		{% elif seq.fk_type_seq.id==45 %}
+		{% elif seq.fk_type_seq.code=='conclu' %}
 			{% set color='conclu-color' %}
 		{% endif %}
 
@@ -113,14 +113,14 @@
 						{{media.nom}}
 					</div>
 					<div class="content">
-						{% if media.fk_type_mat.id==70 or media.fk_type_mat.id==71 or media.fk_type_mat.id==74 or media.fk_type_mat.id==75 %}
+						{% if media.fk_type_mat.code=='image' or media.fk_type_mat.code=='photo' or media.fk_type_mat.code=='support' or media.fk_type_mat.code=='conte' %}
 						<embed src="/{{media.url}}" class="big-embed"></embed>
-						{% elif media.fk_type_mat.id==72 %}
+						{% elif media.fk_type_mat.code=='video' %}
 						<video controls class="big-embed">
 							<source src="/{{media.url}}">
 							Votre navigateur ne supporte pas cette extension.
 						</video>
-						{% elif media.fk_type_mat.id==73 %}
+						{% elif media.fk_type_mat.code=='bandeson' %}
 						<audio controls class="big-embed">
 							<source src="/{{media.url}}">
 							Votre navigateur ne supporte pas cette extension.

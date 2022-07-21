@@ -2,17 +2,17 @@
 
 <div class="ui horizontal segments">
 	<div class="ui segment five-width">
-		{% if media.fk_type_mat.id==70 %}
+		{% if media.fk_type_mat.code=='image' %}
 		<i class="image icon tooltip"><span class="tooltiptext">Image</span></i>
-		{% elif media.fk_type_mat.id==71 %}
+		{% elif media.fk_type_mat.code=='photo' %}
 		<i class="camera icon tooltip"><span class="tooltiptext">Photo</span></i>
-		{% elif media.fk_type_mat.id==72 %}
+		{% elif media.fk_type_mat.code=='video' %}
 		<i class="video icon tooltip"><span class="tooltiptext">Vidéo</span></i>
-		{% elif media.fk_type_mat.id==73 %}
+		{% elif media.fk_type_mat.code=='bandeson' %}
 		<i class="volume up icon tooltip"><span class="tooltiptext">Bande-son</span></i>
-		{% elif media.fk_type_mat.id==74 %}
+		{% elif media.fk_type_mat.code=='support' %}
 		<i class="file icon tooltip"><span class="tooltiptext">Fichier</span></i>
-		{% elif media.fk_type_mat.id==75 %}
+		{% elif media.fk_type_mat.code=='conte' %}
 		<i class="book icon tooltip"><span class="tooltiptext">Conte</span></i>
 		{% endif %}
 	</div>
@@ -28,14 +28,14 @@
 				{{media.nom|md|safe}}
 			</div>
 			<div class="content">
-				{% if media.fk_type_mat.id==70 or media.fk_type_mat.id==71 or media.fk_type_mat.id==74 or media.fk_type_mat.id==75 %}
+				{% if media.fk_type_mat.code=='image' or media.fk_type_mat.code=='photo' or media.fk_type_mat.code=='support' or media.fk_type_mat.code=='conte' %}
 				<embed src="/{{media.url}}" class="big-embed"></embed>
-				{% elif media.fk_type_mat.id==72 %}
+				{% elif media.fk_type_mat.code=='video' %}
 				<video controls class="big-embed">
 					<source src="/{{media.url}}">
 					Votre navigateur ne supporte pas cette extension.
 				</video>
-				{% elif media.fk_type_mat.id==73 %}
+				{% elif media.fk_type_mat.code=='bandeson' %}
 				<audio controls class="big-embed">
 					<source src="/{{media.url}}">
 					Votre navigateur ne supporte pas cette extension.

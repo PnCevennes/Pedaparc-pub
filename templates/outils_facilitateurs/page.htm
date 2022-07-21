@@ -27,19 +27,19 @@
                     <p><b>Description :</b></p>
                     <p class="text-display">{{document.description|md|safe}}</p>
                 </div>
-                {% if not document.fk_type_mat_outil.id == 2 %}
+                {% if not document.fk_type_mat_outil.code == 'ref.type_mat' %}
                 <div class="ui segment ten-width">
                     <div class="ui modal big-modal" id="{{document.id}}">
                         <div class="header">{{document.nom|md|safe}}</div>
                         <div class="content">
-                            {% if document.fk_type_mat_outil.id==70 or document.fk_type_mat_outil.id==71 or document.fk_type_mat_outil.id==74 or document.fk_type_mat_outil.id==75 %}
+                            {% if document.fk_type_mat_outil.code=='image' or document.fk_type_mat_outil.code=='photo' or document.fk_type_mat_outil.code=='support' or document.fk_type_mat_outil.code=='conte' %}
                             <embed src="/{{document.url}}" class="big-embed"></embed>
-                            {% elif document.fk_type_mat_outil.id==72 %}
+                            {% elif document.fk_type_mat_outil.code=='video' %}
                             <video controls class="big-embed">
                                 <source src="/{{document.url}}">
                                 Votre navigateur ne supporte pas cette extension.
                             </video>
-                            {% elif document.fk_type_mat_outil.id==73 %}
+                            {% elif document.fk_type_mat_outil.code=='bandeson' %}
                             <audio controls class="big-embed">
                                 <source src="/{{document.url}}">
                                 Votre navigateur ne supporte pas cette extension.

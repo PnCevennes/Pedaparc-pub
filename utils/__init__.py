@@ -33,9 +33,9 @@ def format(formatage,tags):
                 thes (Thesaurus): Liste de tous les objets Thesaurus correspondants au formatage
     '''
     if formatage=='psearch':
-        return [item for item in tags if item.nom in config.tags_pedatheque_search]
+        return [item for item in tags if item.code in config.tags_pedatheque_search]
     elif formatage=='msearch':
-        return [item for item in tags if item.nom in config.tags_mediatheque_search]
+        return [item for item in tags if item.code in config.tags_mediatheque_search]
     else:
         raiseError('mauvais format')
 
