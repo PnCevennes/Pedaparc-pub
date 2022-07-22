@@ -111,16 +111,6 @@ def edit_page(pagename):
             pagename=pagename))
     return redirect('/')
 
-#Cette fonction permet de render le form de création d'un nouvel outil
-@views.route('/create', methods=['GET'], strict_slashes=False)
-@require_valid_user
-def outils_facilitateurs_create_form():
-    return render_template('/outils_facilitateurs/outils_create_form.htm', 
-        types_outils = thesaurus.get_from_thes(code='ref.type_outil'),
-        types_medias = thesaurus.get_from_thes(code='ref.type_mat'),
-        difficultes = thesaurus.get_from_thes(code='ref.difficulte'))
-
-
 #Cette fonction permet de vérifier si 
 #le fichier upload à une extension autorisée
 def allowed_file(filename):
@@ -128,28 +118,34 @@ def allowed_file(filename):
             filename.rsplit('.', 1)[1].lower() in config.ALLOWED_EXTENSIONS
 
 
-#Cette fonction permet de créer le media à partir du form rempli
-@views.route('/create', methods=['POST'])
+#Cette fonction permet de render le form de création d'un nouvel outil et de créer le media à partir du form rempli
+@views.route('/create', methods=['GET', 'POST'], strict_slashes=False)
 @require_valid_user
-def outils_facilitateurs_create():
-    file = request.files['file']
-    data = dict(request.form)
-    if file:
-        if allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            data['url'] = os.path.join(config.UPLOAD_FOLDER, filename)
-            file.save(data['url'])
-        else:
-            return render_template('/outils_facilitateurs/outils_create_form.htm', 
-                types = thesaurus.get_from_thes(code='ref.type_outil'),
-                difficultes = thesaurus.get_from_thes(code='ref.difficulte'), 
-                alert=config.ALLOWED_EXTENSIONS)
+def outils_facilitateurs_create_form():
+    if request.method == 'GET':
+        return render_template('/outils_facilitateurs/outils_create_form.htm', 
+            types_outils = thesaurus.get_from_thes(idref='ref.type_outil'),
+            types_medias = thesaurus.get_from_thes(idref='ref.type_mat'),
+            difficultes = thesaurus.get_from_thes(idref='ref.difficulte'))
     else:
-        data['url'] = ''
+        file = request.files['file']
+        data = dict(request.form)
+        if file:
+            if allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                data['url'] = os.path.join(config.UPLOAD_FOLDER, filename)
+                file.save(data['url'])
+            else:
+                return render_template('/outils_facilitateurs/outils_create_form.htm', 
+                    types = thesaurus.get_from_thes(idref='ref.type_outil'),
+                    difficultes = thesaurus.get_from_thes(idref='ref.difficulte'), 
+                    alert=config.ALLOWED_EXTENSIONS)
+        else:
+            data['url'] = ''
 
-    mat_peda.create_outil(data)
-        
-    return redirect(url_for('outils_facilitateurs.page', pagename=thesaurus.get_thesaurus(data['type_outil']).code))
+        mat_peda.create_outil(data)
+            
+        return redirect(url_for('outils_facilitateurs.page', pagename=thesaurus.get_thesaurus(data['type_outil']).code))
 
 
 #Cette fonction permet de supprimer l'outil concerné
@@ -162,50 +158,45 @@ def outils_facilitateur_delete_outil(pagename, id_document):
             pagename=pagename))
 
 
-#Cette fonction permet d'afficher le form de mise à jour d'un outil
-@views.route('/<pagename>/<id_document>/edit', methods=['GET'])
+#Cette fonction permet d'afficher le form de mise à jour d'un outil et de mettre à jour un outil
+@views.route('/<pagename>/<id_document>/edit', methods=['GET', 'POST'])
 @require_valid_user
 @require_admin_user
 def update_outil_page(pagename,id_document):
-    return render_template('/outils_facilitateurs/outils_create_form.htm', 
-        types = thesaurus.get_from_thes(code='ref.type_outil'), 
-        outil = mat_peda.get_mat_peda(id_document),
-        difficultes = thesaurus.get_from_thes(code='ref.difficulte'),
-        types_medias = thesaurus.get_from_thes(code='ref.type_mat'),
-        pagename = pagename)
-
-
-#Cette fonction permet de mettre à jour un outil
-@views.route('/<pagename>/<id_document>/edit', methods=['POST'])
-@require_valid_user
-@require_admin_user
-def update_outil(pagename,id_document):
-    data = dict(request.form)
-    file = request.files['file']
-    document = mat_peda.get_mat_peda(id_document)
-    if file:
-        if allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            old_url = document.url
-            if old_url:
-                try:
-                    os.remove(old_url)
-                except Exception as e:
-                    pass
-            data['url'] = os.path.join(config.UPLOAD_FOLDER, filename)
-            file.save(data['url'])
-        else:
-            return render_template('/outils_facilitateurs/outils_create_form.htm', 
-                types = thesaurus.get_from_thes(code='ref.type_outil'),
-                difficultes = thesaurus.get_from_thes(code='ref.difficulte'), 
-                alert=config.ALLOWED_EXTENSIONS)
+    if request.method == 'GET':
+        return render_template('/outils_facilitateurs/outils_create_form.htm', 
+            types = thesaurus.get_from_thes(idref='ref.type_outil'), 
+            outil = mat_peda.get_mat_peda(id_document),
+            difficultes = thesaurus.get_from_thes(idref='ref.difficulte'),
+            types_medias = thesaurus.get_from_thes(idref='ref.type_mat'),
+            pagename = pagename)
     else:
-        data['url'] = document.url
+        data = dict(request.form)
+        file = request.files['file']
+        document = mat_peda.get_mat_peda(id_document)
+        if file:
+            if allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                old_url = document.url
+                if old_url:
+                    try:
+                        os.remove(old_url)
+                    except Exception as e:
+                        pass
+                data['url'] = os.path.join(config.UPLOAD_FOLDER, filename)
+                file.save(data['url'])
+            else:
+                return render_template('/outils_facilitateurs/outils_create_form.htm', 
+                    types = thesaurus.get_from_thes(idref='ref.type_outil'),
+                    difficultes = thesaurus.get_from_thes(idref='ref.difficulte'), 
+                    alert=config.ALLOWED_EXTENSIONS)
+        else:
+            data['url'] = document.url
 
-    data['id_outil'] = id_document
-    mat_peda.update_outil(data)
-    return redirect(url_for('outils_facilitateurs.page', 
-        pagename=pagename))
+        data['id_outil'] = id_document
+        mat_peda.update_outil(data)
+        return redirect(url_for('outils_facilitateurs.page', 
+            pagename=pagename))
 
 
 #Cette fonction permet de télécharger un outil

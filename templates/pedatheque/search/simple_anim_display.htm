@@ -5,13 +5,14 @@
 		<div class="ui left floated header">
 			<h2>{{anim.titre}}</h2>
 			<h4>{{anim.auteurs}}</h4>
+			{% if pertinence %}<small>Pertinence : <img class="ui mini spaced image" src="https://shields.io/badge/-{{pertinence}}-2185d0"></small>{% endif %}
 		</div>
 		<div class="ui right floated header">
 			{% for tag in tags %}
-				{% if tag.reference==1 or tag.reference==4 or tag.reference==5 %}
+				{% if tag.reference=='ref.thematiques' or tag.reference=='ref.lieux' or tag.reference=='ref.saison' %}
 				<i class="ui icon tooltip">
-					<img class="ui mini image" src="/static/ressources/{{tag.nom}}.png">
-					<span class="tooltiptext">{{tag.nom}}</span>
+					<img class="ui mini image" src="/static/ressources/{{tag.label}}.png">
+					<span class="tooltiptext">{{tag.label}}</span>
 				</i>
 				{% endif %}
 			{% endfor %}
@@ -44,7 +45,6 @@
 			<h4>
 				{% if anim.date_modif %}
 				<div><small class="left floated">Dernière modification le {{anim.date_modif|date_format}}</small></div>
-				{% if pertinence %}<div><small class="right floated">Pertinence : {{pertinence}}</small></div>{% endif %}
 				{% endif %}
 			</h4>
 			<a href="/pedatheque/{{anim.id}}" class="ui aligned primary button">Consulter</a>
@@ -55,10 +55,10 @@
 			{% set count = namespace(value=0) %}
 
 			{% for tag in tags %}
-				{% if tag.reference==6 %}
+				{% if tag.reference=='ref.public' %}
 				{% set count.value = count.value + 1 %}
 				<div class="ui checkbox mini-right-margin">
-					<p><i class="check icon"></i>{{tag.nom}}</p>
+					<p><i class="check icon"></i>{{tag.label}}</p>
 				</div>
 				{% endif %}
 			{% endfor %}

@@ -17,7 +17,7 @@
 					<select  class="ui compact selection dropdown little-padding" name="type_mat" required>
 						{% if not media %}<option value="">Choisir ...</option>{% endif %}
 					{% for type in types %}
-						<option value="{{type.id}}" {% if media %}{% if type==media.fk_type_mat %} selected {% endif %}{% endif %}>{{type.nom}}</option>
+						<option value="{{type.id}}" {% if media %}{% if type==media.fk_type_mat %} selected {% endif %}{% endif %}>{{type.label}}</option>
 					{% endfor %}
 					</select>
 				</div>
@@ -26,7 +26,7 @@
 					{% for theme in thematiques %}
 					<div class="ui checkbox mini-right-margin">
 						<input type="checkbox" value="{{theme.id}}" name="thematique" id="{{theme.id}}" {% if media %}{% if theme in media.thematiques %} checked {% endif %}{% endif %}>
-						<label for="{{theme.id}}">{{theme.nom}}</label>
+						<label for="{{theme.id}}">{{theme.label}}</label>
 					</div>					
 					{% endfor %}
 				</div>

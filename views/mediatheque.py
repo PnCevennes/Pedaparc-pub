@@ -22,15 +22,6 @@ from models.mat_peda import utils as mat_peda
 views = Blueprint('mediatheque',__name__)
 
 
-#Cette fonction permet de render le form d'import de média
-@views.route('/create', methods=['GET'])
-@auth.require_valid_user
-def mediatheque_create_form():
-    return render_template('/mediatheque/create/media_form.htm', 
-            types = thesaurus.get_from_thes(code='ref.type_mat'), 
-            thematiques = thesaurus.get_from_thes(code='ref.thematiques'))
-
-
 #Cette fonction permet de vérifier si 
 #le fichier upload à une extension autorisée
 def allowed_file(filename):
@@ -45,57 +36,58 @@ def hash_file(file):
     return md5_hash
 
 
-#Cette fonction permet de créer/importer le média
-@views.route('/create', methods=['POST'])
+#Cette fonction permet de render le form d'import de média et créer/importer le média
+@views.route('/create', methods=['GET', 'POST'])
 @auth.require_valid_user
-def mediatheque_create():    
-    file = request.files['file']
-    if file and allowed_file(file.filename):
-
-        md5_hash = hash_file(file)
-
-        if glob.glob(os.path.join(config.UPLOAD_FOLDER, md5_hash)+'_*'):
-            return render_template('/mediatheque/create/media_form.htm', 
-                types = thesaurus.get_from_thes(code='ref.type_mat'), 
-                thematiques = thesaurus.get_from_thes(code='ref.thematiques'), 
-                alert='duplicate')
-
-        filename = md5_hash + '_' + secure_filename(file.filename)
-        
-        data = dict(request.form)
-        data['url'] = os.path.join(config.UPLOAD_FOLDER, filename)
-        data['thematique'] = request.form.getlist('thematique')
-        mat_peda.create_media(data)
-        file.save(data['url'])
-        return redirect('/mediatheque')
-    else:
+def mediatheque_create_form():
+    if request.method == 'GET' :
         return render_template('/mediatheque/create/media_form.htm', 
-            types = thesaurus.get_from_thes(code='ref.type_mat'), 
-            thematiques = thesaurus.get_from_thes(code='ref.thematiques'), 
-            alert=config.ALLOWED_EXTENSIONS)
+                types = thesaurus.get_from_thes(idref='ref.type_mat'), 
+                thematiques = thesaurus.get_from_thes(idref='ref.thematiques'))
+    else :
+        file = request.files['file']
+        if file and allowed_file(file.filename):
+
+            md5_hash = hash_file(file)
+
+            if glob.glob(os.path.join(config.UPLOAD_FOLDER, md5_hash)+'_*'):
+                return render_template('/mediatheque/create/media_form.htm', 
+                    types = thesaurus.get_from_thes(idref='ref.type_mat'), 
+                    thematiques = thesaurus.get_from_thes(idref='ref.thematiques'), 
+                    alert='duplicate')
+
+            filename = md5_hash + '_' + secure_filename(file.filename)
+            
+            data = dict(request.form)
+            data['url'] = os.path.join(config.UPLOAD_FOLDER, filename)
+            data['thematique'] = request.form.getlist('thematique')
+            mat_peda.create_media(data)
+            file.save(data['url'])
+            return redirect('/mediatheque')
+        else:
+            return render_template('/mediatheque/create/media_form.htm', 
+                types = thesaurus.get_from_thes(idref='ref.type_mat'), 
+                thematiques = thesaurus.get_from_thes(idref='ref.thematiques'), 
+                alert=config.ALLOWED_EXTENSIONS)    
 
 
-#Cette fonction permet de render le form d'édit du média
-@views.route('/<id_media>/edit', methods=['GET'])
+#Cette fonction permet de render le form d'édit du média 
+#et éditer le média avec les nouvelles données
+@views.route('/<id_media>/edit', methods=['GET', 'POST'])
 @auth.require_valid_user
 @auth.require_admin_user
 def mediatheque_edit_form(id_media):
-    return render_template('/mediatheque/create/media_form.htm', 
-        types = thesaurus.get_from_thes(code='ref.type_mat'), 
-        thematiques = thesaurus.get_from_thes(code='ref.thematiques'),
-        media = mat_peda.get_mat_peda(id_media))
-
-
-#Cette fonction permet d'éditer le média avec les nouvelles données
-@views.route('/<id_media>/edit', methods=['POST'])
-@auth.require_valid_user
-@auth.require_admin_user
-def mediatheque_edit(id_media):
-    data = dict(request.form)
-    data['id_media'] = id_media
-    data['thematique'] = request.form.getlist('thematique')
-    mat_peda.update_media(data)
-    return redirect('/mediatheque/results?precision=100')
+    if request.method == 'GET':
+        return render_template('/mediatheque/create/media_form.htm', 
+            types = thesaurus.get_from_thes(idref='ref.type_mat'), 
+            thematiques = thesaurus.get_from_thes(idref='ref.thematiques'),
+            media = mat_peda.get_mat_peda(id_media))
+    else:
+        data = dict(request.form)
+        data['id_media'] = id_media
+        data['thematique'] = request.form.getlist('thematique')
+        mat_peda.update_media(data)
+        return redirect('/mediatheque/results?precision=100')
 
 
 #Cette fonction permet de render la page de recherche des medias 
@@ -103,8 +95,8 @@ def mediatheque_edit(id_media):
 @views.route('/', strict_slashes=False, methods=['GET'])
 @auth.require_valid_user
 def mediatheque_search():
-    tags = {item: thesaurus.get_from_thes(code=item.nom) for item 
-        in utils.format('msearch', thesaurus.get_from_thes(idref=0))}
+    tags = {item: thesaurus.get_from_thes(idref=item.code) for item 
+        in utils.format('msearch', thesaurus.get_from_thes(idref=''))}
     return render_template('/tags_form.htm', tags=tags, 
         action='mediatheque')
 

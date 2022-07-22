@@ -64,8 +64,10 @@ def create_outil(data):
 		variante = data['variante'],
 		difficulte = Thesaurus.get(id=data['difficulte']),
 		materiel = data['materiel'],
-		url = data['url'],
-		fk_type_mat_outil = Thesaurus.get(id=data['type_media']) if data['url'] else Thesaurus.get(id=2))
+		url = data['url'])
+	if data['url'] and data['type_media']:
+		outil.fk_type_mat_outil = Thesaurus.get(id=data['type_media'])
+		outil.save()
 	return outil
 
 
@@ -106,7 +108,8 @@ def update_outil(data):
 	outil.difficulte = Thesaurus.get(id=data['difficulte'])
 	outil.materiel = data['materiel']
 	outil.url = data['url']
-	outil.fk_type_mat_outil = Thesaurus.get(id=data['type_media']) if data['url'] else Thesaurus.get(id=2) 
+	if data['url'] and data['type_media']:
+		outil.fk_type_mat_outil = Thesaurus.get(id=data['type_media'])
 	outil.save()
 
 
@@ -132,7 +135,7 @@ def match_mat_peda_tags(types, tags):
 	'''
 
 	if not types:
-		types = [item.id for item in get_from_thes(code='ref.type_mat')]
+		types = [item.id for item in get_from_thes(idref='ref.type_mat')]
 
 	queryTypes = Mat_peda.select().where(Mat_peda.fk_type_mat.in_(types))
 
@@ -171,7 +174,7 @@ def get_all_medias():
 		Return(s):
 				| mat_pedas (Mat_peda[]): Liste de tous les objets Mat_peda (médias)
 	'''
-	return [item for item in Mat_peda.select() if item.fk_type_mat in get_from_thes(code='ref.type_mat')]
+	return [item for item in Mat_peda.select() if item.fk_type_mat in get_from_thes(idref='ref.type_mat')]
 
 
 def get_all_outils():
@@ -181,7 +184,7 @@ def get_all_outils():
 		Return(s):
 				| mat_pedas (Mat_peda[]): Liste de tous les objets Mat_peda (outils)
 	'''
-	return [item for item in Mat_peda.select() if item.fk_type_mat in get_from_thes(code='ref.type_outil')]
+	return [item for item in Mat_peda.select() if item.fk_type_mat in get_from_thes(idref='ref.type_outil')]
 
 
 def get_outils(code):

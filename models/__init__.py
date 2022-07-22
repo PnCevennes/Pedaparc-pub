@@ -42,116 +42,116 @@ def pop_refs_thes():
     si nouvelle reference, ajouter sur le tas
 
     id references:
-        | 1 - thematiques 
-        | 2 - type materiel
-        | 3 - duree anim
-        | 4 - lieu anim
-        | 5 - saison anim
-        | 6 - public anim
-        | 7 - type sequence
-        | 8 - duree sequence
-        | 9 - approche sequence
-        | 10 - modalites sequence
-        | 76 - type outil
-        | 84 - difficulte outil
+        | 'ref.thematiques' - thematiques 
+        | 'ref.type_mat' - type materiel
+        | 'ref.duree' - duree anim
+        | 'ref.lieux' - lieu anim
+        | 'ref.saison' - saison anim
+        | 'ref.public' - public anim
+        | 'ref.type_seq' - type sequence
+        | 'ref.duree_seq' - duree sequence
+        | 'ref.approches' - approche sequence
+        | 'ref.modalites' - modalites sequence
+        | 'ref.type_outil' - type outil
+        | 'ref.difficulte' - difficulte outil
     """
-    for idx, nom, ref, code in [
-            (1, 'Thématiques', 0, 'ref.thematiques'),
-            (2, 'Type', 0, 'ref.type_mat'),
-            (3, 'Durée', 0, 'ref.duree'),
-            (4,'Lieux', 0, 'ref.lieux'), 
-            (5, 'Saison', 0, 'ref.saison'), 
-            (6, 'Public', 0, 'ref.public'),
-            (7, 'Type de séquence', 0, 'ref.type_seq'),
-            (8, 'Durée de séquence', 0, 'ref.duree_seq'),
-            (9, 'Approches',0, 'ref.approches'),
-            (10, 'Modalités',0, 'ref.modalites'),
-            (76, 'Types d\'outils',0, 'ref.type_outil'),
-            (84, 'Difficulté',0, 'ref.difficulte')]:
+    for idx, label, ref, code in [
+            (1, 'Thématiques', '', 'ref.thematiques'),
+            (2, 'Type', '', 'ref.type_mat'),
+            (3, 'Durée', '', 'ref.duree'),
+            (4,'Lieux', '', 'ref.lieux'), 
+            (5, 'Saison', '', 'ref.saison'), 
+            (6, 'Public', '', 'ref.public'),
+            (7, 'Type de séquence', '', 'ref.type_seq'),
+            (8, 'Durée de séquence', '', 'ref.duree_seq'),
+            (9, 'Approches', '', 'ref.approches'),
+            (10, 'Modalités', '', 'ref.modalites'),
+            (76, 'Types d\'outils', '', 'ref.type_outil'),
+            (84, 'Difficulté', '', 'ref.difficulte')]:
         try:
-            Thesaurus.create(id=idx, nom=nom, reference=ref, code=code)
+            Thesaurus.create(id=idx, label=label, reference=ref, code=code)
         except peewee.IntegrityError:
-            print ('%s - %s déja existant' % (idx, nom))
+            print ('%s - %s déja existant' % (idx, label))
 
 def pop_thes():
     '''
     Entrées de base du thésaurus
     '''
-    for idx, nom, ref, code in [
-            (11, 'Agro-Pastoralisme', 1, ''),
-            (12, 'Eau', 1, ''),
-            (13, 'Faune', 1, ''),
-            (14, 'Flore', 1, ''),
-            (15, 'Forêt', 1, ''),
-            (16, 'Insectes', 1, ''),
-            (17, 'Oiseaux', 1, ''),
-            (18, 'Nuit', 1, ''),
-            (19, 'Patrimoine', 1, ''),
-            (20, 'Handicap', 6, ''),
-            (21, 'Journée', 3, ''),
-            (22, 'Demi-journée', 3, ''),
-            (23, 'Soirée', 3, ''),
-            (24, 'Terrain', 4, ''),
-            (25, 'Intérieur', 4, ''),
-            (26, 'Printemps', 5, ''),
-            (27, 'Été', 5, ''),
-            (28, 'Automne', 5, ''),
-            (29, 'Hiver', 5, ''),
-            (30, 'Petite et Moyenne section', 6, ''),
-            (31, 'Grande section - CP', 6, ''),
-            (32, 'CE1 - CE2', 6, ''),
-            (33, 'CM1 - CM2', 6, ''),
-            (34, '6ème', 6, ''),
-            (35, '5ème', 6, ''),
-            (36, '4ème', 6, ''),
-            (37, '3ème', 6, ''),
-            (38, 'Lycée', 6, ''),
-            (39, 'Grand public', 6, ''),
-            (40, 'Classe unique', 6, ''),
-            (41, 'Professionnels', 6, ''),
-            (42, 'Introduction', 7, 'intro'),
-            (43, 'Développement', 7, 'dvp'),
-            (44, 'Développement optionnel', 7, 'dvpopt'),
-            (45, 'Conclusion', 7, 'conclu'),
-            (46,'5 min',8, ''),
-            (47,'10 min',8, ''),
-            (48,'15 min',8, ''),
-            (49,'20 min',8, ''),
-            (50,'25 min',8, ''),
-            (51,'30 min',8, ''),
-            (52,'35 min',8, ''),
-            (53,'40 min',8, ''),
-            (54,'45 min',8, ''),
-            (55,'50 min',8, ''),
-            (56,'55 min',8, ''),
-            (57,'1h',8, ''),
-            (58,'1h30',8, ''),
-            (59,'2h',8, ''),
-            (60,'Artistique',9, ''),
-            (61,'Scientifique',9, ''),
-            (62,'Ludique',9, ''),
-            (65,'Mise en pratique',9, ''),
-            (67,'Sensible',9, ''),
-            (68,'À l\'écoute',10, ''),
-            (69,'En action',10, ''),
-            (70,'Image',2, 'image'),
-            (71,'Photo',2, 'photo'),
-            (72,'Vidéo',2, 'video'),
-            (73,'Bande-son',2, 'bandeson'),
-            (74,'Support',2, 'support'),
-            (75,'Conte',2, 'contes'),
-            (77,'Instaurer un cadre de confiance',76, 'instaureruncadre'),
-            (78,'Débats',76, 'debats'),
-            (79,'Émergence des représentations',76, 'emergencedesrespresentations'),
-            (80,'Moments de calme',76, 'momentsdecalme'),
-            (81,'En conclusion',76, 'enconclusion'),
-            (82,'Jeux',76, 'jeux'),
-            (83,'Multi-usage',76, 'multiusage'),
-            (85,'Très facile',84,''),
-            (86,'Facile',84,''),
-            (87,'Moyen',84,''),
-            (88,'Difficile',84,'')]:
+    for idx, label, ref, code in [
+            (11, 'Agro-Pastoralisme', 'ref.thematiques', ''),
+            (12, 'Eau', 'ref.thematiques', ''),
+            (13, 'Faune', 'ref.thematiques', ''),
+            (14, 'Flore', 'ref.thematiques', ''),
+            (15, 'Forêt', 'ref.thematiques', ''),
+            (16, 'Insectes', 'ref.thematiques', ''),
+            (17, 'Oiseaux', 'ref.thematiques', ''),
+            (18, 'Nuit', 'ref.thematiques', ''),
+            (19, 'Patrimoine', 'ref.thematiques', ''),
+            (20, 'Handicap', 'ref.public', ''),
+            (21, 'Journée', 'ref.duree', ''),
+            (22, 'Demi-journée', 'ref.duree', ''),
+            (23, 'Soirée', 'ref.duree', ''),
+            (24, 'Terrain', 'ref.lieux', ''),
+            (25, 'Intérieur', 'ref.lieux', ''),
+            (26, 'Printemps', 'ref.saison', ''),
+            (27, 'Été', 'ref.saison', ''),
+            (28, 'Automne', 'ref.saison', ''),
+            (29, 'Hiver', 'ref.saison', ''),
+            (30, 'Petite et Moyenne section', 'ref.public', ''),
+            (31, 'Grande section - CP', 'ref.public', ''),
+            (32, 'CE1 - CE2', 'ref.public', ''),
+            (33, 'CM1 - CM2', 'ref.public', ''),
+            (34, '6ème', 'ref.public', ''),
+            (35, '5ème', 'ref.public', ''),
+            (36, '4ème', 'ref.public', ''),
+            (37, '3ème', 'ref.public', ''),
+            (38, 'Lycée', 'ref.public', ''),
+            (39, 'Grand public', 'ref.public', ''),
+            (40, 'Classe unique', 'ref.public', ''),
+            (41, 'Professionnels', 'ref.public', ''),
+            (42, 'Introduction', 'ref.type_seq', 'intro'),
+            (43, 'Développement', 'ref.type_seq', 'dvp'),
+            (44, 'Développement optionnel', 'ref.type_seq', 'dvpopt'),
+            (45, 'Conclusion', 'ref.type_seq', 'conclu'),
+            (46,'5 min', 'ref.duree_seq', ''),
+            (47,'10 min', 'ref.duree_seq', ''),
+            (48,'15 min', 'ref.duree_seq', ''),
+            (49,'20 min', 'ref.duree_seq', ''),
+            (50,'25 min', 'ref.duree_seq', ''),
+            (51,'30 min', 'ref.duree_seq', ''),
+            (52,'35 min', 'ref.duree_seq', ''),
+            (53,'40 min', 'ref.duree_seq', ''),
+            (54,'45 min', 'ref.duree_seq', ''),
+            (55,'50 min', 'ref.duree_seq', ''),
+            (56,'55 min', 'ref.duree_seq', ''),
+            (57,'1h', 'ref.duree_seq', ''),
+            (58,'1h30', 'ref.duree_seq', ''),
+            (59,'2h', 'ref.duree_seq', ''),
+            (60,'Artistique', 'ref.approches', ''),
+            (61,'Scientifique', 'ref.approches', ''),
+            (62,'Ludique', 'ref.approches', ''),
+            (65,'Mise en pratique', 'ref.approches', ''),
+            (67,'Sensible', 'ref.approches', ''),
+            (68,'À l\'écoute', 'ref.modalites', ''),
+            (69,'En action', 'ref.modalites', ''),
+            (70,'Image', 'ref.type_mat', 'image'),
+            (71,'Photo', 'ref.type_mat', 'photo'),
+            (72,'Vidéo', 'ref.type_mat', 'video'),
+            (73,'Bande-son', 'ref.type_mat', 'bandeson'),
+            (74,'Support', 'ref.type_mat', 'support'),
+            (75,'Conte', 'ref.type_mat', 'contes'),
+            (77,'Instaurer un cadre de confiance', 'ref.type_outil', 'instaureruncadre'),
+            (78,'Débats', 'ref.type_outil', 'debats'),
+            (79,'Émergence des représentations', 'ref.type_outil', 'emergencedesrespresentations'),
+            (80,'Moments de calme', 'ref.type_outil', 'momentsdecalme'),
+            (81,'En conclusion', 'ref.type_outil', 'enconclusion'),
+            (82,'Jeux', 'ref.type_outil', 'jeux'),
+            (83,'Multi-usage', 'ref.type_outil', 'multiusage'),
+            (85,'Très facile', 'ref.difficulte', ''),
+            (86,'Facile', 'ref.difficulte', ''),
+            (87,'Moyen', 'ref.difficulte', ''),
+            (88,'Difficile', 'ref.difficulte', '')]:
         try:
-            Thesaurus.create(id=idx, nom=nom, reference=ref, code=code)
+            Thesaurus.create(id=idx, label=label, reference=ref, code=code)
         except peewee.IntegrityError:
-            print ('%s - %s déja existant' % (idx, nom))
+            print ('%s - %s déja existant' % (idx, label))

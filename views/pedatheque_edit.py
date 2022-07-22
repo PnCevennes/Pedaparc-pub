@@ -24,8 +24,8 @@ views = Blueprint('pedatheque_edit',__name__)
 @auth.require_valid_user
 def get_thes():
      return json.dumps(
-          { thes.code : [{'id': tag.id, 'nom': tag.nom, 'code': tag.code} for tag in thesaurus.get_from_thes(idref=thes.id)] 
-          for thes in thesaurus.get_from_thes(idref=0) }
+          { thes.code : [{'id': tag.id, 'nom': tag.label, 'code': tag.code} for tag in thesaurus.get_from_thes(idref=thes.code)] 
+          for thes in thesaurus.get_from_thes(idref='') }
           )
 
 

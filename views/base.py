@@ -224,5 +224,5 @@ def get_stats():
 @views.route('/get_outils')
 @auth.require_valid_user
 def get_outils_pagenames():
-    types_outils = thesaurus.get_from_thes(code='ref.type_outil')
-    return json.dumps([[item.code, item.nom] for item in types_outils])
+    types_outils = thesaurus.get_from_thes(idref='ref.type_outil')
+    return json.dumps([[item.code, item.label] for item in types_outils])

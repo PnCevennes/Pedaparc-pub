@@ -18,7 +18,7 @@ views = Blueprint('thesaurus',__name__)
 @auth.require_admin_user
 def thesaurus_create_form():
     return render_template('/thesaurus/thesaurus_admin.htm', 
-        references = thesaurus.get_from_thes(idref='0'),
+        references = thesaurus.get_from_thes(idref=''),
         tags = thesaurus.get_all_thes())
 
 
@@ -34,8 +34,8 @@ def thesaurus_create_tag():
     except Exception:
         return render_template(
             '/thesaurus/thesaurus_admin.htm',
-            references = thesaurus.get_from_thes(idref='0'), 
-            alert = data['nom'])
+            references = thesaurus.get_from_thes(idref=''), 
+            alert = data['label'])
 
 
 #Cette fonction permet de supprimer un tag

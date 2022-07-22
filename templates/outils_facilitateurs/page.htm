@@ -27,7 +27,7 @@
                     <p><b>Description :</b></p>
                     <p class="text-display">{{document.description|md|safe}}</p>
                 </div>
-                {% if not document.fk_type_mat_outil.code == 'ref.type_mat' %}
+                {% if document.fk_type_mat_outil %}
                 <div class="ui segment ten-width">
                     <div class="ui modal big-modal" id="{{document.id}}">
                         <div class="header">{{document.nom|md|safe}}</div>
@@ -73,7 +73,7 @@
                 {% endif %}
                 {% if document.difficulte %}
                     <div class="ui segment">
-                        <p class="text-display"><b>Difficulté :</b> {{document.difficulte.nom}}</p>
+                        <p class="text-display"><b>Difficulté :</b> {{document.difficulte.label}}</p>
                     </div>
                 {% endif %}
                 {% if document.materiel %}

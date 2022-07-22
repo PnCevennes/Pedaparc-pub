@@ -15,14 +15,14 @@
 				<select class="ui compact selection dropdown" name="reference" required>
 					<option value="">Choisir ...</option>
 					{% for reference in references %}
-					<option value="{{reference.id}}">{{reference.nom}}</option>
+					<option value="{{reference.id}}">{{reference.label}}</option>
 					{% endfor %}
 				</select>
 			</div>
 			<div class="ui segment">
 				<div class="ui labeled input">
 					<div class="ui label">Nom du tag</div>
-					<input type="text" name="nom">
+					<input type="text" name="label">
 				</div>
 			</div>
 		</div>
@@ -39,7 +39,7 @@
 			<select class="ui selection dropdown" name="id_thes" required>
 				<option value="">Choisir ...</option>
 				{% for tag in tags %}
-				<option value="{{tag.id}}">{{tag.nom}}</option>
+				<option value="{{tag.id}}">{{tag.label}}</option>
 				{% endfor %}
 			</select>
 		</div>

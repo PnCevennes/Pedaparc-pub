@@ -55,8 +55,8 @@ def delete_comment(id_anim, id_commentaire):
 @views.route('/', strict_slashes=False, methods=['GET'])
 @auth.require_valid_user
 def pedatheque_search_search_form():
-    tags = {item: thesaurus.get_from_thes(code=item.code) for item 
-        in utils.format('psearch', thesaurus.get_from_thes(idref=0))}
+    tags = {item: thesaurus.get_from_thes(idref=item.code) for item 
+        in utils.format('psearch', thesaurus.get_from_thes(idref=''))}
     return render_template('/tags_form.htm', tags=tags, action='pedatheque')
 
 
@@ -75,8 +75,8 @@ def pedatheque_search_search_results():
         return render_template('/pedatheque/search/results.htm', anims=anims)
 
     tags = []
-    for item in utils.format('psearch', thesaurus.get_from_thes(idref=0)):
-        tags = tags+request.args.getlist(item.nom)
+    for item in utils.format('psearch', thesaurus.get_from_thes(idref='')):
+        tags = tags+request.args.getlist(item.code)
     
     match = animation.match_anim_tags(tags)
 
@@ -162,8 +162,8 @@ def pedatheque_search_download_anim(id_anim):
 
     tags = []
     for tag in animation.get_animation(id_anim).tags[:]:
-        if tag.reference in [1,4,5]:
-            with open('static/ressources/'+tag.nom+'.png', 'rb') as img_file:
+        if tag.reference in ['ref.thematiques','ref.lieux','ref.saison']:
+            with open('static/ressources/'+tag.label+'.png', 'rb') as img_file:
                 tags.append(base64.b64encode(img_file.read()))
 
     secure_name =  secure_filename(anim.titre)

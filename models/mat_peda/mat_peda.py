@@ -37,7 +37,7 @@ class Mat_peda(BaseModel):
     difficulte = ForeignKeyField(Thesaurus)
     materiel = TextField()
     date_modif = DateField(constraints=[SQL("DEFAULT (datetime('now'))")])
-    fk_type_mat_outil = ForeignKeyField(Thesaurus)
+    fk_type_mat_outil = ForeignKeyField(Thesaurus, null=True, default=None)
 
 
 class Rel_mat_peda_sequence(BaseModel):

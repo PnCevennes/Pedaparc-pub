@@ -4,7 +4,7 @@ Fichier contenant les fonctions utiles à la manipulation du thesaurus.
 
 Fonctions:
 
-   | get_from_thes(idref=None, code=None) -> Thesaurus[]
+   | get_from_thes(idref=None) -> Thesaurus[]
    | create_thesaurus(data) -> Thesaurus
    | delete_thesaurus(id_thes)
    | get_thesaurus(id_thes) -> Thesaurus
@@ -16,26 +16,19 @@ from models.thesaurus.thesaurus import Thesaurus
 
 #====================Thesaurus====================#
 
-def get_from_thes(idref=None, *, code=None):
+def get_from_thes(idref=None):
     '''
     Retourne les objets Thesaurus dont l'Id de référence ou le code de référence
     a été passé en paramètre.
 
         Param(s):
                 | idref (int)(facultatif): Id de référence du type d'objets Thesaurus à renvoyer
-                | code (str)(facultatif): code de référence du type d'objets Thesaurus à renvoyer
 
         Return(s):
                 | thes (Thesaurus[]): Liste de tous les objets Thesaurus correspondants au type d'objets passé en paramètre
     '''
     if idref is None: 
-        if code:
-            try:
-                idref = Thesaurus.select().where(Thesaurus.code == code)[0].id
-            except IndexError:
-                return []
-        else:
-            raise ValueError('get_from_thes: idref ou code doit être fourni')
+        raise ValueError('get_from_thes: idref doit être fourni')
     return Thesaurus.select().where(Thesaurus.reference==idref)[:]
 
 
@@ -51,7 +44,7 @@ def create_thesaurus(data):
     '''
     thes = Thesaurus.create(
         reference = data['reference'],
-        nom = data['nom'])
+        label = data['label'])
     return thes
 
 
@@ -85,7 +78,7 @@ def get_pictos():
         Return(s):
                 | thes (Thesaurus[]): Liste de tous les objets Thesaurus associés à un pictogramme
     '''
-    return Thesaurus.select().where(Thesaurus.reference.in_([1,4,5]))[:]
+    return Thesaurus.select().where(Thesaurus.reference.in_(['ref.thematiques','ref.lieux','ref.saison']))[:]
 
 
 def get_all_thes():
@@ -95,4 +88,4 @@ def get_all_thes():
         Return(s):
                 | thes (Thesaurus[]): Liste de tous les objets Thesaurus qui ne sont pas des catégories
     '''
-    return Thesaurus.select().where(Thesaurus.reference!=0)[:]
+    return Thesaurus.select().where(Thesaurus.reference!='')[:]

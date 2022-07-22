@@ -59,14 +59,14 @@
 	<div class="ui segment ten-width">
 	{% for theme in media.thematiques %}
 		<i class="ui icon tooltip">
-			<img class="ui mini image" src="/static/ressources/{{theme.nom}}.png">
-			<span class="tooltiptext">{{theme.nom}}</span>
+			<img class="ui mini image" src="/static/ressources/{{theme.label}}.png">
+			<span class="tooltiptext">{{theme.label}}</span>
 		</i>
 	{% endfor %}
 	</div>
 	{% if pertinence %}
 	<div class="ui segment ten-width">
-		<small>Pertinence : {{pertinence}}</small>
+		<small>Pertinence : <img class="ui mini spaced image" src="https://shields.io/badge/-{{pertinence}}-2185d0"></small>
 	</div>
 	{% endif %}
 </div>

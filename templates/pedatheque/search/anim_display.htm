@@ -34,16 +34,16 @@
 		</div>
 		<div class="ui segment text-display">
 			<p><div>
-				<b>Durée :</b> {{anim.fk_duree.nom}}
+				<b>Durée :</b> {{anim.fk_duree.label}}
 			</p></div>
 			<p><div>
 				<b>Public :</b>
 				{% set count = namespace(value=0) %}
 				{% for tag in tags %}
-					{% if tag.reference==6 %}
+					{% if tag.reference=='ref.public' %}
 					{% set count.value = count.value + 1 %}
 					<div class="ui checkbox mini-right-margin">
-						<p><i class="check icon"></i>{{tag.nom}}</p>
+						<p><i class="check icon"></i>{{tag.label}}</p>
 					</div>
 					{% endif %}
 				{% endfor %}
@@ -86,17 +86,17 @@
 		{% endif %}
 
 		<div class="ui segment {{color}} bold-border">
-			<h3 class="ui left aligned header">{{seq.fk_type_seq.nom}} : {{seq.titre}}</h3>
+			<h3 class="ui left aligned header">{{seq.fk_type_seq.label}} : {{seq.titre}}</h3>
 		</div>
 		<div class="ui horizontal segments {{color}}">
 			<div class="ui segment twenty-five-width">
-				<p class="text-display"><b>Approche :</b> {{seq.fk_approche.nom}}</p>
+				<p class="text-display"><b>Approche :</b> {{seq.fk_approche.label}}</p>
 			</div>
 			<div class="ui segment twenty-five-width">
-				<p class="text-display"><b>Modalité :</b> {{seq.fk_modalite.nom}}</p>
+				<p class="text-display"><b>Modalité :</b> {{seq.fk_modalite.label}}</p>
 			</div>
 			<div class="ui segment fifty-width">
-				<p class="text-display"><b>Durée :</b> {{seq.fk_duree.nom}}</p>
+				<p class="text-display"><b>Durée :</b> {{seq.fk_duree.label}}</p>
 			</div>
 		</div>
 		<div class="ui horizontal segments">
