@@ -17,3 +17,8 @@ class Thesaurus(BaseModel):
     reference = TextField(default='')
     label = CharField(max_length=80)
     code = TextField(default='')
+
+    class Meta:
+        indexes = (
+            (('code'), True)
+        )
