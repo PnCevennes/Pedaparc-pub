@@ -117,3 +117,49 @@ Application conçue et développée par Olivia Pelestor, @Alexandre-Roussel48 et
 ![](https://img.shields.io/badge/flask-informationals?style=flat&logo=flask&color=000000&logoColor=FFF)![](https://img.shields.io/badge/jinja-informationals?style=flat&logo=jinja&color=B41717&logoColor=FFF)![](https://img.shields.io/badge/peewee-informationals?style=flat&logo=peewee&color=000000&logoColor=FFF)![](https://img.shields.io/badge/py3o-informationals?style=flat&logo=py3o&color=0E85CD&logoColor=FFF)![](https://img.shields.io/badge/semanticUi-informationals?style=flat&logo=semanticUi&color=35BDB2&logoColor=FFF)
 
 Application conçue et développée par Olivia Pelestor, @Alexandre-Roussel48 et @PnCevennes.
+
+# 2.3.0 (22/07/2022)
+## Quoi de neuf pour Pedaparc ? Des nouvelles fonctionnalités et des fixs !
+
+- Ajout de régles CSS pour les tailles des segments et tooltips
+- Modification de la forme de saisie des séquences
+- Ajout du filtrage des médias par noms ET par mots-clés (création d'animations)
+- Modification du modèle de téléchargement d'animations
+- Ajout d'une bordure noire pour le type et le titre des séquences
+- Modification du .gitignore
+- Ajout du fichier markdown de la notice
+- Ajout d'un onglet de consultation des pictogrammes
+- Ajout de la pertinence pour ordonner les animations (recherche)
+- Ajout de la pertinence pour ordonner les médias (recherche)
+- Suppression de la recherche par pertinence
+- Modification de l'affichage de la pertinence d'animations
+- Modification de l'affichage de la pertinence de médias
+- Fix recherche d'animations par auteur
+- Uniformisation de l'ordre des liens du layout
+- Ajout de la vérification d'unicité des fichiers associés aux médias par hashage md5
+- Ajout de la fonctionnalité administrateur suppression de mots-clés
+- Ajout du nombre de résultats par recherche (recherche animations et médias)
+- Modification du layout pour la catégorie Thésaurus
+- Ajout de tooltips pour le statut d'animation et le bouton d'édition
+- Uniformisation de la documentation des models
+- Modification de noms de fonctions
+- Suppression de la limite de caractères sur les champs du formulaire d'import d'outils facilitateurs
+- Ajout de tooltip et de modal pour la suppression de séquences
+- Arrêt de l'utilisation des id pour reconnaitre les mots-clés : passage aux codes uniques
+- Fixs et correctifs frontvuejs et application des modifications
+- Ajout de shields pour le nombre de résultats par recherche et la pertinence des résultats
+- Passage de fk_type_mat_outil de mat_peda en nullable
+- Changements thesaurus : nom -> label et reference(int) -> reference(text)
+- Rassemblement des fonctions views qui appelent les mêmes urls 
+- Ajout de la documentation Sphinx
+- Rajout de la contrainte d'unicité sur le code du thesaurus
+
+### Languages utilisées
+
+![](https://img.shields.io/badge/HTML5-informationals?style=flat&logo=html5&color=E34F26&logoColor=FFF)![](https://img.shields.io/badge/CSS3-informationals?style=flat&logo=css3&color=1572B6&logoColor=FFF)![](https://img.shields.io/badge/JavaScript-informationals?style=flat&logo=javascript&color=C7B61A&logoColor=FFF)![](https://img.shields.io/badge/python-informationals?style=flat&logo=python&color=3776AB&logoColor=FFF)![](https://img.shields.io/badge/vue.js-informationals?style=flat&logo=vue.js&color=4FC08D&logoColor=FFF)
+
+### Frameworks et librairies utilisées
+
+![](https://img.shields.io/badge/flask-informationals?style=flat&logo=flask&color=000000&logoColor=FFF)![](https://img.shields.io/badge/jinja-informationals?style=flat&logo=jinja&color=B41717&logoColor=FFF)![](https://img.shields.io/badge/peewee-informationals?style=flat&logo=peewee&color=000000&logoColor=FFF)![](https://img.shields.io/badge/py3o-informationals?style=flat&logo=py3o&color=0E85CD&logoColor=FFF)![](https://img.shields.io/badge/semanticUi-informationals?style=flat&logo=semanticUi&color=35BDB2&logoColor=FFF)
+
+Application conçue et développée par Olivia Pelestor, @Alexandre-Roussel48 et @PnCevennes.
