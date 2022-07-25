@@ -32,7 +32,7 @@ def render_file(animation=None, sequences=None, medias=None, tags=None, outil=No
     except Exception as e:
         pass
 
-    if animation and sequences and tags:
+    if animation and sequences:
 
         secure_name = secure_filename(animation.titre)
 
