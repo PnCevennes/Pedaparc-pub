@@ -8,6 +8,9 @@
 		<a href="/mediatheque" class="ui aligned primary button">Nouvelle recherche</a>
 		<img class="ui right floated basic segment" src="https://shields.io/badge/-{{medias|length}} résultats-2185d0">
 	</div>
+    <div class="ui modal big-modal" id="the_modal">
+        modal! 
+    </div>
 
 	{% for media, pertinence in medias %}
 		{% include '/mediatheque/search/simple_media_display.htm' %}

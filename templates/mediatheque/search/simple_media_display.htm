@@ -23,27 +23,7 @@
 		<p>{{media.description|md|safe}}</p>
 	</div>
 	<div class="ui segment ten-width">
-		<div class="ui modal big-modal" id="{{media.id}}">
-			<div class="header">
-				{{media.nom|md|safe}}
-			</div>
-			<div class="content">
-				{% if media.fk_type_mat.code=='image' or media.fk_type_mat.code=='photo' or media.fk_type_mat.code=='support' or media.fk_type_mat.code=='conte' %}
-				<embed src="/{{media.url}}" class="big-embed"></embed>
-				{% elif media.fk_type_mat.code=='video' %}
-				<video controls class="big-embed">
-					<source src="/{{media.url}}">
-					Votre navigateur ne supporte pas cette extension.
-				</video>
-				{% elif media.fk_type_mat.code=='bandeson' %}
-				<audio controls class="big-embed">
-					<source src="/{{media.url}}">
-					Votre navigateur ne supporte pas cette extension.
-				</audio>
-				{% endif %}
-			</div>
-		</div>
-		<button class="ui primary button" onclick="javascript:$('#{{media.id}}').modal('show');">Aperçu</button>
+        <button class="ui primary button" onclick="javascript: openmodal('{{media.url}}', '{{media.fk_type_mat.code}}', '{{media.nom}}')" >Aperçu</button>
 	</div>
 	<div class="ui segment five-width">
 		<a href="/mediatheque/{{media.id}}"><i class="download icon"></i></a>
@@ -70,3 +50,23 @@
 	</div>
 	{% endif %}
 </div>
+<script>
+function openmodal(url, codeType, nom) {
+    //$('#{{media.id}}').modal('show');
+    let modalWdw = document.getElementById('the_modal');
+
+    modalWdw.innerHTML = '<h1>' + nom + '</h1>';
+
+    if (codeType == 'image' || codeType == 'photo' || codeType == 'support' || codeType == 'conte'){
+        modalWdw.innerHTML += '<embed src="/'+url+'" class="big-embed"></embed>';
+    } else if (codeType == 'video') {
+        modalWdw.innerHTML += '<video controls class="big-embed"><source src="/'+url+'">Votre navigateur ne supporte pas cette extension</video>';
+
+    } else if (codeType == 'bandeson') {
+        modalWdw.innerHTML += '<audio controls class="big-embed"><source src="/'+url+'">Votre navigateur ne supporte pas cette extension</audio>';
+
+    }
+
+    $('#the_modal').modal('show');
+}
+</script>
