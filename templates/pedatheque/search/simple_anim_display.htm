@@ -3,9 +3,8 @@
 <div class="ui segments">
 	<div class="ui clearing segment mini-padding">
 		<div class="ui left floated header">
-			<h2>{{anim.titre}}</h2>
-			<h4>{{anim.auteurs}}</h4>
-			{% if pertinence %}<small>Pertinence : <img class="ui mini spaced image" src="https://shields.io/badge/-{{pertinence}}-2185d0"></small>{% endif %}
+            <h2 class="header">{{anim.titre}}{% if pertinence %}<a class="ui blue basic left pointing label">Pertinence : {{pertinence}}</a>{% endif %}</h2>
+			<h4 class="sub header">{{anim.auteurs}}</h4>
 		</div>
 		<div class="ui right floated header">
 			{% for tag in tags %}

@@ -4,9 +4,9 @@
 
 {% block content %}
 <div class="ui very padded container large-container">
-	<div class="ui basic segment">
-		<a href="/pedatheque" class="ui aligned primary button">Nouvelle recherche</a>
-		<img class="ui right floated basic segment" src="https://shields.io/badge/-{{anims|length}} résultats-2185d0">
+	<div class="ui left labeled blue button">
+        <a class="ui blue basic right pointing label">{{anims|length}} résultat(s)</a>
+		<a href="/pedatheque" class="ui blue button">Nouvelle recherche</a>
 	</div>
 
 	{% for anim, tags, pertinence in anims %}
