@@ -6,11 +6,10 @@
 <form method="get" action="/{{action}}/results" class="big-bottom-margin">
   <div class="mini-bottom-margin">
     {% for key in tags %}
-    <div class="ui accordion">
-      <div class="title active">
-        <i class="dropdown icon"></i>
+    <div class="ui segment">
+      <h5 class="title">
         {{key.label}} :
-      </div>
+      </h5>
       <div class="content">
       {% for item in tags[key] %}
           <div class="ui checkbox mini-right-margin">
@@ -55,7 +54,6 @@ $('.ui.search')
 {% endif %}
 
 <script defer>
-  $('.ui.accordion')
-  .accordion();
+  $('.ui.accordion').accordion('refresh');
 </script>
 {% endblock %}
